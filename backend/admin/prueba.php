@@ -4,7 +4,7 @@ require_once "../bd/bd.php";
 $bd = new BD();
 
 // Obtén la conexión
-$conexion = $bd->getConexion();
+$conexion = $bd->iniciarConexion();
 
 // Comprueba si la conexión se realizó correctamente
 if ($conexion->connect_errno) {

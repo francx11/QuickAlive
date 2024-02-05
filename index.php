@@ -1,14 +1,18 @@
 <?php
-
+session_start();
 require_once 'vendor/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader('./');
 $twig = new \Twig\Environment($loader);
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+$logueado = false;
+$rol = "";
 
-echo 'Script ejecutado'; // Mensaje de depuración
+// Para comprobar que las variables de Session tienen contenido no nulo
+if (isset($_SESSION['loggedin']) && isset($_SESSION['rol'])) {
+    $logueado = $_SESSION['loggedin'];
+    $rol = $_SESSION['rol'];
+}
 
 $template = $twig->load('index.html');
-echo $template->render(['variable' => 'Bienvenido!']);
+echo $template->render(['logueado' => $logueado, 'rol' => $rol]);

@@ -108,4 +108,30 @@ class BD
         return false;
     }
 
+    public function buscarCoincidenciasUsuario($nickName)
+    {
+        $sql = "SELECT * FROM usuario WHERE nickName LIKE CONCAT('%', ? , '%')";
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $nickName);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $usuarios = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $usuario = array(
+                'nombre' => $row['nombre'],
+                'email' => $row['email'],
+            );
+
+            $usuarios[] = $usuario;
+        }
+
+        return $usuario;
+
+    }
+
 }

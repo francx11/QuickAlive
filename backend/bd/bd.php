@@ -90,4 +90,22 @@ class BD
         return $rol;
     }
 
+    public function checkLogin($nickName, $password)
+    {
+
+        $usuario = $this->getUsuario($nickName);
+
+        if ($usuario == null) {
+            echo 'No existe el usuario';
+            return false;
+        }
+
+        if (password_verify($password, $usuario->getPassword())) {
+            echo 'Contraseña correcta';
+            return true;
+        }
+
+        return false;
+    }
+
 }

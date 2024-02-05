@@ -37,6 +37,10 @@ if ( /*_SESSION['loggedin']*/$_SESSION['rol'] == 'root') {
 
         }
 
+        // Redirigir a la misma página
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+
     }
 
 }

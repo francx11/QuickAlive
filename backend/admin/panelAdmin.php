@@ -7,22 +7,8 @@ session_start();
 $loader = new \Twig\Loader\FilesystemLoader('../../frontend/admin/templates');
 $twig = new \Twig\Environment($loader);
 
-$bd = new BD();
+$registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
 
-$bd->iniciarConexion();
-
-if ($_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
-    // Buscar a un usuario
-
-    if (isset($_POST['nickNameBuscado'])) {
-        $nickName = $_POST['nickNameBuscado'];
-    }
-
-    $usuariosBuscados = $bd->buscarCoincidenciasUsuario($nickName);
-    echo json_encode($usuariosBuscados);
-
+if ($registradoRoot) {
+    echo $twig->render('panelAdmin.html', []);
 }
-
-$bd->cerrarConexion();
-
-echo $twig->render('panelAdmin.html', []);

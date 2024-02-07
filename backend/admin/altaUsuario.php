@@ -10,8 +10,9 @@ $twig = new \Twig\Environment($loader);
 $bd = new BD();
 
 $bd->iniciarConexion();
+$registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
 
-if ($_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
+if ($registradoRoot) {
     // Funcionalidad para la inserción de usuarios
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -39,9 +40,8 @@ if ($_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
         exit();
 
     }
+    echo $twig->render('altaUsuario.html', []);
 
 }
-
-echo $twig->render('altaUsuario.html', []);
 
 $bd->cerrarConexion();

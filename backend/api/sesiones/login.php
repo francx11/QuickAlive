@@ -9,7 +9,7 @@ $bd = new BD();
 
 $bd->iniciarConexion();
 
-$inicio = false;
+$inicio = 0;
 
 // Obtener del formulario los datos del usuario
 
@@ -26,13 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['password'] = $pass;
         $_SESSION['rol'] = $bd->getRol($nick);
 
+        echo $_SESSION['rol'];
+
         //echo "Usuario iniciando sesion";
-        $inicio = true;
-        header("Location: ../../../index.php");
+        $inicio = 1;
+
+        if ($_SESSION['rol'] == 'root') {
+            header("Location: ../../../backend/admin/panelAdmin.php");
+        } else {
+            header("Location: ../../../index.php");
+        }
 
     } else {
         //echo 'Nombre de usuario o contraseña incorrectos';
-        $inicio = false;
+        $inicio = 2;
     }
 }
 

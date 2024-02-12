@@ -68,5 +68,4 @@ class Usuario
         return $this->rol;
     }
 
-    // Puedes agregar métodos adicionales según sea necesario, como métodos para establecer nuevos valores.
 }

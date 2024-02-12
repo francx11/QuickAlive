@@ -142,7 +142,7 @@ class BD
 
     public function eliminarUsuario($id)
     {
-        $query = "DELETE FROM usuario WHERE id = ?";
+        $query = "DELETE FROM usuario WHERE idUsuario = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('i', $id);
@@ -174,7 +174,7 @@ class BD
             return false;
         }
 
-        if (true/*password_verify($password, $usuario->getPassword())*/) {
+        if (password_verify($password, $usuario->getPassword())) {
             echo 'Contraseña correcta';
             return true;
         }
@@ -209,5 +209,7 @@ class BD
 
         return $usuarios;
     }
+
+    // Gestión de las actividades
 
 }

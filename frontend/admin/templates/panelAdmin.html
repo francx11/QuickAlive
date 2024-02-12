@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +8,6 @@
 			rel="stylesheet"
 			type="text/css"
 		/>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<title>Panel de Administración</title>
 	</head>
 	<body>
@@ -17,30 +16,23 @@
 		</header>
 
 		<main>
-			<button
-				id="altaUsuarioButton"
-				onclick="window.location.href='/quickalive/backend/admin/altaUsuario.php'"
-			>
-				Dar de Alta Usuario
-			</button>
-
 			<div>
-				<label for="nickNameBuscado">Buscar Usuario:</label>
-				<input
-					type="text"
-					id="nickNameBuscado"
-					name="nickNameBuscado"
-					placeholder="Buscar usuario"
-				/>
+				<button
+					onclick="window.location.href = '../../../../../quickAlive/backend/admin/gestionUsuarios/gestionUsuarios.php';"
+				>
+					Gestión de Usuarios
+				</button>
+				<button onclick="window.location.href = 'gestionActividades.php';">
+					Gestión de Actividades
+				</button>
+				<button onclick="window.location.href = 'gestionPreferencias.php';">
+					Gestión de Preferencias
+				</button>
 			</div>
-
-			<div id="resultadosBusqueda"></div>
 		</main>
-
-		<footer>
-			<p>&copy; 2024 QuickAlive</p>
-		</footer>
-
-		<script src="/quickalive/frontend/admin/js/buscarUsuarios.js"></script>
 	</body>
+
+	<footer>
+		<p>&copy; 2024 QuickAlive</p>
+	</footer>
 </html>

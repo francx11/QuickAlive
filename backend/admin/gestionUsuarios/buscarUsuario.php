@@ -1,10 +1,10 @@
 <?php
-require_once "../bd/bd.php";
-require "../../vendor/autoload.php";
+require_once "../../bd/bd.php";
+require "../../../vendor/autoload.php";
 
 session_start();
 
-$loader = new \Twig\Loader\FilesystemLoader('../../frontend/admin/templates');
+$loader = new \Twig\Loader\FilesystemLoader('../../../frontend/admin/templates/gestionUsuarios');
 $twig = new \Twig\Environment($loader);
 
 $bd = new BD();

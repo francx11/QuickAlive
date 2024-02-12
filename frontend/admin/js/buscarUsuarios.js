@@ -8,7 +8,7 @@ $(document).ready(function() {
             // Realizar la solicitud AJAX con jQuery
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost/quickalive/backend/admin/buscarUsuario.php', // Usar una ruta relativa
+                url: 'http://localhost/quickalive/backend/admin/gestionUsuarios/buscarUsuario.php', // Usar una ruta relativa
                 data: { nickNameBuscado: nickNameBuscado },
                 dataType: 'json',
                 success: function(resultados) {
@@ -34,7 +34,7 @@ $(document).ready(function() {
             var usuarioDiv = $('<div>').addClass('usuario');
             usuarioDiv.append($('<span>').text('Id de usuario: ' + usuario.idUsuario));
             usuarioDiv.append($('<span>').text('Nombre de usuario: ' + usuario.nickName));
-            usuarioDiv.append($('<span>').text('Email: ' + usuario.email));
+            usuarioDiv.append($('<span>').text('Email: ' + usuario.correo));
             usuarioDiv.append($('<span>').text('Nombre: ' + usuario.nombre));
             usuarioDiv.append($('<span>').text('Apellidos: ' + usuario.apellidos));
     
@@ -43,11 +43,11 @@ $(document).ready(function() {
     
             // Agregar enlaces a los botones de editar y eliminar con los parámetros del usuario
             editarBtn.click(function() {
-                window.location.href = 'http://localhost/quickalive/backend/admin/modificarUsuario.php?id=' + usuario.idUsuario;
+                window.location.href = 'http://localhost/quickalive/backend/admin/gestionUsuarios/modificarUsuario.php?id=' + usuario.idUsuario;
             });
     
             eliminarBtn.click(function() {
-                window.location.href = 'http://localhost/quickalive/backend/admin/eliminarUsuario.php?id=' + usuario.idUsuario;
+                window.location.href = 'http://localhost/quickalive/backend/admin/gestionUsuarios/eliminarUsuario.php?id=' + usuario.idUsuario;
             });
     
             var buttonsDiv = $('<div>').addClass('usuario-buttons');

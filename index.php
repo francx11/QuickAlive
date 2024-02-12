@@ -12,6 +12,7 @@ $rol = "";
 if (isset($_SESSION['loggedin']) && isset($_SESSION['rol'])) {
     $logueado = $_SESSION['loggedin'];
     $rol = $_SESSION['rol'];
+    echo $rol;
 }
 
 $template = $twig->load('index.html');

@@ -1,10 +1,10 @@
 <?php
-require_once "../bd/bd.php";
-require "../../vendor/autoload.php";
+require_once "../../bd/bd.php";
+require "../../../vendor/autoload.php";
 
 session_start();
 
-$loader = new \Twig\Loader\FilesystemLoader('../../frontend/admin/templates');
+$loader = new \Twig\Loader\FilesystemLoader('../../../frontend/admin/templates/gestionUsuarios');
 $twig = new \Twig\Environment($loader);
 
 $bd = new BD();
@@ -15,6 +15,7 @@ echo $idUsuario;
 
 // Verificar la sesión del usuario y sus permisos
 if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
+    $bd->iniciarConexion();
 
     // Verificar si se envió una solicitud POST para modificar el usuario
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -62,3 +63,5 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
     // Si el usuario no tiene permisos suficientes, mostrar un mensaje de error en la página
     echo "No tienes permiso para realizar esta acción";
 }
+
+$bd->cerrarConexion();

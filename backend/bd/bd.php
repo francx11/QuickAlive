@@ -211,5 +211,156 @@ class BD
     }
 
     // Gestión de las actividades
+    public function insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $duracion, $galeriaFotos)
+    {
+        // Primero, insertar los datos comunes en la tabla Actividad
+        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, tipoActividad, duracion) VALUES (?, ?, ?, ?)";
+        $stmtActividad = $this->mysqli->prepare($queryActividad);
+        $stmtActividad->bind_param('sssis', $nombreActividad, $descripcion, $tipoActividad, $duracion);
+
+        try {
+            $stmtActividad->execute();
+            $idActividad = $stmtActividad->insert_id; // Obtener el ID de la actividad insertada
+        } catch (PDOException $e) {
+            echo "Error al insertar actividad: " . $e->getMessage();
+            return false; // Fallo al insertar la actividad
+        }
+
+        // Ahora, insertar los datos específicos de ActividadSimple en su tabla correspondiente
+        $queryActividadSimple = "INSERT INTO ActividadSimple (idActividad) VALUES (?, ?)";
+        $stmtActividadSimple = $this->mysqli->prepare($queryActividadSimple);
+        $stmtActividadSimple->bind_param('i', $idActividad);
+
+        try {
+            $stmtActividadSimple->execute();
+            return true; // Éxito al insertar la actividad simple
+        } catch (PDOException $e) {
+            echo "Error al insertar actividad simple: " . $e->getMessage();
+            return false; // Fallo al insertar la actividad simple
+        }
+    }
+    // Función para modificar una actividad existente
+    public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion, $completada)
+    {
+        $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, duracion = ? WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('sssisi', $nombreActividad, $descripcion, $tipoActividad, $duracion, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al modificar la actividad
+        } catch (PDOException $e) {
+            echo "Error al modificar la actividad: " . $e->getMessage();
+            return false; // Fallo al modificar la actividad
+        }
+    }
+
+    public function eliminarActividad($idActividad)
+    {
+        // Eliminar todas las fotos de la galería asociadas a esta actividad
+        if (!$this->eliminarFotosGaleria($idActividad)) {
+            // Si hubo un error al eliminar las fotos, retornar false
+            return false;
+        }
+
+        // Eliminar la actividad de la tabla de actividades
+        $query = "DELETE FROM Actividad WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al eliminar la actividad
+        } catch (PDOException $e) {
+            echo "Error al eliminar la actividad: " . $e->getMessage();
+            return false; // Fallo al eliminar la actividad
+        }
+    }
+
+    public function crearGaleriaFotos($idActividad, $fotos)
+    {
+        // Iterar sobre las fotos y agregarlas a la galería
+        foreach ($fotos as $foto) {
+            $this->agregarFotoGaleria($idActividad, $foto);
+        }
+    }
+
+    private function agregarFotoGaleria($idActividad, $foto)
+    {
+        // Insertar una foto en la galería asociada a la actividad
+        $query = "INSERT INTO GaleriaFotos (idActividad, url) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('is', $idActividad, $foto);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al agregar la foto a la galería
+        } catch (PDOException $e) {
+            echo "Error al agregar foto a la galería: " . $e->getMessage();
+            return false; // Fallo al agregar la foto a la galería
+        }
+    }
+
+    private function eliminarFotosGaleria($idActividad)
+    {
+        // Eliminar todas las fotos de la galería asociadas a la actividad
+        $query = "DELETE FROM GaleriaFotos WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al eliminar las fotos de la galería
+        } catch (PDOException $e) {
+            echo "Error al eliminar las fotos de la galería: " . $e->getMessage();
+            return false; // Fallo al eliminar las fotos de la galería
+        }
+    }
+
+    public function getActividad($idActividad)
+    {
+        $query = "SELECT nombreActividad, descripcion, tipoActividad, duracion FROM Actividad WHERE idActividad = ?";
+
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+        $stmt->execute();
+
+        // Obtener el resultado como un objeto de la clase ActividadSimple
+        $resultado = $stmt->get_result();
+
+        // Verificar si se encontró la actividad simple
+        if ($resultado->num_rows > 0) {
+            // Obtener el primer resultado como un objeto de la clase ActividadSimple
+            $fila = $resultado->fetch_assoc();
+
+            // Crear una instancia de la clase ActividadSimple con los datos obtenidos de la base de datos
+            $actividadSimpleEncontrada = new ActividadSimple(
+                $fila['nombreActividad'],
+                $fila['descripcion'],
+                $fila['tipoActividad'],
+                $fila['duracion'],
+                null// La galería de fotos se obtendrá por separado
+            );
+
+            // Obtener la galería de fotos asociada a la actividad simple
+            $queryGaleria = "SELECT url FROM GaleriaFotos WHERE idActividad = ?";
+            $stmtGaleria = $this->mysqli->prepare($queryGaleria);
+            $stmtGaleria->bind_param('i', $idActividad);
+            $stmtGaleria->execute();
+            $resultadoGaleria = $stmtGaleria->get_result();
+
+            // Verificar si se encontraron fotos en la galería
+            if ($resultadoGaleria->num_rows > 0) {
+                // Iterar sobre los resultados y agregar las URLs al array de galería de fotos de la actividad simple
+                while ($filaGaleria = $resultadoGaleria->fetch_assoc()) {
+                    $actividadSimpleEncontrada->aniadirFotosGaleria($filaGaleria['url']);
+                }
+            }
+
+            return $actividadSimpleEncontrada;
+        } else {
+            return null; // No se encontró una actividad simple con el ID dado
+        }
+    }
 
 }

@@ -8,14 +8,17 @@ class Actividad
     protected $tipoActividad;
     protected $duracion;
     protected $completada;
+    private $galeriaFotos = [];
 
-    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada)
+    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos)
     {
         $this->nombreActividad = $nombreActividad;
         $this->descripcion = $descripcion;
         $this->tipoActividad = $tipoActividad;
         $this->duracion = $duracion;
         $this->completada = $completada;
+        $this->galeriaFotos = $galeriaFotos;
+
     }
 
     public function getNombreActividad()
@@ -43,6 +46,11 @@ class Actividad
         return $this->completada;
     }
 
+    public function getGaleriaFotos()
+    {
+        return $this->$galeriaFotos;
+    }
+
     public function setNombreActividad($nombreActividad)
     {
         $this->nombreActividad = $nombreActividad;
@@ -67,35 +75,63 @@ class Actividad
     {
         $this->completada = $completada;
     }
+
+    public function aniadirFotosGaleria($imagen)
+    {
+        $this->$galeriaFotos = $imagen;
+    }
 }
 
 // Clase para representar una actividad simple
 class ActividadSimple extends Actividad
 {
-    private $galeriaFotos;
 
     public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos)
     {
-        parent::__construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada);
-        $this->galeriaFotos = $galeriaFotos;
+        parent::__construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos);
+
     }
 
-    // Método getter para la galería de fotos
-    public function getGaleriaFotos()
+}
+
+// Clase para representar una actividad geolocalizable
+class ActividadGeolocalizable extends Actividad
+{
+    private $ubicacion;
+    private $fechaRealizacion;
+
+    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos, $ubicacion, $fechaRealizacion)
     {
-        return $this->galeriaFotos;
+        parent::__construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos);
+        $this->ubicacion = $ubicacion;
+        $this->fechaRealizacion = $fechaRealizacion;
     }
 
-    // Método setter para la galería de fotos
-    public function setGaleriaFotos($galeriaFotos)
+    public function getUbicacion()
     {
-        $this->galeriaFotos = $galeriaFotos;
+        return $this->ubicacion;
+    }
+
+    public function getFechaRealizacion()
+    {
+        return $this->fechaRealizacion;
+    }
+
+    public function setUbicacion($ubicacion)
+    {
+        $this->ubicacion = $ubicacion;
+    }
+
+    public function setFechaRealizacion($fechaRealizacion)
+    {
+        $this->fechaRealizacion = $fechaRealizacion;
     }
 }
 
 // Clase para representar una foto en la galería de fotos
-class GaleriaFotos
+class Imagen
 {
+    private $numImagen;
     private $url;
     private $idActividad;
 
@@ -103,6 +139,11 @@ class GaleriaFotos
     {
         $this->$idActividad = $idActividad;
         $this->url = $url;
+    }
+
+    public function getNumImagen()
+    {
+        return $numImagen;
     }
 
     public function getIdActividad()

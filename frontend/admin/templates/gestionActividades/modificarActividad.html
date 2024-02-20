@@ -4,10 +4,12 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link
-			href="/quickalive/frontend/admin/css/gestionActividades/modificarActividades.css"
+			href="/quickalive/frontend/admin/css/gestionActividades/modificarActividad.css"
 			rel="stylesheet"
 			type="text/css"
 		/>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 		<title>Modificar Actividad</title>
 	</head>
 	<body>
@@ -18,8 +20,9 @@
 		<main>
 			<form
 				id="modificarActividadForm"
-				action="modificarActividad.php?id={{ idActividad }}"
+				action="modificarActividad.php?id={{idActividad}}"
 				method="post"
+				enctype="multipart/form-data"
 			>
 				<div>
 					<label for="nombreActividad">Nombre Actividad:</label>
@@ -37,39 +40,42 @@
 					<label for="duracion">Duración:</label>
 					<input type="number" id="duracion" name="duracion" />
 				</div>
-				<div>
-					<label for="nombre">Nombre:</label>
-					<input type="text" id="nombre" name="nombre" />
-				</div>
+
 				<div class="galeria">
-					<label>Imágenes de Galería:</label>
-					{% for imagen in imagenes %}
+					Galería de imágenes Actual: {% for imagen in imagenes %}
 					<div class="imagen">
-						<img src="{{ imagen.ruta }}" alt="Imagen de la galería" />
-						<input
-							type="file"
-							id="imagen_{{ imagen.id }}"
-							name="imagen_{{ imagen.id }}"
-						/>
-						<input
-							type="hidden"
-							name="imagen_id_{{ imagen.id }}"
-							value="{{ imagen.id }}"
-						/>
-						<button
-							type="button"
-							class="eliminar-imagen"
-							data-id="{{ imagen.id }}"
-						>
-							X
-						</button>
+						<img src="{{ imagen.url }}" alt="Imagen de la galería" />
+						<a href="modificarActividad.php?id= {{ idActividad }}">
+							<button
+								type="button"
+								class="eliminar-imagen"
+								data-id="{{ imagen.numImagen }}"
+							>
+								&#128465;
+							</button>
+						</a>
 					</div>
+
 					{% endfor %}
 				</div>
+
+				<label for="imagenes"
+					>Imágenes (selecciona varias manteniendo Ctrl/Cmd):</label
+				><br />
+				<input
+					type="file"
+					id="imagenes"
+					name="imagenes[]"
+					multiple
+					accept="image/*"
+				/><br /><br />
+
 				<button type="submit">Modificar Actividad</button>
 			</form>
 		</main>
 	</body>
+
+	<script src="/quickalive/frontend/admin/js/eliminarFotoGaleria.js"></script>
 	<footer>
 		<p>&copy; 2024 QuickAlive</p>
 	</footer>

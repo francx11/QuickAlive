@@ -51,13 +51,19 @@
 					<label for="edad">Edad:</label>
 					<input type="number" id="edad" name="edad" />
 				</div>
+
+				{% if rol != 'root' %}
 				<div>
 					<label for="rol">Rol:</label>
 					<select id="rol" name="rol">
 						<option value="registrado">Registrado</option>
-						<option value="admin">Administrador</option>
+						<option value="root" selected>Administrador</option>
 					</select>
 				</div>
+				{% else %}
+				<input type="hidden" name="rol" value="root" />
+				{% endif %}
+
 				<a
 					href="http://localhost/quickalive/backend/admin/gestionUsuarios/modificarUsuario.php?id= {{ idUsuario }}"
 				>

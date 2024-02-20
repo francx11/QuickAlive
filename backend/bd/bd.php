@@ -211,36 +211,37 @@ class BD
     }
 
     // Gestión de las actividades
-    public function insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $duracion, $galeriaFotos)
+    public function insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
         // Primero, insertar los datos comunes en la tabla Actividad
         $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, tipoActividad, duracion) VALUES (?, ?, ?, ?)";
         $stmtActividad = $this->mysqli->prepare($queryActividad);
-        $stmtActividad->bind_param('sssis', $nombreActividad, $descripcion, $tipoActividad, $duracion);
+        $stmtActividad->bind_param('sssi', $nombreActividad, $descripcion, $tipoActividad, $duracion);
 
         try {
             $stmtActividad->execute();
             $idActividad = $stmtActividad->insert_id; // Obtener el ID de la actividad insertada
+            echo $idActividad;
         } catch (PDOException $e) {
             echo "Error al insertar actividad: " . $e->getMessage();
             return false; // Fallo al insertar la actividad
         }
 
         // Ahora, insertar los datos específicos de ActividadSimple en su tabla correspondiente
-        $queryActividadSimple = "INSERT INTO ActividadSimple (idActividad) VALUES (?, ?)";
+        $queryActividadSimple = "INSERT INTO ActividadSimple (idActividad) VALUES (?)";
         $stmtActividadSimple = $this->mysqli->prepare($queryActividadSimple);
         $stmtActividadSimple->bind_param('i', $idActividad);
 
         try {
             $stmtActividadSimple->execute();
-            return true; // Éxito al insertar la actividad simple
+            return $idActividad; // Éxito al insertar la actividad simple
         } catch (PDOException $e) {
             echo "Error al insertar actividad simple: " . $e->getMessage();
             return false; // Fallo al insertar la actividad simple
         }
     }
     // Función para modificar una actividad existente
-    public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion, $completada)
+    public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
         $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, duracion = ? WHERE idActividad = ?";
         $stmt = $this->mysqli->prepare($query);
@@ -277,15 +278,23 @@ class BD
         }
     }
 
-    public function crearGaleriaFotos($idActividad, $fotos)
+    private function eliminarFotoGaleria($numImagen)
     {
-        // Iterar sobre las fotos y agregarlas a la galería
-        foreach ($fotos as $foto) {
-            $this->agregarFotoGaleria($idActividad, $foto);
+        // Eliminar todas las fotos de la galería asociadas a la actividad
+        $query = "DELETE FROM GaleriaFotos WHERE numImagen = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $numImagen);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al eliminar las fotos de la galería
+        } catch (PDOException $e) {
+            echo "Error al elimina la foto: " . $e->getMessage();
+            return false; // Fallo al eliminar las fotos de la galería
         }
     }
 
-    private function agregarFotoGaleria($idActividad, $foto)
+    public function agregarFotoGaleria($idActividad, $foto)
     {
         // Insertar una foto en la galería asociada a la actividad
         $query = "INSERT INTO GaleriaFotos (idActividad, url) VALUES (?, ?)";
@@ -315,6 +324,34 @@ class BD
             echo "Error al eliminar las fotos de la galería: " . $e->getMessage();
             return false; // Fallo al eliminar las fotos de la galería
         }
+    }
+
+    public function buscarCoincidenciasActividad($nombreActividad)
+    {
+        $sql = "SELECT * FROM actividad WHERE nombreActividad LIKE CONCAT('%', ? , '%')";
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $nombreActividad);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $actividades = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $actividad = array(
+                'idActividad' => $row['idActividad'],
+                'nombreActividad' => $row['nombreActividad'],
+                'descripcion' => $row['descripcion'],
+                'tipoActividad' => $row['tipoActividad'],
+                'duracion' => $row['duracion'],
+            );
+
+            $actividades[] = $actividad;
+        }
+
+        return $actividades;
     }
 
     public function getActividad($idActividad)
@@ -360,6 +397,41 @@ class BD
             return $actividadSimpleEncontrada;
         } else {
             return null; // No se encontró una actividad simple con el ID dado
+        }
+    }
+
+    public function getGaleriaActividad($idActividad)
+    {
+        $sql = "SELECT * FROM galeriafotos where idActividad = ?";
+
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+        $stmt->execute();
+
+        // Obtener el resultado como un objeto de la clase ActividadSimple
+        $resultado = $stmt->get_result();
+
+        // Verificar si se encontró la actividad simple
+        if ($resultado->num_rows > 0) {
+            // Obtener el primer resultado como un objeto de la clase ActividadSimple
+            $fila = $resultado->fetch_assoc();
+
+            $galeria = array();
+
+            while ($row = $result->fetch_assoc()) {
+                $imagen = new Imagen(
+                    $row('numImagen'),
+                    $row('idActividad'),
+                    $row('url')
+                );
+
+                $galeria[] = $imagen;
+
+            }
+
+            return $galeria;
+        } else {
+            return null;
         }
     }
 

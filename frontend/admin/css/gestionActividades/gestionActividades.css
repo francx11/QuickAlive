@@ -50,25 +50,25 @@ input {
     margin-top: 20px;
 }
 
-/*
-.usuario {
+
+.actividad {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
     border-radius: 5px;
 }
-.usuario span {
+.actividad span {
     display: block;
     margin-bottom: 5px;
 }
-.usuario-buttons {
+.actividad-buttons {
     margin-top: 5px;
 }
-.usuario-buttons button {
+.actividad-buttons button {
     margin-right: 5px;
 }
-*/
+
 
 footer {
     background-color: #333;

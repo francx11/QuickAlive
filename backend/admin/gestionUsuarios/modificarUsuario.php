@@ -48,7 +48,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
             // Llamar a la función para modificar el usuario
             if ($bd->modificarUsuario($idUsuario, $nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)) {
                 // Si la modificación fue exitosa, redirigir a una página de éxito
-                //header("Location: modificarUsuario.php?id=" . $idUsuario);
+                header("Location: gestionUsuarios.php");
                 //exit();
             } else {
                 // Si la modificación falló, mostrar un mensaje de error en la página

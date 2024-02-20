@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="/QuickAlive/frontend/admin/css/gestionActividades/altaActividad.css"
+			rel="stylesheet"
+			type="text/css"
+        ></link>
+		<title>Dar de alta Actividad</title>
+	</head>
+	<body>
+		<h1>Crear Nueva Actividad</h1>
+		<form
+			action="http://localhost/quickalive/backend/admin/gestionActividades/altaActividad.php"
+			method="POST"
+			enctype="multipart/form-data"
+		>
+			<label for="nombre">Nombre de la Actividad:</label><br />
+			<input type="text" id="nombre" name="nombre" required /><br /><br />
+
+			<label for="descripcion">Descripción:</label><br />
+			<textarea id="descripcion" name="descripcion" rows="4" required></textarea
+			><br /><br />
+
+			<label for="tipo">Tipo de Actividad:</label><br />
+			<input type="text" id="tipo" name="tipo" required /><br /><br />
+
+			<label for="duracion">Duración (en minutos):</label><br />
+			<input
+				type="number"
+				id="duracion"
+				name="duracion"
+				min="1"
+				required
+			/><br /><br />
+
+			<label for="imagenes"
+				>Imágenes (selecciona varias manteniendo Ctrl/Cmd):</label
+			><br />
+			<input
+				type="file"
+				id="imagenes"
+				name="imagenes[]"
+				multiple
+				accept="image/*"
+			/><br /><br />
+
+			<input type="submit" value="Crear Actividad" />
+		</form>
+	</body>
+</html>

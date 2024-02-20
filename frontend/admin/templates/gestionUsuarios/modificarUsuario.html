@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="/quickalive/frontend/admin/css/gestionUsuarios/modificarUsuario.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<title>Modificar Usuario</title>
+	</head>
+	<body>
+		<header>
+			<h1>Modificar Usuario</h1>
+		</header>
+
+		<main>
+			<form
+				id="modificarUsuarioForm"
+				action="modificarUsuario.php?id= {{ idUsuario }}"
+				method="post"
+			>
+				<div>
+					<label for="nickName">Nickname:</label>
+					<input type="text" id="nickName" name="nickName" />
+				</div>
+				<div>
+					<label for="telefono">Teléfono:</label>
+					<input type="tel" id="telefono" name="telefono" />
+				</div>
+				<div>
+					<label for="correo">Correo:</label>
+					<input type="email" id="correo" name="correo" />
+				</div>
+
+				<div>
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="password" />
+				</div>
+
+				<div>
+					<label for="nombre">Nombre:</label>
+					<input type="text" id="nombre" name="nombre" />
+				</div>
+				<div>
+					<label for="apellidos">Apellidos:</label>
+					<input type="text" id="apellidos" name="apellidos" />
+				</div>
+				<div>
+					<label for="edad">Edad:</label>
+					<input type="number" id="edad" name="edad" />
+				</div>
+
+				{% if rol != 'root' %}
+				<div>
+					<label for="rol">Rol:</label>
+					<select id="rol" name="rol">
+						<option value="registrado">Registrado</option>
+						<option value="root" selected>Administrador</option>
+					</select>
+				</div>
+				{% else %}
+				<input type="hidden" name="rol" value="root" />
+				{% endif %}
+
+				<a
+					href="http://localhost/quickalive/backend/admin/gestionUsuarios/modificarUsuario.php?id= {{ idUsuario }}"
+				>
+					<button type="submit">Modificar Usuario</button></a
+				>
+			</form>
+		</main>
+	</body>
+
+	<footer>
+		<p>&copy; 2024 QuickAlive</p>
+	</footer>
+</html>

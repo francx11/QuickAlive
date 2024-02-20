@@ -2,22 +2,20 @@
 // Clase base para representar una actividad
 class Actividad
 {
-    protected $idActividad;
-    protected $nombreActividad;
-    protected $descripcion;
-    protected $tipoActividad;
-    protected $duracion;
-    protected $completada;
-    private $galeriaFotos = [];
+    public $idActividad;
+    public $nombreActividad;
+    public $descripcion;
+    public $tipoActividad;
+    public $duracion;
+    public $galeriaFotos = [];
 
-    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos)
+    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
         $this->nombreActividad = $nombreActividad;
         $this->descripcion = $descripcion;
         $this->tipoActividad = $tipoActividad;
         $this->duracion = $duracion;
-        $this->completada = $completada;
-        $this->galeriaFotos = $galeriaFotos;
+        $this->galeriaFotos = [];
 
     }
 
@@ -48,7 +46,7 @@ class Actividad
 
     public function getGaleriaFotos()
     {
-        return $this->$galeriaFotos;
+        return $this->galeriaFotos;
     }
 
     public function setNombreActividad($nombreActividad)
@@ -78,7 +76,9 @@ class Actividad
 
     public function aniadirFotosGaleria($imagen)
     {
-        $this->$galeriaFotos = $imagen;
+
+        $this->galeriaFotos[] = $imagen;
+
     }
 }
 
@@ -86,9 +86,9 @@ class Actividad
 class ActividadSimple extends Actividad
 {
 
-    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos)
+    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
-        parent::__construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos);
+        parent::__construct($nombreActividad, $descripcion, $tipoActividad, $duracion);
 
     }
 
@@ -129,26 +129,28 @@ class ActividadGeolocalizable extends Actividad
 }
 
 // Clase para representar una foto en la galería de fotos
+
 class Imagen
 {
-    private $numImagen;
-    private $url;
-    private $idActividad;
+    public $numImagen;
+    public $url; // Cambiado a público para que sea accesible desde fuera de la clase
+    public $idActividad;
 
-    public function __construct($idActividad, $url)
+    public function __construct($numImagen, $idActividad, $url)
     {
-        $this->$idActividad = $idActividad;
+        $this->numImagen = $numImagen;
+        $this->idActividad = $idActividad;
         $this->url = $url;
     }
 
     public function getNumImagen()
     {
-        return $numImagen;
+        return $this->numImagen; // Corregido para acceder a la propiedad $numImagen correctamente
     }
 
     public function getIdActividad()
     {
-        return $this->$idActividad;
+        return $this->idActividad; // Corregido para acceder a la propiedad $idActividad correctamente
     }
 
     public function getUrl()

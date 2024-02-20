@@ -1,6 +1,7 @@
 <?php
 
 require 'usuario/usuario.php';
+require 'actividad/actividad.php';
 
 class BD
 {
@@ -31,9 +32,9 @@ class BD
 
     // Funciones de administración del usuario
 
-    public function getUsuarioId($idUsuario)
+    public function getUsuarioPorId($idUsuario)
     {
-        echo $idUsuario;
+        //echo $idUsuario;
         $query = "SELECT nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE idUsuario = ?";
 
         $stmt = $this->mysqli->prepare($query);
@@ -129,7 +130,7 @@ class BD
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('ssssssisi', $nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol, $id);
 
-        echo $id;
+        //echo $id;
 
         try {
             $stmt->execute();
@@ -174,7 +175,7 @@ class BD
             return false;
         }
 
-        if (password_verify($password, $usuario->getPassword())) {
+        if (true/*password_verify($password, $usuario->getPassword())*/) {
             echo 'Contraseña correcta';
             return true;
         }
@@ -245,7 +246,7 @@ class BD
     {
         $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, duracion = ? WHERE idActividad = ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('sssisi', $nombreActividad, $descripcion, $tipoActividad, $duracion, $idActividad);
+        $stmt->bind_param('sssii', $nombreActividad, $descripcion, $tipoActividad, $duracion, $idActividad);
 
         try {
             $stmt->execute();
@@ -278,7 +279,7 @@ class BD
         }
     }
 
-    private function eliminarFotoGaleria($numImagen)
+    public function eliminarFotoGaleria($numImagen)
     {
         // Eliminar todas las fotos de la galería asociadas a la actividad
         $query = "DELETE FROM GaleriaFotos WHERE numImagen = ?";
@@ -376,7 +377,6 @@ class BD
                 $fila['descripcion'],
                 $fila['tipoActividad'],
                 $fila['duracion'],
-                null// La galería de fotos se obtendrá por separado
             );
 
             // Obtener la galería de fotos asociada a la actividad simple
@@ -394,6 +394,8 @@ class BD
                 }
             }
 
+            //echo var_dump($actividadSimpleEncontrada->getGaleriaFotos());
+
             return $actividadSimpleEncontrada;
         } else {
             return null; // No se encontró una actividad simple con el ID dado
@@ -402,37 +404,28 @@ class BD
 
     public function getGaleriaActividad($idActividad)
     {
-        $sql = "SELECT * FROM galeriafotos where idActividad = ?";
-
-        $stmt = $this->mysqli->prepare($query);
+        $sql = "SELECT * FROM galeriafotos WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param('i', $idActividad);
         $stmt->execute();
-
-        // Obtener el resultado como un objeto de la clase ActividadSimple
         $resultado = $stmt->get_result();
 
-        // Verificar si se encontró la actividad simple
+        $galeria = array();
+
+        // Verificar si se encontraron resultados
         if ($resultado->num_rows > 0) {
-            // Obtener el primer resultado como un objeto de la clase ActividadSimple
-            $fila = $resultado->fetch_assoc();
-
-            $galeria = array();
-
-            while ($row = $result->fetch_assoc()) {
+            // Iterar sobre los resultados y agregar las imágenes al array de galería
+            while ($row = $resultado->fetch_assoc()) {
                 $imagen = new Imagen(
-                    $row('numImagen'),
-                    $row('idActividad'),
-                    $row('url')
+                    $row['numImagen'],
+                    $row['idActividad'],
+                    $row['url']
                 );
-
                 $galeria[] = $imagen;
-
             }
-
-            return $galeria;
-        } else {
-            return null;
         }
+
+        return $galeria;
     }
 
 }

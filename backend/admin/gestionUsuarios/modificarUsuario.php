@@ -11,18 +11,28 @@ $bd = new BD();
 
 // Obtener el ID de usuario de la URL o establecer un valor predeterminado de -1
 $idUsuario = isset($_GET['id']) ? $_GET['id'] : -1;
-echo $idUsuario;
+//echo $idUsuario;
 
 // Verificar la sesión del usuario y sus permisos
 if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
     $bd->iniciarConexion();
 
+    // Obtener los datos del usuario original
+    $usuarioOriginal = $bd->getUsuarioPorId($idUsuario);
+    $rolOriginal = $usuarioOriginal->getRol();
+
     // Verificar si se envió una solicitud POST para modificar el usuario
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo $idUsuario;
+        echo 'Entra aqui';
+        //echo $idUsuario;
         // Verificar la existencia de cada campo POST
+        if ($rolOriginal == 'root') {
+            $_POST['rol'] = 'root';
+        }
+
         if (isset($_POST['nickName'], $_POST['telefono'], $_POST['correo'], $_POST['password'], $_POST['nombre'], $_POST['apellidos'], $_POST['edad'], $_POST['rol'])) {
             // Obtener los datos del formulario
+            echo 'Entra aqui tb';
             $nickName = $_POST['nickName'];
             $telefono = $_POST['telefono'];
             $correo = $_POST['correo'];
@@ -30,10 +40,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
             $nombre = $_POST['nombre'];
             $apellidos = $_POST['apellidos'];
             $edad = $_POST['edad'];
-            $rol = $_POST['rol'];
-
-            // Obtener los datos del usuario original
-            $usuarioOriginal = $bd->getUsuarioId($idUsuario);
+            $root = $_POST['rol'];
 
             // Verificar qué campos se están modificando y establecer valores predeterminados si no se están modificando
             $nickName = ($nickName != '') ? $nickName : $usuarioOriginal->getNickName();
@@ -57,7 +64,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
         }
     }
     // Renderizar el formulario de modificación del usuario
-    echo $twig->render('modificarUsuario.html', ['idUsuario' => $idUsuario]);
+    echo $twig->render('modificarUsuario.html', ['idUsuario' => $idUsuario, 'rol' => $rolOriginal]);
 
 } else {
     // Si el usuario no tiene permisos suficientes, mostrar un mensaje de error en la página

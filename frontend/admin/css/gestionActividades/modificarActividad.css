@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif; /* Establecer una fuente predeterminada */
+    margin: 0; /* Eliminar el margen predeterminado del cuerpo */
+    padding: 0; /* Eliminar el relleno predeterminado del cuerpo */
+}
+
+header {
+    background-color: #333; /* Color de fondo del encabezado */
+    color: white; /* Color del texto del encabezado */
+    padding: 20px; /* Espaciado interno del encabezado */
+    text-align: center; /* Alinear el texto al centro */
+}
+
+main {
+    max-width: 800px; /* Ancho máximo del contenido principal */
+    margin: 20px auto; /* Margen automático para centrar el contenido */
+    padding: 0 20px; /* Espaciado interno del contenido principal */
+}
+
+form {
+    background-color: #f4f4f4; /* Color de fondo del formulario */
+    padding: 20px; /* Espaciado interno del formulario */
+    border-radius: 10px; /* Añadir bordes redondeados al formulario */
+}
+
+form div {
+    margin-bottom: 15px; /* Espacio entre los elementos del formulario */
+}
+
+label {
+    display: block; /* Mostrar las etiquetas en una línea separada */
+    margin-bottom: 5px; /* Espacio debajo de las etiquetas */
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%; /* Ancho completo para los campos de texto y número */
+    padding: 10px; /* Espaciado interno de los campos de texto y número */
+    border-radius: 5px; /* Añadir bordes redondeados a los campos de texto y número */
+    border: 1px solid #ccc; /* Borde del campo de texto y número */
+}
+
+button[type="submit"] {
+    background-color: #007bff; /* Color de fondo del botón de enviar */
+    color: white; /* Color del texto del botón de enviar */
+    padding: 10px 20px; /* Espaciado interno del botón de enviar */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Añadir bordes redondeados al botón de enviar */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón de enviar */
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Cambiar el color de fondo al pasar sobre el botón de enviar */
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Crea una matriz de 3 columnas */
+    gap: 20px; /* Espacio entre las imágenes */
+    margin-bottom: 50px; /* Ajusta el margen inferior para dejar espacio para el botón */
+}
+
+.imagen {
+    position: relative; /* Permitir posicionamiento relativo para superponer el botón de eliminar */
+}
+
+.imagen img {
+    width: 100%; /* Ajustar el ancho de la imagen al 100% del contenedor */
+    height: auto; /* Mantener la proporción de aspecto */
+    display: block; /* Asegurar que la imagen se muestre correctamente */
+    border-radius: 10px; /* Añadir bordes redondeados */
+}
+
+.eliminar-imagen {
+    position: absolute; /* Posicionamiento absoluto para superponer el botón de eliminar */
+    top: 10px; /* Distancia desde la parte superior */
+    right: 10px; /* Distancia desde la derecha */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+    border: none; /* Sin borde */
+    border-radius: 50%; /* Botón circular */
+    width: 30px; /* Ancho del botón */
+    height: 30px; /* Alto del botón */
+    font-size: 20px; /* Tamaño del icono */
+    line-height: 1; /* Alinear el contenido verticalmente */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+}
+
+.eliminar-imagen:hover {
+    background-color: rgba(255, 0, 0, 0.8); /* Cambiar el color de fondo al pasar sobre el botón */
+    color: white; /* Cambiar el color del icono al pasar sobre el botón */
+}
+
+/* Estilo opcional para el botón de eliminar */
+.eliminar-imagen::after {
+    content: '\00d7'; /* Código Unicode para la 'X' */
+}
+
+footer {
+    background-color: #333; /* Color de fondo del pie de página */
+    color: white; /* Color del texto del pie de página */
+    padding: 20px; /* Espaciado interno del pie de página */
+    text-align: center; /* Alinear el texto al centro */
+    position: fixed; /* Fijar el pie de página en la parte inferior de la ventana */
+    width: 100%; /* Ancho completo del pie de página */
+    bottom: 0; /* Alinear el pie de página en la parte inferior */
+    z-index: 999; /* Asegurar que el pie de página esté por encima de otros elementos */
+}
+

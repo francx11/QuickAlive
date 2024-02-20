@@ -1,50 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Aplicación de Recomendación</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        header {
-            text-align: center;
-            padding: 20px;
-            background-color: #4CAF50;
-            color: white;
-        }
-        main {
-            padding: 20px;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Mi Aplicación de Recomendación</h1>
-        <p>Descubre actividades emocionantes cerca de ti</p>
-    </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="index.css" rel="stylesheet" type="text/css" />
+		<title>Mi Aplicación de Recomendación</title>
+	</head>
+	<body>
+		<header>
+			<div class="brand">
+				<h1>QuickAlive</h1>
+				<p>Descubre actividades emocionantes cerca de ti</p>
+			</div>
 
-    <main>
-        <h2>¡Bienvenido!</h2>
-        <p>Explora nuestras recomendaciones personalizadas basadas en tu ubicación y preferencias.</p>
-        <p>¡Acaba con la monotonía y vive momentos vibrantes!</p>
+			{% if logueado %}
+			<a href="./backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
+		</header>
 
-        <!-- Aquí puedes agregar contenido adicional según las necesidades de tu aplicación -->
-    </main>
+		<main>
+			<h2>Bienvenido!</h2>
+			<p>
+				Explora nuestras recomendaciones personalizadas basadas en tu ubicación
+				y preferencias.
+			</p>
+			<p>¡Acaba con la monotonía y vive momentos vibrantes!</p>
+		</main>
 
-    <footer>
-        <p>&copy; 2024 Mi Aplicación de Recomendación</p>
-    </footer>
-</body>
+		<footer>
+			<p>&copy; 2024 QuickAlive</p>
+		</footer>
+	</body>
 </html>

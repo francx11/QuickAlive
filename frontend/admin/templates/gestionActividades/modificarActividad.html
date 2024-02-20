@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="/quickalive/frontend/admin/css/gestionActividades/modificarActividades.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<title>Modificar Actividad</title>
+	</head>
+	<body>
+		<header>
+			<h1>Modificar Actividad</h1>
+		</header>
+
+		<main>
+			<form
+				id="modificarActividadForm"
+				action="modificarActividad.php?id={{ idActividad }}"
+				method="post"
+			>
+				<div>
+					<label for="nombreActividad">Nombre Actividad:</label>
+					<input type="text" id="nombreActividad" name="nombreActividad" />
+				</div>
+				<div>
+					<label for="descripcion">Descripción:</label>
+					<input type="text" id="descripcion" name="descripcion" />
+				</div>
+				<div>
+					<label for="tipoActividad">Tipo de Actividad:</label>
+					<input type="text" id="tipoActividad" name="tipoActividad" />
+				</div>
+				<div>
+					<label for="duracion">Duración:</label>
+					<input type="number" id="duracion" name="duracion" />
+				</div>
+				<div>
+					<label for="nombre">Nombre:</label>
+					<input type="text" id="nombre" name="nombre" />
+				</div>
+				<div class="galeria">
+					<label>Imágenes de Galería:</label>
+					{% for imagen in imagenes %}
+					<div class="imagen">
+						<img src="{{ imagen.ruta }}" alt="Imagen de la galería" />
+						<input
+							type="file"
+							id="imagen_{{ imagen.id }}"
+							name="imagen_{{ imagen.id }}"
+						/>
+						<input
+							type="hidden"
+							name="imagen_id_{{ imagen.id }}"
+							value="{{ imagen.id }}"
+						/>
+						<button
+							type="button"
+							class="eliminar-imagen"
+							data-id="{{ imagen.id }}"
+						>
+							X
+						</button>
+					</div>
+					{% endfor %}
+				</div>
+				<button type="submit">Modificar Actividad</button>
+			</form>
+		</main>
+	</body>
+	<footer>
+		<p>&copy; 2024 QuickAlive</p>
+	</footer>
+</html>

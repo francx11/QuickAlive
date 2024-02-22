@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="/QuickAlive/frontend/admin/css/gestionPreferencias/altaPreferencia.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<title>Alta de Preferencia</title>
+	</head>
+	<body>
+		<h2>Crear Nueva Preferencia</h2>
+
+		<form
+			action="http://localhost/quickalive/backend/admin/gestionPreferencias/altaPreferencia.php"
+			method="post"
+		>
+			<label for="tipoPreferencia">Tipo de Preferencia:</label>
+			<input type="text" id="tipoPreferencia" name="tipoPreferencia" required />
+
+			<button type="submit">Crear Preferencia</button>
+		</form>
+	</body>
+
+	<footer>
+		<p>&copy; 2024 QuickAlive</p>
+	</footer>
+</html>

@@ -36,7 +36,7 @@ if ($registradoRoot) {
         }
 
         // Redirigir a la misma página
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: gestionUsuarios.php");
         exit();
 
     }

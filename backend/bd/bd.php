@@ -449,36 +449,24 @@ class BD
 
     public function insertarPreferenciaEspecifica($idPreferencia, $tipoPreferencia, $nombrePreferencia)
     {
-        // Insertar la preferencia específica en la tabla correspondiente según el tipo de preferencia
-        switch ($tipoPreferencia) {
-            case 'Deportes':
-                $query = "INSERT INTO PreferenciasDeportivas (idPreferencia, nombreDeporte) VALUES (?, ?)";
-                break;
-            case 'Cultura':
-                $query = "INSERT INTO PreferenciaCultural (idPreferencia, nombreActividadCultural) VALUES (?, ?)";
-                break;
-            case 'Entretenimiento':
-                $query = "INSERT INTO PreferenciaEntretenimiento (idPreferencia, nombreFormaEntretenimiento) VALUES (?, ?)";
-                break;
-            case 'Naturaleza':
-                $query = "INSERT INTO PreferenciaNaturaleza (idPreferencia, nombreActividadNatural) VALUES (?, ?)";
-                break;
-            case 'Literatura':
-                $query = "INSERT INTO PreferenciaLiteraria (idPreferencia, nombreGeneroLiterario) VALUES (?, ?)";
-                break;
-            case 'Bienestar':
-                $query = "INSERT INTO PreferenciaBienestar (idPreferencia, nombrePreferenciaSaludable) VALUES (?, ?)";
-                break;
-            default:
-                echo "Tipo de preferencia no válido.";
-                return false;
+        // Construir el nombre de la tabla a partir del tipo de preferencia
+        $tabla = "Preferencia" . ucfirst($tipoPreferencia);
+
+        // Verificar si la tabla existe
+        if (!in_array($tabla, ['PreferenciasDeportivas', 'PreferenciaCultural', 'PreferenciaEntretenimiento', 'PreferenciaNaturaleza', 'PreferenciaLiteraria', 'PreferenciaBienestar'])) {
+            echo "Tipo de preferencia no válido.";
+            return false;
         }
 
-        // Insertar la preferencia específica en la tabla correspondiente
+        // Construir la consulta SQL para insertar la preferencia específica en la tabla correspondiente
+        $query = "INSERT INTO $tabla (idPreferencia, nombrePreferencia) VALUES (?, ?)";
+
+        // Preparar la consulta
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('is', $iPreferencia, $nombrePreferencia);
+        $stmt->bind_param('is', $idPreferencia, $nombrePreferencia);
 
         try {
+            // Ejecutar la consulta
             $stmt->execute();
             $idPreferenciaEspecifica = $stmt->insert_id; // Obtener el ID de la preferencia específica insertada
             return true;
@@ -486,62 +474,40 @@ class BD
             echo "Error al insertar preferencia específica: " . $e->getMessage();
             return false; // Fallo al insertar la preferencia específica
         }
-
     }
 
-    public function eliminarPreferenciaPadre($idPreferencia, $tipoPreferencia)
+    public function eliminarPreferenciaPadre($idPreferencia)
     {
-        // Eliminar todas las preferencias hijas de la preferencia padre
-        switch ($tipoPreferencia) {
-            case 'Deportes':
-                $queryEliminarHijas = "DELETE FROM PreferenciasDeportivas WHERE idPreferencia = ?";
-                break;
-            case 'Cultura':
-                $queryEliminarHijas = "DELETE FROM PreferenciaCultural WHERE idPreferencia = ?";
-                break;
-            case 'Entretenimiento':
-                $queryEliminarHijas = "DELETE FROM PreferenciaEntretenimiento WHERE idPreferencia = ?";
-                break;
-            case 'Naturaleza':
-                $queryEliminarHijas = "DELETE FROM PreferenciaNaturaleza WHERE idPreferencia = ?";
-                break;
-            case 'Literatura':
-                $queryEliminarHijas = "DELETE FROM PreferenciaLiteraria WHERE idPreferencia = ?";
-                break;
-            case 'Bienestar':
-                $queryEliminarHijas = "DELETE FROM PreferenciaBienestar WHERE idPreferencia = ?";
-                break;
-            default:
-                echo "Tipo de preferencia no válido.";
-                return false;
-        }
+        // Obtener el tipo de preferencia para construir el nombre de la tabla hija
+        $queryTipoPreferencia = "SELECT tipoPreferencia FROM Preferencias WHERE idPreferencia = ?";
+        $stmtTipoPreferencia = $this->mysqli->prepare($queryTipoPreferencia);
+        $stmtTipoPreferencia->bind_param('i', $idPreferencia);
+        $stmtTipoPreferencia->execute();
+        $stmtTipoPreferencia->bind_result($tipoPreferencia);
+        $stmtTipoPreferencia->fetch();
+        $stmtTipoPreferencia->close();
 
-        // Preparar la sentencia para eliminar las preferencias hijas
-        $stmtEliminarHijas = $this->mysqli->prepare($queryEliminarHijas);
-        $stmtEliminarHijas->bind_param('i', $idPreferencia);
-
-        // Ejecutar la eliminación de las preferencias hijas
-        try {
-            $stmtEliminarHijas->execute();
-        } catch (PDOException $e) {
-            echo "Error al eliminar las preferencias hijas: " . $e->getMessage();
-            return false; // Fallo al eliminar las preferencias hijas
-        }
+        // Construir el nombre de la tabla hija
+        $nombreTablaHija = "Preferencias" . $tipoPreferencia;
 
         // Eliminar la preferencia padre
-        $queryEliminarPadre = "DELETE FROM Preferencias WHERE IdPreferencia = ?";
+        $queryEliminarPadre = "DELETE FROM Preferencias WHERE idPreferencia = ?";
         $stmtEliminarPadre = $this->mysqli->prepare($queryEliminarPadre);
         $stmtEliminarPadre->bind_param('i', $idPreferencia);
 
         // Ejecutar la eliminación de la preferencia padre
         try {
             $stmtEliminarPadre->execute();
-            return true; // Éxito al eliminar la preferencia padre
+
+            // Eliminar la tabla hija
+            $queryEliminarTablaHija = "DROP TABLE IF EXISTS $nombreTablaHija";
+            $this->mysqli->query($queryEliminarTablaHija);
+
+            return true; // Éxito al eliminar la preferencia padre y su tabla hija
         } catch (PDOException $e) {
             echo "Error al eliminar la preferencia padre: " . $e->getMessage();
             return false; // Fallo al eliminar la preferencia padre
         }
-
     }
 
     public function eliminarPreferenciaHija($idPreferenciaHija, $tipoPreferencia)
@@ -586,7 +552,7 @@ class BD
         }
     }
 
-    public function buscarCoincidenciasPreferenciaPadre($tipoPreferencia)
+    public function buscarCoincidenciasPreferencias($tipoPreferencia)
     {
         // Preparar la consulta SQL para buscar coincidencias de preferencias padre
         $sql = "SELECT * FROM Preferencias WHERE tipoPreferencia LIKE CONCAT('%', ? , '%')";
@@ -616,6 +582,94 @@ class BD
 
         // Devolver el array de preferencias encontradas
         return $preferencias;
+    }
+
+    public function modificarTipoPreferenciaPadre($idPreferencia, $nuevoTipoPreferencia)
+    {
+        // Preparar la consulta SQL para actualizar el tipo de preferencia padre
+        $sql = "UPDATE Preferencias SET tipoPreferencia = ? WHERE idPreferencia = ?";
+
+        // Preparar la sentencia SQL
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("si", $nuevoTipoPreferencia, $idPreferencia);
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            // Si la consulta se ejecuta correctamente, devolver true
+            return true;
+        } else {
+            // Si hay un error al ejecutar la consulta, devolver false
+            return false;
+        }
+    }
+
+    public function obtenerPreferenciasPorTipo($idPreferenciaPadre, $tipoPreferenciaHija)
+    {
+        // Inicializar el array de preferencias hijas
+        $preferenciasHijas = array();
+
+        // Definir las consultas SQL y los campos según el tipo de preferencia hija
+        switch ($tipoPreferenciaHija) {
+            case 'Deportiva':
+                $sql = "SELECT * FROM PreferenciasDeportivas WHERE idPreferencia = ?";
+                $campoId = 'idDeporte';
+                $campoNombre = 'nombreDeporte';
+                break;
+            case 'Cultural':
+                $sql = "SELECT * FROM PreferenciaCultural WHERE idPreferencia = ?";
+                $campoId = 'idActividadCultural';
+                $campoNombre = 'nombreActividadCultural';
+                break;
+            case 'Entretenimiento':
+                $sql = "SELECT * FROM PreferenciaEntretenimiento WHERE idPreferencia = ?";
+                $campoId = 'idFormaEntretenimiento';
+                $campoNombre = 'nombreFormaEntretenimiento';
+                break;
+            case 'Naturaleza':
+                $sql = "SELECT * FROM PreferenciaNaturaleza WHERE idPreferencia = ?";
+                $campoId = 'idActividadNatural';
+                $campoNombre = 'nombreActividadNatural';
+                break;
+            case 'Literaria':
+                $sql = "SELECT * FROM PreferenciaLiteraria WHERE idPreferencia = ?";
+                $campoId = 'idGeneroLiterario';
+                $campoNombre = 'nombreGeneroLiterario';
+                break;
+            case 'Bienestar':
+                $sql = "SELECT * FROM PreferenciaBienestar WHERE idPreferencia = ?";
+                $campoId = 'idPreferenciaSaludable';
+                $campoNombre = 'nombrePreferenciaSaludable';
+                break;
+            default:
+                // Si el tipo de preferencia hija no es reconocido, devolver false
+                return false;
+        }
+
+        // Preparar la sentencia SQL
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i", $idPreferenciaPadre);
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            // Obtener el resultado de la consulta
+            $result = $stmt->get_result();
+
+            // Recorrer el resultado y guardar las preferencias hijas en el array
+            while ($row = $result->fetch_assoc()) {
+                $preferenciaHija = array(
+                    'id' => $row[$campoId],
+                    'nombre' => $row[$campoNombre],
+                    // Agregar otros campos según la estructura de tu tabla de preferencias hijas
+                );
+                $preferenciasHijas[] = $preferenciaHija;
+            }
+
+            // Devolver el array de preferencias hijas
+            return $preferenciasHijas;
+        } else {
+            // Si hay un error al ejecutar la consulta, devolver false
+            return false;
+        }
     }
 
 }

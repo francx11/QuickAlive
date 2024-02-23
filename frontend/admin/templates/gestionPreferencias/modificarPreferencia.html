@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lista de Preferencias Hijas</title>
+		<link
+			href="/quickalive/frontend/admin/css/gestionPreferencias/modificarPreferencia.css"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<h2>Lista de SubPreferencias</h2>
+
+		<!-- Lista de preferencias hijas -->
+		<ul>
+			{% for preferencia in subPreferencias %}
+			<li>
+				<span class="nombre">Nombre: {{ preferencia.nombre }}</span>
+				<form
+					action="listarSubPreferencias.php?id={{idPreferencia}}&tipoOperacion=borrar"
+					method="post"
+				>
+					<input
+						type="hidden"
+						name="idSubPreferencia"
+						value="{{ preferencia.id }}"
+					/>
+					<button type="submit">Eliminar</button>
+				</form>
+			</li>
+			{% endfor %}
+		</ul>
+
+		<!-- Formulario para agregar nueva preferencia hija -->
+		<h3>Agregar Nueva SubPreferencia</h3>
+		<form
+			action="listarSubPreferencias.php?id={{idPreferencia}}&tipoOperacion=añadir"
+			method="post"
+		>
+			<input type="hidden" name="idPreferencia" value="{{ idPreferencia }}" />
+			<label for="nombreSubPreferencia">Nombre de la SubPrefencia:</label>
+			<input
+				type="text"
+				id="nombreSubPreferencia"
+				name="nombreSubPreferencia"
+				required
+			/>
+			<button type="submit">Agregar SubPreferencia</button>
+		</form>
+	</body>
+
+	<footer>
+		<p>&copy; 2024 QuickAlive</p>
+	</footer>
+</html>

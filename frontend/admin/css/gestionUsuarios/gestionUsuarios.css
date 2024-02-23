@@ -1,4 +1,4 @@
-/* estilosPreferencias.css */
+/* estilos.css */
 
 body {
     font-family: Arial, sans-serif;
@@ -50,21 +50,21 @@ input {
     margin-top: 20px;
 }
 
-.preferencia {
+.usuario {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
     border-radius: 5px;
 }
-.preferencia span {
+.usuario span {
     display: block;
     margin-bottom: 5px;
 }
-.preferencia-buttons {
+.usuario-buttons {
     margin-top: 5px;
 }
-.preferencia-buttons button {
+.usuario-buttons button {
     margin-right: 5px;
 }
 

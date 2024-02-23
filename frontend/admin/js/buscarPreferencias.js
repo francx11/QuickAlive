@@ -41,7 +41,7 @@ $(document).ready(function() {
     
             // Agregar enlaces a los botones de editar y eliminar con los parámetros de la preferencia
             editarBtn.click(function() {
-                window.location.href = 'http://localhost/quickalive/backend/admin/gestionPreferencias/modificarPreferencia.php?id=' + preferencia.idPreferencia;
+                window.location.href = 'http://localhost/quickalive/backend/admin/gestionPreferencias/listarSubPreferencias.php?id=' + preferencia.idPreferencia + '&' + 'tipoPreferencia=' + preferencia.tipoPreferencia;
             });
     
             eliminarBtn.click(function() {

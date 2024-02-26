@@ -8,7 +8,8 @@ $loader = new \Twig\Loader\FilesystemLoader('../../frontend/admin/templates/');
 $twig = new \Twig\Environment($loader);
 
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
+$logueado = $_SESSION['loggedin'];
 
 if ($registradoRoot) {
-    echo $twig->render('panelAdmin.html', []);
+    echo $twig->render('panelAdmin.html', ['logueado' => $logueado]);
 }

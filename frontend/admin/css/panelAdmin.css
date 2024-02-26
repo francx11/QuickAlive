@@ -13,19 +13,45 @@ header {
     color: white;
 }
 
+.brand {
+    flex: 1;
+    text-align: center;
+}
+
+
+.loginButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logoutButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 main {
     padding: 20px;
     max-width: 800px;
   
 }
-
-footer {
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    text-align: center;
-}
-
 
 .button-container {
     text-align: center;
@@ -45,4 +71,14 @@ footer {
 
 .button-container button:hover {
     background-color: #0056b3;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }

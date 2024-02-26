@@ -12,6 +12,7 @@ $bd = new BD();
 // Verificar la sesión del usuario
 if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
     $bd->iniciarConexion();
+    $logueado = $_SESSION['loggedin'];
 
     $tipoOperacion = isset($_GET['tipoOperacion']) ? $_GET['tipoOperacion'] : "añadir";
     // Obtener el ID de la preferencia padre
@@ -61,7 +62,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
     }
 
     // Renderizar el template con la lista de preferencias hijas
-    echo $twig->render('modificarTipoPreferencia.html', ['preferencias' => $preferencias, 'idTipoPreferencia' => $idTipoPreferencia]);
+    echo $twig->render('modificarTipoPreferencia.html', ['preferencias' => $preferencias, 'idTipoPreferencia' => $idTipoPreferencia, 'logueado' => $logueado]);
 
 } else {
     // Si el usuario no tiene permisos suficientes, mostrar un mensaje de error en la página

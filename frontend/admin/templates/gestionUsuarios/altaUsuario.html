@@ -7,7 +7,23 @@
 		<title>Registro de Usuario</title>
 	</head>
 	<body>
-		<h2>Dar de Alta Usuario</h2>
+		<header>
+			<div class="brand">
+				<h2>Alta de Usuario</h2>
+			</div>
+			
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
+
+		</header>
+
 
 		<form action="http://localhost/quickalive/backend/admin/gestionUsuarios/altaUsuario.php" method="post">
 			<label for="nickName">Nickname:</label>
@@ -34,7 +50,7 @@
 			<label for="rol">Rol:</label>
 			<select id="rol" name="rol">
 				<option value="registrado">Registrado</option>
-				<option value="admin">Administrador</option>
+				<option value="root">Administrador</option>
 			</select>
 
 			<button type="submit">Registrar Usuario</button>

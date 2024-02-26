@@ -13,6 +13,7 @@ header('Content-Type: application/json');
 $bd->iniciarConexion();
 
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
+$logueado = $_SESSION['loggedin'];
 
 $usuariosBuscados = [];
 

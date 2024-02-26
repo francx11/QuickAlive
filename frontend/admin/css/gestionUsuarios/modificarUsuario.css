@@ -5,13 +5,50 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
     background-color: #333;
-    color: #fff;
-    padding: 1rem;
+    color: white;
+}
+
+.brand {
+    flex: 1;
     text-align: center;
 }
 
-h1 {
+
+.loginButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logoutButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+h2 {
     margin: 0;
 }
 
@@ -58,6 +95,10 @@ button:hover {
 footer {
     background-color: #333;
     color: #fff;
+    padding: 10px;
     text-align: center;
-    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
+

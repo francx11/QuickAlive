@@ -10,6 +10,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
     // Verificar si el usuario está autenticado como administrador (root)
     $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
+    $logueado = $_SESSION['loggedin'];
 
     // Verificar si se proporciona un ID de imagen válido en la solicitud AJAX
     if ($registradoRoot && isset($_POST['imagenId'])) {

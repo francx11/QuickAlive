@@ -11,7 +11,21 @@
 		<title>Alta de Tipo de Preferencia</title>
 	</head>
 	<body>
-		<h2>Crear Nueva Tipo de Preferencia</h2>
+		<header>
+			<div class="brand">
+				<h2>Alta Tipo de Prefencia</h2>
+			</div>
+
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
+		</header>
 
 		<form
 			action="http://localhost/quickalive/backend/admin/gestionPreferencias/altaTipoPreferencia.php"

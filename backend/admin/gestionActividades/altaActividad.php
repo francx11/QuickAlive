@@ -10,6 +10,7 @@ $twig = new \Twig\Environment($loader);
 $bd = new BD();
 
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
+$logueado = $_SESSION['loggedin'];
 
 if ($registradoRoot) {
     $bd->iniciarConexion();
@@ -64,6 +65,6 @@ if ($registradoRoot) {
         }
     }
 
-    echo $twig->render('altaActividad.html', []);
+    echo $twig->render('altaActividad.html', ['logueado' => $logueado]);
 }
 $bd->cerrarConexion();

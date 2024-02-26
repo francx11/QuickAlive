@@ -14,13 +14,13 @@ $bd->iniciarConexion();
 
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
 
-$preferenciasBuscadas = [];
+$tipoPreferenciasBuscadas = [];
 
 if ($registradoRoot && isset($_POST['tipoPreferenciaBuscado'])) {
     $tipoPreferencia = $_POST['tipoPreferenciaBuscado'];
-    $preferenciasBuscadas = $bd->buscarCoincidenciasPreferencias($tipoPreferencia);
+    $tipoPreferenciasBuscadas = $bd->buscarCoincidenciasTipoPreferencias($tipoPreferencia);
 
-    echo json_encode($preferenciasBuscadas);
+    echo json_encode($tipoPreferenciasBuscadas);
 }
 
 $bd->cerrarConexion();

@@ -5,25 +5,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Lista de Preferencias Hijas</title>
 		<link
-			href="/quickalive/frontend/admin/css/gestionPreferencias/modificarPreferencia.css"
+			href="/quickalive/frontend/admin/css/gestionPreferencias/modificarTipoPreferencia.css"
 			rel="stylesheet"
 		/>
 	</head>
 	<body>
-		<h2>Lista de SubPreferencias</h2>
+		<h2>Lista de preferencias</h2>
 
 		<!-- Lista de preferencias hijas -->
 		<ul>
-			{% for preferencia in subPreferencias %}
+			{% for preferencia in preferencias %}
 			<li>
 				<span class="nombre">Nombre: {{ preferencia.nombre }}</span>
 				<form
-					action="listarSubPreferencias.php?id={{idPreferencia}}&tipoOperacion=borrar"
+					action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=borrar"
 					method="post"
 				>
 					<input
 						type="hidden"
-						name="idSubPreferencia"
+						name="idPreferencia"
 						value="{{ preferencia.id }}"
 					/>
 					<button type="submit">Eliminar</button>
@@ -33,20 +33,24 @@
 		</ul>
 
 		<!-- Formulario para agregar nueva preferencia hija -->
-		<h3>Agregar Nueva SubPreferencia</h3>
+		<h3>Agregar Nueva Preferencia</h3>
 		<form
-			action="listarSubPreferencias.php?id={{idPreferencia}}&tipoOperacion=añadir"
+			action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=añadir"
 			method="post"
 		>
-			<input type="hidden" name="idPreferencia" value="{{ idPreferencia }}" />
-			<label for="nombreSubPreferencia">Nombre de la SubPrefencia:</label>
+			<input
+				type="hidden"
+				name="idTipoPreferencia"
+				value="{{ idTipoPreferencia }}"
+			/>
+			<label for="nombrePreferencia">Nombre de la Prefencia:</label>
 			<input
 				type="text"
-				id="nombreSubPreferencia"
-				name="nombreSubPreferencia"
+				id="nombrePreferencia"
+				name="nombrePreferencia"
 				required
 			/>
-			<button type="submit">Agregar SubPreferencia</button>
+			<button type="submit">Agregar Preferencia</button>
 		</form>
 	</body>
 

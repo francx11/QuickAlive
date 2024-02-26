@@ -7,16 +7,16 @@ session_start();
 
 $bd = new BD();
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
-$idPreferencia = -1;
+$idTipoPreferencia = -1;
 
 if ($registradoRoot) {
     $bd->iniciarConexion();
 
     if (isset($_GET['id'])) {
-        $idPreferencia = $_GET['id'];
+        $idTipoPreferencia = $_GET['id'];
     }
 
-    if ($bd->eliminarPreferenciaPadre($idPreferencia)) {
+    if ($bd->eliminarTipoPreferencia($idTipoPreferencia)) {
         header('Location: gestionPreferencias.php');
     } else {
         echo 'Error en la eliminación de la preferencia';

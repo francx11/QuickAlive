@@ -11,7 +11,22 @@
 		<title>Dar de alta Actividad</title>
 	</head>
 	<body>
-		<h1>Crear Nueva Actividad</h1>
+		<header>
+			<div class="brand">
+				<h2>Alta de Actividad</h2>
+			</div>
+
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
+		</header>
+
 		<form
 			action="http://localhost/quickalive/backend/admin/gestionActividades/altaActividad.php"
 			method="POST"
@@ -50,4 +65,8 @@
 			<input type="submit" value="Crear Actividad" />
 		</form>
 	</body>
+
+	<footer>
+		<p>&copy; 2024 QuickAlive</p>
+	</footer>
 </html>

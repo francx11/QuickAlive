@@ -14,7 +14,19 @@
 	</head>
 	<body>
 		<header>
-			<h1>Modificar Actividad</h1>
+			<div class="brand">
+				<h2>Modificar Actividad</h2>
+			</div>
+
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
 		</header>
 
 		<main>

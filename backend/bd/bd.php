@@ -19,7 +19,8 @@ class BD
 
     public function __construct()
     {
-        $this->mysqli = new mysqli("127.0.0.1", "root", "", "quickalivedb");
+
+        $this->mysqli = new mysqli(getenv("DB_HOST"), getenv("DB_USER"), getenv("DB_PASS"), getenv("DB_NAME"));
 
         if ($this->mysqli->connect_errno) {
 
@@ -28,6 +29,88 @@ class BD
         }
 
         return $this->mysqli;
+    }
+
+    public function verificarTokenRecuperacion($tokenRecuperacionUsuario, $tokenRecuperacionBD)
+    {
+        // Encriptar el token proporcionado por el usuario
+        $tokenRecuperacionEncriptado = hash('sha256', $tokenRecuperacionUsuario);
+
+        // Comparar el token encriptado proporcionado por el usuario con el token encriptado almacenado en la base de datos
+        if ($tokenRecuperacionEncriptado === $tokenRecuperacionBD) {
+            return true; // Los tokens coinciden
+        } else {
+            return false; // Los tokens no coinciden
+        }
+    }
+
+    public function generarTokenRecuperacion()
+    {
+        // Longitud del token
+        $longitud = 32; // Puedes ajustar la longitud según tus necesidades
+
+        // Generar una cadena de bytes aleatoria
+        $bytesAleatorios = random_bytes($longitud);
+
+        // Convertir los bytes a una cadena hexadecimal
+        $tokenRecuperacion = bin2hex($bytesAleatorios);
+
+        // Encriptar el token utilizando el algoritmo SHA-256
+        $tokenEncriptado = hash('sha256', $tokenRecuperacion);
+
+        return $tokenEncriptado;
+    }
+
+    public function getTokenRecuperacion($nickName)
+    {
+        $query = "SELECT tokenRecuperacion FROM usuario WHERE nickName = ?";
+
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('s', $nickName);
+        $stmt->execute();
+
+        // Obtener el resultado como un array asociativo
+        $resultado = $stmt->get_result();
+
+        // Verificar si se encontró un usuario
+        if ($resultado->num_rows > 0) {
+            // Obtener el primer resultado como un array asociativo
+            $fila = $resultado->fetch_assoc();
+
+            // Obtener el token de recuperación de contraseña
+            $tokenRecuperacion = $fila['tokenRecuperacion'];
+
+            return $tokenRecuperacion;
+        } else {
+            return null; // No se encontró un usuario con el nickName dado
+        }
+    }
+
+    public function insertarTokenRecuperacion($nickName, $tokenRecuperacion)
+    {
+        // Consulta SQL para insertar el token de recuperación
+        $query = "UPDATE usuario SET tokenRecuperacion = ? WHERE nickName = ?";
+
+        // Preparar la consulta
+        $stmt = $this->mysqli->prepare($query);
+
+        // Verificar si la preparación de la consulta fue exitosa
+        if ($stmt === false) {
+            echo "Error al preparar la consulta para insertar token de recuperación.";
+            return false;
+        }
+
+        // Vincular los parámetros y ejecutar la consulta
+        $stmt->bind_param("ss", $tokenRecuperacion, $nickName);
+        $result = $stmt->execute();
+
+        // Verificar si la ejecución de la consulta fue exitosa
+        if ($result === false) {
+            echo "Error al insertar el token de recuperación en la base de datos.";
+            return false;
+        }
+
+        return true; // Éxito al insertar el token de recuperación
     }
 
     // Funciones de administración del usuario

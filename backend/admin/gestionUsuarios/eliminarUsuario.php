@@ -7,6 +7,7 @@ session_start();
 
 $bd = new BD();
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
+$logueado = $_SESSION['loggedin'];
 $idUsuario = -1;
 
 if ($registradoRoot) {

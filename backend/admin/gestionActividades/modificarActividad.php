@@ -12,6 +12,7 @@ $bd = new BD();
 $idActividad = isset($_GET['id']) ? $_GET['id'] : -1;
 
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
+$logueado = $_SESSION['loggedin'];
 
 if ($registradoRoot) {
     //echo 'Bien';
@@ -94,6 +95,6 @@ if ($registradoRoot) {
 
     }
 
-    echo $twig->render('modificarActividad.html', ['idActividad' => $idActividad, 'imagenes' => $galeriaActual]);
+    echo $twig->render('modificarActividad.html', ['idActividad' => $idActividad, 'imagenes' => $galeriaActual, 'logueado' => $logueado]);
 
 }

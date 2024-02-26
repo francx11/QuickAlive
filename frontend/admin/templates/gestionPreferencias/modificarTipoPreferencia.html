@@ -10,7 +10,21 @@
 		/>
 	</head>
 	<body>
-		<h2>Lista de preferencias</h2>
+		<header>
+			<div class="brand">
+				<h2>Modificar Tipo de Preferencia</h2>
+			</div>
+
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
+		</header>
 
 		<!-- Lista de preferencias hijas -->
 		<ul>

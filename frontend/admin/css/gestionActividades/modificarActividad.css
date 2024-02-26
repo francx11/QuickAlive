@@ -5,10 +5,46 @@ body {
 }
 
 header {
-    background-color: #333; /* Color de fondo del encabezado */
-    color: white; /* Color del texto del encabezado */
-    padding: 20px; /* Espaciado interno del encabezado */
-    text-align: center; /* Alinear el texto al centro */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+.brand {
+    flex: 1;
+    text-align: center;
+}
+
+
+.loginButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logoutButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 main {
@@ -102,7 +138,7 @@ footer {
     color: white; /* Color del texto del pie de página */
     padding: 20px; /* Espaciado interno del pie de página */
     text-align: center; /* Alinear el texto al centro */
-    position: fixed; /* Fijar el pie de página en la parte inferior de la ventana */
+    position: relative; /* Fijar el pie de página en la parte inferior de la ventana */
     width: 100%; /* Ancho completo del pie de página */
     bottom: 0; /* Alinear el pie de página en la parte inferior */
     z-index: 999; /* Asegurar que el pie de página esté por encima de otros elementos */

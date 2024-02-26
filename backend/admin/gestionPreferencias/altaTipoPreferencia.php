@@ -10,6 +10,7 @@ $twig = new \Twig\Environment($loader);
 $bd = new BD();
 
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
+$logueado = $_SESSION['loggedin'];
 
 if ($registradoRoot) {
     $bd->iniciarConexion();
@@ -30,7 +31,7 @@ if ($registradoRoot) {
         exit();
     }
 
-    echo $twig->render('altaTipoPreferencia.html', []);
+    echo $twig->render('altaTipoPreferencia.html', ['logueado' => $logueado]);
 }
 
 $bd->cerrarConexion();

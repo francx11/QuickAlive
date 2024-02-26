@@ -429,17 +429,18 @@ class BD
     }
 
     // Gestión de preferencias //
-
     public function insertarTipoDePreferencia($tipoPreferencia)
     {
-        // Insertar la preferencia en la tabla padre de Preferencias
-        $queryPreferenciaPadre = "INSERT INTO Preferencias (tipoPreferencia) VALUES (?)";
+        // Insertar la preferencia en la tabla padre de tipoPreferencias
+        $queryPreferenciaPadre = "INSERT INTO tipoPreferencias (tipoPreferencia) VALUES (?)";
         $stmtPreferenciaPadre = $this->mysqli->prepare($queryPreferenciaPadre);
         $stmtPreferenciaPadre->bind_param('s', $tipoPreferencia);
 
         try {
             $stmtPreferenciaPadre->execute();
             $idPreferenciaPadre = $stmtPreferenciaPadre->insert_id; // Obtener el ID de la preferencia insertada
+            // Crear la tabla de preferencias hijas correspondiente
+            $this->crearTablaPreferencias($tipoPreferencia);
         } catch (PDOException $e) {
             echo "Error al insertar preferencia padre: " . $e->getMessage();
             return false; // Fallo al insertar la preferencia padre
@@ -448,22 +449,44 @@ class BD
         return $idPreferenciaPadre; // Éxito al insertar la preferencia padre
     }
 
-    public function insertarPreferenciaEspecifica($idPreferencia, $tipoPreferencia, $nombreSubPreferencia)
+    // Función privada para crear la tabla de preferencias hijas correspondiente
+    private function crearTablaPreferencias($tipoPreferencia)
+    {
+        // Construir el nombre de la tabla
+        $tabla = "Preferencias" . ucfirst($tipoPreferencia);
+
+        // Consulta para crear la tabla con el campo idPreferencia autoincremental y clave primaria
+        $queryCrearTabla = "CREATE TABLE $tabla (
+            idPreferencia INT AUTO_INCREMENT PRIMARY KEY,
+            nombrePreferencia VARCHAR(255),
+            idTipoPreferencia INT,
+            FOREIGN KEY (idTipoPreferencia) REFERENCES tipoPreferencias(idTipoPreferencia) ON DELETE CASCADE
+        )";
+
+        // Ejecutar la consulta para crear la tabla
+        try {
+            $this->mysqli->query($queryCrearTabla);
+        } catch (PDOException $e) {
+            echo "Error al crear la tabla de preferencias hijas: " . $e->getMessage();
+        }
+    }
+
+    public function insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia)
     {
         // Construir el nombre de la tabla a partir del tipo de preferencia
         $tabla = "Preferencias" . ucfirst($tipoPreferencia);
 
         // Preparar la consulta SQL para insertar la preferencia específica en la tabla correspondiente
-        $query = "INSERT INTO $tabla (idPreferencia, nombreSubPreferencia) VALUES (?, ?)";
+        $query = "INSERT INTO $tabla (idTipoPreferencia, nombrePreferencia) VALUES (?, ?)";
 
         // Preparar la consulta
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('is', $idPreferencia, $nombreSubPreferencia);
+        $stmt->bind_param('is', $idTipoPreferencia, $nombrePreferencia);
 
         try {
             // Ejecutar la consulta
             $stmt->execute();
-            $idPreferenciaEspecifica = $stmt->insert_id; // Obtener el ID de la preferencia específica insertada
+            $idPreferencia = $stmt->insert_id; // Obtener el ID de la preferencia específica insertada
             return true;
         } catch (PDOException $e) {
             echo "Error al insertar preferencia específica: " . $e->getMessage();
@@ -471,12 +494,12 @@ class BD
         }
     }
 
-    public function eliminarPreferenciaPadre($idPreferencia)
+    public function eliminarTipoPreferencia($idTipoPreferencia)
     {
         // Obtener el tipo de preferencia para construir el nombre de la tabla hija
-        $queryTipoPreferencia = "SELECT tipoPreferencia FROM Preferencias WHERE idPreferencia = ?";
+        $queryTipoPreferencia = "SELECT tipoPreferencia FROM tipoPreferencias WHERE idTipoPreferencia = ?";
         $stmtTipoPreferencia = $this->mysqli->prepare($queryTipoPreferencia);
-        $stmtTipoPreferencia->bind_param('i', $idPreferencia);
+        $stmtTipoPreferencia->bind_param('i', $idTipoPreferencia);
         $stmtTipoPreferencia->execute();
         $stmtTipoPreferencia->bind_result($tipoPreferencia);
         $stmtTipoPreferencia->fetch();
@@ -486,9 +509,9 @@ class BD
         $nombreTablaHija = "Preferencias" . $tipoPreferencia;
 
         // Eliminar la preferencia padre
-        $queryEliminarPadre = "DELETE FROM Preferencias WHERE idPreferencia = ?";
+        $queryEliminarPadre = "DELETE FROM TipoPreferencias WHERE idTipoPreferencia = ?";
         $stmtEliminarPadre = $this->mysqli->prepare($queryEliminarPadre);
-        $stmtEliminarPadre->bind_param('i', $idPreferencia);
+        $stmtEliminarPadre->bind_param('i', $idTipoPreferencia);
 
         // Ejecutar la eliminación de la preferencia padre
         try {
@@ -505,15 +528,15 @@ class BD
         }
     }
 
-    public function eliminarSubPreferencia($idSubPreferencia, $tipoPreferencia)
+    public function eliminarPreferencia($idPreferencia, $tipoPreferencia)
     {
         // Construir el nombre de la tabla de preferencia hija
         $tablaPreferencia = "Preferencias" . ucfirst($tipoPreferencia);
 
         // Preparar la sentencia para eliminar la fila de la preferencia hija
-        $queryEliminarHija = "DELETE FROM $tablaPreferencia WHERE idSubPreferencia = ?";
+        $queryEliminarHija = "DELETE FROM $tablaPreferencia WHERE idPreferencia = ?";
         $stmtEliminarHija = $this->mysqli->prepare($queryEliminarHija);
-        $stmtEliminarHija->bind_param('i', $idSubPreferencia);
+        $stmtEliminarHija->bind_param('i', $idPreferencia);
 
         // Ejecutar la eliminación de la fila de la preferencia hija
         try {
@@ -525,10 +548,10 @@ class BD
         }
     }
 
-    public function buscarCoincidenciasPreferencias($tipoPreferencia)
+    public function buscarCoincidenciasTipoPreferencias($tipoPreferencia)
     {
         // Preparar la consulta SQL para buscar coincidencias de preferencias padre
-        $sql = "SELECT * FROM Preferencias WHERE tipoPreferencia LIKE CONCAT('%', ? , '%')";
+        $sql = "SELECT * FROM tipoPreferencias WHERE tipoPreferencia LIKE CONCAT('%', ? , '%')";
 
         // Preparar la sentencia SQL
         $stmt = $this->mysqli->prepare($sql);
@@ -546,7 +569,7 @@ class BD
         // Recorrer el resultado y almacenar las preferencias encontradas en el array
         while ($row = $result->fetch_assoc()) {
             $preferencia = array(
-                'idPreferencia' => $row['idPreferencia'],
+                'idTipoPreferencia' => $row['idTipoPreferencia'],
                 'tipoPreferencia' => $row['tipoPreferencia'],
             );
 
@@ -557,22 +580,22 @@ class BD
         return $preferencias;
     }
 
-    public function obtenerSubPreferencias($idPreferencia, $tipoPreferencia)
+    public function obtenerPreferencias($idTipoPreferencia, $tipoPreferencia)
     {
         // Inicializar el array de preferencias hijas
-        $subPreferencias = array();
+        $preferencias = array();
 
         // Construir el nombre de la tabla a partir del tipo de preferencia
         $tabla = "Preferencias" . ucfirst($tipoPreferencia);
 
         // Definir la consulta SQL genérica y el campo según el tipo de preferencia hija
-        $sql = "SELECT idSubPreferencia, nombreSubPreferencia FROM $tabla WHERE idPreferencia = ?";
-        $campoId = 'idSubPreferencia';
-        $campoNombre = 'nombreSubPreferencia';
+        $sql = "SELECT idPreferencia, nombrePreferencia FROM $tabla WHERE idTipoPreferencia = ?";
+        $campoId = 'idPreferencia';
+        $campoNombre = 'nombrePreferencia';
 
         // Preparar la sentencia SQL
         $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("i", $idPreferencia);
+        $stmt->bind_param("i", $idTipoPreferencia);
 
         // Ejecutar la consulta
         if ($stmt->execute()) {
@@ -581,16 +604,16 @@ class BD
 
             // Recorrer el resultado y guardar las preferencias hijas en el array
             while ($row = $result->fetch_assoc()) {
-                $subPrefencia = array(
+                $preferencia = array(
                     'id' => $row[$campoId],
                     'nombre' => $row[$campoNombre],
                     // Agregar otros campos según la estructura de tu tabla de preferencias hijas
                 );
-                $subPreferencias[] = $subPrefencia;
+                $preferencias[] = $preferencia;
             }
 
             // Devolver el array de preferencias hijas
-            return $subPreferencias;
+            return $preferencias;
         } else {
             // Si hay un error al ejecutar la consulta, devolver false
             return false;

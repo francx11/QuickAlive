@@ -30,7 +30,7 @@ if ($registradoRoot) {
         exit();
     }
 
-    echo $twig->render('altaPreferencia.html', []);
+    echo $twig->render('altaTipoPreferencia.html', []);
 }
 
 $bd->cerrarConexion();

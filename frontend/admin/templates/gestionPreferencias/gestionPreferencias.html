@@ -18,26 +18,28 @@
 
 		<main>
 			<button
-				id="altaPreferenciaButton"
-				onclick="window.location.href='/quickalive/backend/admin/gestionPreferencias/altaPreferencia.php'"
+				id="altaTipoPreferenciaButton"
+				onclick="window.location.href='/quickalive/backend/admin/gestionPreferencias/altaTipoPreferencia.php'"
 			>
-				Crear Nueva Preferencia
+				Crear Nuevo Tipo de Preferencia
 			</button>
 
 			<div>
-				<label for="nombrePreferenciaBuscada">Buscar Preferencia:</label>
+				<label for="nombreTipoPreferenciaBuscado"
+					>Buscar Tipo de Preferencia:</label
+				>
 				<input
 					type="text"
-					id="nombrePreferenciaBuscada"
-					name="nombrePreferenciaBuscada"
-					placeholder="Buscar preferencia"
+					id="nombreTipoPreferenciaBuscado"
+					name="nombreTipoPreferenciaBuscado"
+					placeholder="Buscar tipo preferencia"
 				/>
 			</div>
 
 			<div id="resultadosBusqueda"></div>
 		</main>
 
-		<script src="/quickalive/frontend/admin/js/buscarPreferencias.js"></script>
+		<script src="/quickalive/frontend/admin/js/buscarTipoPreferencias.js"></script>
 	</body>
 
 	<footer>

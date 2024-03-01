@@ -5,21 +5,27 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Recuperación de Contraseña - Paso 2</title>
-		<!-- Agrega aquí tus enlaces a hojas de estilo si es necesario -->
+		<!-- Se incluye un enlace a una hoja de estilos externa -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/quickalive/frontend/common/css/recuperarContraseña.css"
+		/>
 	</head>
 	<body>
-		<!-- Contenido de tu página -->
-
+		<!-- Sección del formulario de recuperación de contraseña -->
 		<form
-			action="/ruta/a/tu/script/de/reestablecer_contrasena.php"
+			action="http://localhost/quickalive/backend/api/recuContraseña/recuperarContraseña.php?token={{token}}&email={{correo}}"
 			method="POST"
 		>
 			<h2>Recuperación de Contraseña - Paso 2</h2>
 			<p>Por favor, ingresa tu nueva contraseña.</p>
 
+			<!-- Campo para ingresar la nueva contraseña -->
 			<label for="password">Nueva Contraseña:</label>
 			<input type="password" id="password" name="password" required />
 
+			<!-- Campo para confirmar la nueva contraseña -->
 			<label for="confirm_password">Confirmar Contraseña:</label>
 			<input
 				type="password"
@@ -28,9 +34,32 @@
 				required
 			/>
 
-			<button type="submit">Reestablecer Contraseña</button>
+			<!-- Sección para mostrar un mensaje de error si las contraseñas no coinciden -->
+			<div id="error_message" style="color: red; display: none">
+				Las contraseñas no coinciden. Por favor, inténtalo de nuevo.
+			</div>
+
+			<!-- Botón para enviar el formulario, con una llamada a la función validarContraseñas() -->
+			<button type="submit" onclick="return validarContraseñas();">
+				Reestablecer Contraseña
+			</button>
 		</form>
 
-		<!-- Puedes agregar más contenido aquí -->
+		<!-- Script JavaScript para validar que las contraseñas coincidan -->
+		<script>
+			function validarContraseñas() {
+				var password = document.getElementById("password").value;
+				var confirm_password =
+					document.getElementById("confirm_password").value;
+
+				// Verificar si las contraseñas coinciden
+				if (password !== confirm_password) {
+					document.getElementById("error_message").style.display = "block";
+					return false; // Detener el envío del formulario
+				}
+
+				return true; // Permitir el envío del formulario si las contraseñas coinciden
+			}
+		</script>
 	</body>
 </html>

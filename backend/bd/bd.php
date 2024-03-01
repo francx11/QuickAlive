@@ -3,89 +3,119 @@
 require 'usuario/usuario.php';
 require 'actividad/actividad.php';
 
+/**
+ * Clase que representa la conexión y operaciones con la base de datos.
+ */
 class BD
 {
     public $mysqli;
 
+    /**
+     * Inicia la conexión con la base de datos.
+     *
+     * @return object Objeto de conexión a la base de datos.
+     */
     public function iniciarConexion()
     {
         return $this->mysqli;
     }
 
+    /**
+     * Cierra la conexión con la base de datos.
+     */
     public function cerrarConexion()
     {
         mysqli_close($this->mysqli);
     }
 
+    /**
+     * Constructor de la clase BD. Establece la conexión con la base de datos.
+     *
+     * @return object Objeto de conexión a la base de datos.
+     */
     public function __construct()
     {
-
         $this->mysqli = new mysqli(getenv("DB_HOST"), getenv("DB_USER"), getenv("DB_PASS"), getenv("DB_NAME"));
 
         if ($this->mysqli->connect_errno) {
-
             echo ("Fallo en la conexion: " . $this->mysqli->connect_errno);
-
         }
 
         return $this->mysqli;
     }
 
+    /**
+     * Verifica si el token de recuperación proporcionado por el usuario coincide con el almacenado en la base de datos.
+     *
+     * @param string $tokenRecuperacionUsuario Token de recuperación proporcionado por el usuario.
+     * @param string $tokenRecuperacionBD Token de recuperación almacenado en la base de datos.
+     * @return bool true si los tokens coinciden, false si no coinciden.
+     */
     public function verificarTokenRecuperacion($tokenRecuperacionUsuario, $tokenRecuperacionBD)
     {
-        // Encriptar el token proporcionado por el usuario
-        $tokenRecuperacionEncriptado = hash('sha256', $tokenRecuperacionUsuario);
-
-        // Comparar el token encriptado proporcionado por el usuario con el token encriptado almacenado en la base de datos
-        if ($tokenRecuperacionEncriptado === $tokenRecuperacionBD) {
+        if ($tokenRecuperacionUsuario === $tokenRecuperacionBD) {
             return true; // Los tokens coinciden
         } else {
             return false; // Los tokens no coinciden
         }
     }
 
+    /**
+     * Genera un token de recuperación aleatorio.
+     *
+     * @return string Token de recuperación generado.
+     */
     public function generarTokenRecuperacion()
     {
-        // Longitud del token
-        $longitud = 32; // Puedes ajustar la longitud según tus necesidades
+        $longitud = 32; // Longitud del token
 
-        // Generar una cadena de bytes aleatoria
+        // Genera una cadena de bytes aleatorios
         $bytesAleatorios = random_bytes($longitud);
 
-        // Convertir los bytes a una cadena hexadecimal
+        // Convierte los bytes a una cadena hexadecimal
         $tokenRecuperacion = bin2hex($bytesAleatorios);
 
-        // Encriptar el token utilizando el algoritmo SHA-256
-        $tokenEncriptado = hash('sha256', $tokenRecuperacion);
-
-        return $tokenEncriptado;
+        return $tokenRecuperacion;
     }
 
-    public function getTokenRecuperacion($nickName)
+    /**
+     * Obtiene el token de recuperación de contraseña asociado a un correo electrónico.
+     *
+     * @param string $correo Correo electrónico del usuario.
+     * @return string|null Token de recuperación de contraseña o null si no se encuentra.
+     */
+    public function getTokenRecuperacion($correo)
     {
-        $query = "SELECT tokenRecuperacion FROM usuario WHERE nickName = ?";
+        $query = "SELECT tokenRecuperacion FROM usuario WHERE correo = ?";
 
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('s', $nickName);
+        $stmt->bind_param('s', $correo);
         $stmt->execute();
 
-        // Obtener el resultado como un array asociativo
+        // Obtiene el resultado como un array asociativo
         $resultado = $stmt->get_result();
 
-        // Verificar si se encontró un usuario
+        // Verifica si se encontró un usuario
         if ($resultado->num_rows > 0) {
-            // Obtener el primer resultado como un array asociativo
+            // Obtiene el primer resultado como un array asociativo
             $fila = $resultado->fetch_assoc();
 
-            // Obtener el token de recuperación de contraseña
+            // Obtiene el token de recuperación de contraseña
             $tokenRecuperacion = $fila['tokenRecuperacion'];
 
             return $tokenRecuperacion;
         } else {
-            return null; // No se encontró un usuario con el nickName dado
+            return null; // No se encontró un usuario con el correo electrónico dado
         }
     }
 
+    /**
+     * Inserta un token de recuperación en la base de datos para un usuario específico.
+     *
+     * @param string $nickName Nombre de usuario del usuario.
+     * @param string $tokenRecuperacion Token de recuperación a insertar.
+     * @return bool true si la inserción fue exitosa, false si falló.
+     */
     public function insertarTokenRecuperacion($nickName, $tokenRecuperacion)
     {
         // Consulta SQL para insertar el token de recuperación
@@ -113,11 +143,14 @@ class BD
         return true; // Éxito al insertar el token de recuperación
     }
 
-    // Funciones de administración del usuario
-
+/**
+ * Obtiene un usuario de la base de datos por su ID.
+ *
+ * @param int $idUsuario ID del usuario a buscar.
+ * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
+ */
     public function getUsuarioPorId($idUsuario)
     {
-        //echo $idUsuario;
         $query = "SELECT nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE idUsuario = ?";
 
         $stmt = $this->mysqli->prepare($query);
@@ -150,9 +183,55 @@ class BD
         }
     }
 
+/**
+ * Obtiene un usuario de la base de datos por su correo electrónico.
+ *
+ * @param string $correo Correo electrónico del usuario a buscar.
+ * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
+ */
+    public function getUsuarioPorCorreo($correo)
+    {
+        $query = "SELECT idUsuario, nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE correo = ?";
+
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('s', $correo);
+        $stmt->execute();
+
+        // Obtener el resultado como un objeto de la clase Usuario
+        $resultado = $stmt->get_result();
+
+        // Verificar si se encontró un usuario
+        if ($resultado->num_rows > 0) {
+            // Obtener el primer resultado como un objeto de la clase Usuario
+            $fila = $resultado->fetch_assoc();
+
+            // Crear una instancia de la clase Usuario con los datos obtenidos de la base de datos
+            $usuarioEncontrado = new Usuario(
+                $fila['nickName'],
+                $fila['telefono'],
+                $fila['correo'],
+                $fila['password'],
+                $fila['nombre'],
+                $fila['apellidos'],
+                $fila['edad'],
+                $fila['rol']
+            );
+
+            return $usuarioEncontrado;
+        } else {
+            return null; // No se encontró un usuario con el correo dado
+        }
+    }
+
+/**
+ * Obtiene un usuario de la base de datos por su nombre de usuario (nickName).
+ *
+ * @param string $nickName Nombre de usuario (nickName) del usuario a buscar.
+ * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
+ */
     public function getUsuario($nickName)
     {
-        $query = "SELECT nickName,telefono,correo,password,nombre,apellidos,edad,rol FROM usuario WHERE nickName = ?";
+        $query = "SELECT nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE nickName = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('s', $nickName);
@@ -182,9 +261,21 @@ class BD
         } else {
             return null; // No se encontró un usuario con el nickName dado
         }
-
     }
 
+/**
+ * Inserta un nuevo usuario en la base de datos.
+ *
+ * @param string $nickName Nombre de usuario del nuevo usuario.
+ * @param string $telefono Número de teléfono del nuevo usuario.
+ * @param string $correo Correo electrónico del nuevo usuario.
+ * @param string $password Contraseña del nuevo usuario (ya debe estar hasheada).
+ * @param string $nombre Nombre del nuevo usuario.
+ * @param string $apellidos Apellidos del nuevo usuario.
+ * @param int $edad Edad del nuevo usuario.
+ * @param string $rol Rol del nuevo usuario.
+ * @return bool true si la inserción fue exitosa, false si falló.
+ */
     public function insertarUsuario($nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)
     {
         // Hash de la contraseña
@@ -203,6 +294,20 @@ class BD
         }
     }
 
+    /**
+     * Modifica los datos de un usuario existente en la base de datos.
+     *
+     * @param int $id ID del usuario a modificar.
+     * @param string $nickName Nuevo nombre de usuario.
+     * @param string $telefono Nuevo número de teléfono.
+     * @param string $correo Nuevo correo electrónico.
+     * @param string $password Nueva contraseña (ya debe estar hasheada).
+     * @param string $nombre Nuevo nombre.
+     * @param string $apellidos Nuevos apellidos.
+     * @param int $edad Nueva edad.
+     * @param string $rol Nuevo rol.
+     * @return bool true si la modificación fue exitosa, false si falló.
+     */
     public function modificarUsuario($id, $nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)
     {
         // Hash de la contraseña
@@ -224,6 +329,38 @@ class BD
         }
     }
 
+/**
+ * Modifica la contraseña de un usuario en la base de datos.
+ *
+ * @param string $correo Correo electrónico del usuario.
+ * @param string $nuevaContraseña Nueva contraseña (ya debe estar hasheada).
+ * @return bool true si la modificación fue exitosa, false si falló.
+ */
+    public function modificarContraseñaUsuario($correo, $nuevaContraseña)
+    {
+        // Hash de la nueva contraseña
+        $passwordHash = password_hash($nuevaContraseña, PASSWORD_DEFAULT);
+
+        $query = "UPDATE usuario SET password = ? WHERE correo = ?";
+
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('ss', $passwordHash, $correo);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al modificar la contraseña del usuario
+        } catch (PDOException $e) {
+            echo "Error al modificar la contraseña del usuario: " . $e->getMessage();
+            return false; // Fallo al modificar la contraseña del usuario
+        }
+    }
+
+/**
+ * Elimina un usuario de la base de datos.
+ *
+ * @param int $id ID del usuario a eliminar.
+ * @return bool true si la eliminación fue exitosa, false si falló.
+ */
     public function eliminarUsuario($id)
     {
         $query = "DELETE FROM usuario WHERE idUsuario = ?";
@@ -240,6 +377,12 @@ class BD
         }
     }
 
+/**
+ * Obtiene el rol de un usuario por su nombre de usuario (nickName).
+ *
+ * @param string $nickName Nombre de usuario del usuario.
+ * @return string Rol del usuario.
+ */
     public function getRol($nickName)
     {
         $usuario = $this->getUsuario($nickName);
@@ -248,9 +391,15 @@ class BD
         return $rol;
     }
 
+/**
+ * Verifica las credenciales de inicio de sesión de un usuario.
+ *
+ * @param string $nickName Nombre de usuario del usuario.
+ * @param string $password Contraseña proporcionada por el usuario.
+ * @return bool true si las credenciales son válidas, false si no lo son.
+ */
     public function checkLogin($nickName, $password)
     {
-
         $usuario = $this->getUsuario($nickName);
 
         if ($usuario == null) {
@@ -258,7 +407,7 @@ class BD
             return false;
         }
 
-        if (true/*password_verify($password, $usuario->getPassword())*/) {
+        if (password_verify($password, $usuario->getPassword())) {
             echo 'Contraseña correcta';
             return true;
         }
@@ -266,6 +415,12 @@ class BD
         return false;
     }
 
+/**
+ * Busca usuarios cuyo nombre de usuario (nickName) coincide parcialmente con el nombre proporcionado.
+ *
+ * @param string $nickName Parte del nombre de usuario a buscar.
+ * @return array Arreglo de usuarios que coinciden con el nombre de usuario proporcionado.
+ */
     public function buscarCoincidenciasUsuario($nickName)
     {
         $sql = "SELECT * FROM usuario WHERE nickName LIKE CONCAT('%', ? , '%')";
@@ -294,7 +449,15 @@ class BD
         return $usuarios;
     }
 
-    // Gestión de las actividades
+/**
+ * Inserta una nueva actividad simple en la base de datos.
+ *
+ * @param string $nombreActividad Nombre de la actividad.
+ * @param string $descripcion Descripción de la actividad.
+ * @param string $tipoActividad Tipo de actividad.
+ * @param int $duracion Duración de la actividad.
+ * @return int|bool ID de la actividad insertada si la inserción fue exitosa, false si falló.
+ */
     public function insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
         // Primero, insertar los datos comunes en la tabla Actividad
@@ -305,7 +468,7 @@ class BD
         try {
             $stmtActividad->execute();
             $idActividad = $stmtActividad->insert_id; // Obtener el ID de la actividad insertada
-            echo $idActividad;
+            //echo $idActividad;
         } catch (PDOException $e) {
             echo "Error al insertar actividad: " . $e->getMessage();
             return false; // Fallo al insertar la actividad
@@ -324,7 +487,17 @@ class BD
             return false; // Fallo al insertar la actividad simple
         }
     }
-    // Función para modificar una actividad existente
+
+/**
+ * Modifica los datos de una actividad existente en la base de datos.
+ *
+ * @param int $idActividad ID de la actividad a modificar.
+ * @param string $nombreActividad Nuevo nombre de la actividad.
+ * @param string $descripcion Nueva descripción de la actividad.
+ * @param string $tipoActividad Nuevo tipo de actividad.
+ * @param int $duracion Nueva duración de la actividad.
+ * @return bool true si la modificación fue exitosa, false si falló.
+ */
     public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
         $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, duracion = ? WHERE idActividad = ?";
@@ -340,6 +513,48 @@ class BD
         }
     }
 
+/**
+ * Elimina todas las fotos de la galería asociadas a una actividad específica.
+ *
+ * @param int $idActividad El ID de la actividad de la cual se eliminarán las fotos de la galería.
+ *
+ * @return bool Retorna true si se eliminan las fotos de la galería exitosamente, o false en caso de error.
+ */
+    private function eliminarFotosGaleria($idActividad)
+    {
+        // Construir la consulta SQL para eliminar las fotos de la galería asociadas a la actividad
+        $query = "DELETE FROM GaleriaFotos WHERE idActividad = ?";
+
+        // Preparar la consulta SQL
+        $stmt = $this->mysqli->prepare($query);
+
+        // Vincular el parámetro de ID de actividad a la consulta preparada
+        $stmt->bind_param('i', $idActividad);
+
+        try {
+            // Ejecutar la consulta SQL
+            $stmt->execute();
+
+            // Retornar true si se eliminan las fotos de la galería exitosamente
+            return true;
+        } catch (PDOException $e) {
+            // Capturar cualquier excepción y manejarla adecuadamente
+            echo "Error al eliminar las fotos de la galería: " . $e->getMessage();
+
+            // Retornar false en caso de error durante la eliminación de las fotos de la galería
+            return false;
+        } finally {
+            // Cerrar la conexión y liberar los recursos
+            $stmt->close();
+        }
+    }
+
+/**
+ * Elimina una actividad de la base de datos.
+ *
+ * @param int $idActividad ID de la actividad a eliminar.
+ * @return bool true si la eliminación fue exitosa, false si falló.
+ */
     public function eliminarActividad($idActividad)
     {
         // Eliminar todas las fotos de la galería asociadas a esta actividad
@@ -362,6 +577,12 @@ class BD
         }
     }
 
+/**
+ * Elimina una foto de la galería de fotos.
+ *
+ * @param int $numImagen Número de la imagen a eliminar.
+ * @return bool true si la eliminación fue exitosa, false si falló.
+ */
     public function eliminarFotoGaleria($numImagen)
     {
         // Eliminar todas las fotos de la galería asociadas a la actividad
@@ -378,6 +599,13 @@ class BD
         }
     }
 
+/**
+ * Agrega una foto a la galería de una actividad.
+ *
+ * @param int $idActividad ID de la actividad a la que se agrega la foto.
+ * @param string $foto URL de la foto a agregar.
+ * @return bool true si la adición fue exitosa, false si falló.
+ */
     public function agregarFotoGaleria($idActividad, $foto)
     {
         // Insertar una foto en la galería asociada a la actividad
@@ -394,22 +622,12 @@ class BD
         }
     }
 
-    private function eliminarFotosGaleria($idActividad)
-    {
-        // Eliminar todas las fotos de la galería asociadas a la actividad
-        $query = "DELETE FROM GaleriaFotos WHERE idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('i', $idActividad);
-
-        try {
-            $stmt->execute();
-            return true; // Éxito al eliminar las fotos de la galería
-        } catch (PDOException $e) {
-            echo "Error al eliminar las fotos de la galería: " . $e->getMessage();
-            return false; // Fallo al eliminar las fotos de la galería
-        }
-    }
-
+/**
+ * Busca actividades cuyo nombre coincide parcialmente con el nombre proporcionado.
+ *
+ * @param string $nombreActividad Parte del nombre de la actividad a buscar.
+ * @return array Arreglo de actividades que coinciden con el nombre proporcionado.
+ */
     public function buscarCoincidenciasActividad($nombreActividad)
     {
         $sql = "SELECT * FROM actividad WHERE nombreActividad LIKE CONCAT('%', ? , '%')";
@@ -438,6 +656,12 @@ class BD
         return $actividades;
     }
 
+/**
+ * Obtiene los detalles de una actividad por su ID.
+ *
+ * @param int $idActividad ID de la actividad.
+ * @return ActividadSimple|null Objeto de la clase ActividadSimple si se encontró la actividad, null si no.
+ */
     public function getActividad($idActividad)
     {
         $query = "SELECT nombreActividad, descripcion, tipoActividad, duracion FROM Actividad WHERE idActividad = ?";
@@ -485,6 +709,12 @@ class BD
         }
     }
 
+/**
+ * Obtiene la galería de fotos asociada a una actividad por su ID.
+ *
+ * @param int $idActividad ID de la actividad.
+ * @return array Arreglo de objetos Imagen que representan la galería de fotos de la actividad.
+ */
     public function getGaleriaActividad($idActividad)
     {
         $sql = "SELECT * FROM galeriafotos WHERE idActividad = ?";
@@ -511,7 +741,12 @@ class BD
         return $galeria;
     }
 
-    // Gestión de preferencias //
+/**
+ * Inserta un nuevo tipo de preferencia en la base de datos y crea la tabla correspondiente para sus preferencias hijas.
+ *
+ * @param string $tipoPreferencia Nombre del tipo de preferencia a insertar.
+ * @return int|bool ID del tipo de preferencia insertado si la inserción fue exitosa, false si falló.
+ */
     public function insertarTipoDePreferencia($tipoPreferencia)
     {
         // Insertar la preferencia en la tabla padre de tipoPreferencias
@@ -532,7 +767,12 @@ class BD
         return $idPreferenciaPadre; // Éxito al insertar la preferencia padre
     }
 
-    // Función privada para crear la tabla de preferencias hijas correspondiente
+    /**
+     * Función privada para crear la tabla de preferencias hijas correspondiente a un tipo de preferencia.
+     *
+     * @param string $tipoPreferencia Nombre del tipo de preferencia para el cual se creará la tabla.
+     * @return void
+     */
     private function crearTablaPreferencias($tipoPreferencia)
     {
         // Construir el nombre de la tabla
@@ -540,11 +780,11 @@ class BD
 
         // Consulta para crear la tabla con el campo idPreferencia autoincremental y clave primaria
         $queryCrearTabla = "CREATE TABLE $tabla (
-            idPreferencia INT AUTO_INCREMENT PRIMARY KEY,
-            nombrePreferencia VARCHAR(255),
-            idTipoPreferencia INT,
-            FOREIGN KEY (idTipoPreferencia) REFERENCES tipoPreferencias(idTipoPreferencia) ON DELETE CASCADE
-        )";
+        idPreferencia INT AUTO_INCREMENT PRIMARY KEY,
+        nombrePreferencia VARCHAR(255),
+        idTipoPreferencia INT,
+        FOREIGN KEY (idTipoPreferencia) REFERENCES tipoPreferencias(idTipoPreferencia) ON DELETE CASCADE
+    )";
 
         // Ejecutar la consulta para crear la tabla
         try {
@@ -554,6 +794,14 @@ class BD
         }
     }
 
+/**
+ * Inserta una preferencia específica en la tabla correspondiente al tipo de preferencia.
+ *
+ * @param int $idTipoPreferencia ID del tipo de preferencia al que pertenece la preferencia.
+ * @param string $tipoPreferencia Nombre del tipo de preferencia.
+ * @param string $nombrePreferencia Nombre de la preferencia específica a insertar.
+ * @return bool true si la inserción fue exitosa, false si falló.
+ */
     public function insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia)
     {
         // Construir el nombre de la tabla a partir del tipo de preferencia
@@ -577,6 +825,12 @@ class BD
         }
     }
 
+/**
+ * Elimina un tipo de preferencia de la base de datos, incluida su tabla hija.
+ *
+ * @param int $idTipoPreferencia ID del tipo de preferencia a eliminar.
+ * @return bool true si la eliminación fue exitosa, false si falló.
+ */
     public function eliminarTipoPreferencia($idTipoPreferencia)
     {
         // Obtener el tipo de preferencia para construir el nombre de la tabla hija
@@ -611,6 +865,13 @@ class BD
         }
     }
 
+/**
+ * Elimina una preferencia específica de la base de datos.
+ *
+ * @param int $idPreferencia ID de la preferencia a eliminar.
+ * @param string $tipoPreferencia Tipo de preferencia a la que pertenece la preferencia específica.
+ * @return bool true si la eliminación fue exitosa, false si falló.
+ */
     public function eliminarPreferencia($idPreferencia, $tipoPreferencia)
     {
         // Construir el nombre de la tabla de preferencia hija
@@ -631,6 +892,12 @@ class BD
         }
     }
 
+/**
+ * Busca coincidencias de tipos de preferencias en la base de datos.
+ *
+ * @param string $tipoPreferencia Tipo de preferencia a buscar.
+ * @return array Arreglo de tipos de preferencias encontrados.
+ */
     public function buscarCoincidenciasTipoPreferencias($tipoPreferencia)
     {
         // Preparar la consulta SQL para buscar coincidencias de preferencias padre
@@ -663,6 +930,13 @@ class BD
         return $preferencias;
     }
 
+/**
+ * Obtiene las preferencias específicas asociadas a un tipo de preferencia.
+ *
+ * @param int $idTipoPreferencia ID del tipo de preferencia.
+ * @param string $tipoPreferencia Tipo de preferencia.
+ * @return array|bool Arreglo de preferencias encontradas si la consulta fue exitosa, false si falló.
+ */
     public function obtenerPreferencias($idTipoPreferencia, $tipoPreferencia)
     {
         // Inicializar el array de preferencias hijas

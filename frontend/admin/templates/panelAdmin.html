@@ -11,24 +11,29 @@
 		<title>Panel de Administración</title>
 	</head>
 	<body>
+		<!-- Encabezado de la página -->
 		<header>
 			<div class="brand">
 				<h2>Panel de administración</h2>
+				<!-- Título del panel de administración -->
 			</div>
 
+			<!-- Botón para cerrar sesión si el usuario está autenticado, de lo contrario, muestra un botón para iniciar sesión -->
 			{% if logueado %}
-			<a href="../../../../QuickAlive/backend/api/sesiones/logout.php"
-				><button class="logoutButton">Cerrar Sesión</button></a
-			>
+			<a href="../../../../QuickAlive/backend/api/sesiones/logout.php">
+				<button class="logoutButton">Cerrar Sesión</button>
+			</a>
 			{% else %}
-			<a href="./backend/api/sesiones/login.php"
-				><button class="loginButton">Iniciar Sesión</button></a
-			>
+			<a href="./backend/api/sesiones/login.php">
+				<button class="loginButton">Iniciar Sesión</button>
+			</a>
 			{% endif %}
 		</header>
 
+		<!-- Contenido principal -->
 		<main>
 			<div>
+				<!-- Botones para gestionar usuarios, actividades y preferencias -->
 				<button
 					onclick="window.location.href = '../../../../../quickAlive/backend/admin/gestionUsuarios/gestionUsuarios.php';"
 				>
@@ -46,9 +51,10 @@
 				</button>
 			</div>
 		</main>
-	</body>
 
-	<footer>
-		<p>&copy; 2024 QuickAlive</p>
-	</footer>
+		<!-- Pie de página -->
+		<footer>
+			<p>&copy; 2024 QuickAlive</p>
+		</footer>
+	</body>
 </html>

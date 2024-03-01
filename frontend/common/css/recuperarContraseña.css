@@ -1,9 +1,9 @@
 /* Estilo para el cuerpo de la página */
 body {
-    font-family: 'Arial', sans-serif; /* Fuente predeterminada */
+    font-family: Arial, sans-serif; /* Fuente predeterminada y de respaldo */
+    background-color: #f9f9f9; /* Color de fondo */
     margin: 0; /* Elimina el margen predeterminado */
     padding: 0; /* Elimina el relleno predeterminado */
-    background-color: #f4f4f4; /* Color de fondo */
 }
 
 /* Estilo para el formulario */
@@ -16,6 +16,13 @@ form {
     border-radius: 5px; /* Borde redondeado */
 }
 
+/* Estilo para el título del formulario */
+h2 {
+    text-align: center; /* Alineación centrada del texto */
+    margin-bottom: 20px; /* Margen inferior */
+    color: #007bff; /* Color del texto */
+}
+
 /* Estilo para las etiquetas de los campos */
 label {
     display: block; /* Muestra las etiquetas en una línea separada */
@@ -26,41 +33,32 @@ label {
 /* Estilo para los campos de entrada */
 input {
     width: 100%; /* Ancho completo */
-    padding: 8px; /* Espaciado interno */
-    margin-bottom: 16px; /* Margen inferior */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 20px; /* Margen inferior */
     box-sizing: border-box; /* Incluye el relleno y el borde en el ancho total */
     border: 1px solid #ccc; /* Borde con color gris claro */
     border-radius: 4px; /* Borde redondeado */
 }
 
+/* Estilo para el mensaje de error */
+#error_message {
+    color: red; /* Color del texto en rojo */
+    margin-bottom: 20px; /* Margen inferior */
+    display: none; /* Inicialmente oculto */
+}
+
 /* Estilo para el botón de enviar */
-button {
-    background-color: #007BFF; /* Color de fondo */
+button[type="submit"] {
+    background-color: #007bff; /* Color de fondo */
     color: #fff; /* Color del texto */
     padding: 10px 20px; /* Espaciado interno */
     border: none; /* Sin borde */
     border-radius: 4px; /* Borde redondeado */
     cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
 }
 
 /* Estilo para el botón de enviar al pasar el cursor sobre él */
-button:hover {
+button[type="submit"]:hover {
     background-color: #0056b3; /* Cambia el color de fondo al pasar el cursor */
-}
-
-/* Estilo para el contenedor del enlace de recuperación de contraseña */
-.recuperacion-contrasena {
-    text-align: center; /* Alineación centrada del texto */
-    margin-top: 20px; /* Margen superior */
-}
-
-/* Estilo para el enlace de recuperación de contraseña */
-.recuperacion-contrasena a {
-    color: #007BFF; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
-}
-
-/* Estilo para el enlace de recuperación de contraseña al pasar el cursor sobre él */
-.recuperacion-contrasena a:hover {
-    text-decoration: underline; /* Subrayado al pasar el cursor */
 }

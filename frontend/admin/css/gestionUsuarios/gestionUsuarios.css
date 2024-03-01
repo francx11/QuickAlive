@@ -1,115 +1,117 @@
-/* estilos.css */
-
+/* Estilos generales para el cuerpo de la página */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: Arial, sans-serif; /* Tipo de fuente para el texto */
+    margin: 0; /* Elimina los márgenes predeterminados */
+    padding: 0; /* Elimina el relleno predeterminado */
+    background-color: #f4f4f4; /* Color de fondo para el cuerpo de la página */
 }
 
+/* Estilos para el encabezado */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #333;
-    color: white;
+    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
+    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos */
+    align-items: center; /* Alinea verticalmente los elementos en el centro */
+    padding: 10px; /* Añade relleno alrededor del encabezado */
+    background-color: #333; /* Color de fondo oscuro para el encabezado */
+    color: white; /* Color del texto del encabezado */
 }
 
+/* Estilos para la marca o logo */
 .brand {
-    flex: 1;
-    text-align: center;
+    flex: 1; /* La marca ocupará el espacio restante */
+    text-align: center; /* Alinea el texto al centro */
 }
 
-
-.loginButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
+/* Estilos para los botones de inicio y cierre de sesión */
+.loginButton,
 .logoutButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
+    background-color: #4CAF50; /* Color de fondo para los botones */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Relleno interno */
+    text-align: center; /* Alineación del texto al centro */
+    text-decoration: none; /* Sin decoración de texto */
+    display: inline-block; /* Mostrar como bloque en línea */
+    font-size: 16px; /* Tamaño de la fuente */
+    margin: 4px 2px; /* Márgenes */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 5px; /* Borde redondeado */
 }
 
+/* Estilos para el contenido principal */
 main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Ancho máximo del contenido principal */
+    margin: 20px auto; /* Centra el contenido horizontalmente */
+    padding: 20px; /* Añade relleno alrededor del contenido */
+    background-color: #fff; /* Color de fondo para el contenido */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
+/* Estilos para los botones */
 button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
+    background-color: #007bff; /* Color de fondo para los botones */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px; /* Relleno interno */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
 }
 
+/* Estilos para los botones al pasar el cursor */
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Color de fondo alternativo */
 }
 
+/* Estilos para las etiquetas de los campos */
 label {
-    display: block;
-    margin-bottom: 10px;
+    display: block; /* Convierte las etiquetas en elementos de bloque */
+    margin-bottom: 10px; /* Márgen inferior */
 }
 
+/* Estilos para los campos de entrada */
 input {
-    padding: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 15px;
+    padding: 8px; /* Relleno interno */
+    width: 100%; /* Ancho completo */
+    box-sizing: border-box; /* Tamaño de la caja incluyendo el borde y el relleno */
+    margin-bottom: 15px; /* Márgen inferior */
 }
 
+/* Estilos para los resultados de búsqueda */
 #resultadosBusqueda {
-    margin-top: 20px;
+    margin-top: 20px; /* Márgen superior */
 }
 
+/* Estilos para cada resultado de búsqueda de usuario */
 .usuario {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-}
-.usuario span {
-    display: block;
-    margin-bottom: 5px;
-}
-.usuario-buttons {
-    margin-top: 5px;
-}
-.usuario-buttons button {
-    margin-right: 5px;
+    border: 1px solid #ccc; /* Borde del resultado */
+    padding: 10px; /* Relleno interno */
+    margin-bottom: 10px; /* Márgen inferior */
+    background-color: #f9f9f9; /* Color de fondo */
+    border-radius: 5px; /* Borde redondeado */
 }
 
+/* Estilos para los elementos dentro de cada resultado de búsqueda de usuario */
+.usuario span {
+    display: block; /* Convierte los elementos en elementos de bloque */
+    margin-bottom: 5px; /* Márgen inferior */
+}
+
+/* Estilos para los botones dentro de cada resultado de búsqueda de usuario */
+.usuario-buttons {
+    margin-top: 5px; /* Márgen superior */
+}
+
+/* Estilos para los botones dentro de cada resultado de búsqueda de usuario */
+.usuario-buttons button {
+    margin-right: 5px; /* Márgen derecho */
+}
+
+/* Estilos para el pie de página */
 footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    background-color: #333; /* Color de fondo para el pie de página */
+    color: #fff; /* Color del texto */
+    padding: 10px; /* Añade relleno alrededor del pie de página */
+    text-align: center; /* Alinea el texto al centro */
+    position: relative; /* Posicionamiento relativo */
+    bottom: 0; /* Coloca el pie de página en la parte inferior */
+    width: 100%; /* Ancho completo */
 }

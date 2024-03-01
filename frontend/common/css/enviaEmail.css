@@ -1,0 +1,76 @@
+/* Estilo para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif; /* Fuente predeterminada */
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Elimina el relleno predeterminado */
+    background-color: #f8f9fa; /* Color de fondo */
+}
+
+/* Estilo para el contenedor principal */
+#content {
+    max-width: 400px; /* Ancho máximo del contenedor */
+    margin: 50px auto; /* Centra el contenedor horizontalmente con un margen superior e inferior de 50px */
+    padding: 20px; /* Espaciado interno del contenedor */
+    background-color: #fff; /* Color de fondo del contenedor */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border-radius: 5px; /* Borde redondeado */
+}
+
+/* Estilo para el título del formulario */
+h2 {
+    color: #007bff; /* Color del texto */
+    text-align: center; /* Alineación centrada del texto */
+}
+
+/* Estilo para el texto de información */
+p {
+    margin-bottom: 20px; /* Margen inferior */
+}
+
+/* Estilo para las etiquetas de los campos */
+label {
+    display: block; /* Muestra las etiquetas en una línea separada */
+    margin-bottom: 8px; /* Margen inferior */
+    font-weight: bold; /* Texto en negrita */
+}
+
+/* Estilo para los campos de entrada */
+input {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 16px; /* Margen inferior */
+    box-sizing: border-box; /* Incluye el relleno y el borde en el ancho total */
+    border: 1px solid #ccc; /* Borde con color gris claro */
+    border-radius: 4px; /* Borde redondeado */
+}
+
+/* Estilo para el botón de enviar */
+button[type="submit"] {
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Borde redondeado */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+/* Estilo para el botón de enviar al pasar el cursor sobre él */
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el cursor */
+}
+
+/* Estilo para el mensaje de confirmación */
+#mensaje-confirmacion {
+    display: none; /* Oculta el mensaje de confirmación inicialmente */
+    margin-top: 20px; /* Margen superior */
+    padding: 10px; /* Espaciado interno */
+    background-color: #d4edda; /* Color de fondo */
+    border: 1px solid #c3e6cb; /* Borde */
+    border-radius: 4px; /* Borde redondeado */
+    color: #155724; /* Color del texto */
+}
+
+/* Estilo para el texto dentro del mensaje de confirmación */
+#mensaje-confirmacion p {
+    margin: 0; /* Elimina el margen */
+}

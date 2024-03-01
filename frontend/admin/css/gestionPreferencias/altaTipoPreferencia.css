@@ -1,108 +1,102 @@
-/* altaPreferencia.css */
-
+/* Estilos generales para el cuerpo de la página */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: Arial, sans-serif; /* Tipo de fuente para el texto */
+    margin: 0; /* Elimina los márgenes alrededor del cuerpo de la página */
+    padding: 0; /* Elimina el relleno alrededor del cuerpo de la página */
+    background-color: #f4f4f4; /* Color de fondo para el cuerpo de la página */
 }
 
+/* Estilos para el encabezado */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #333;
-    color: white;
+    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
+    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos */
+    align-items: center; /* Alinea verticalmente los elementos en el centro */
+    padding: 10px; /* Añade relleno alrededor del encabezado */
+    background-color: #333; /* Color de fondo oscuro para el encabezado */
+    color: white; /* Color del texto en el encabezado */
 }
 
+/* Estilos para la marca o logo */
 .brand {
-    flex: 1;
-    text-align: center;
+    flex: 1; /* La marca ocupará el espacio restante */
+    text-align: center; /* Alinea el texto al centro */
 }
 
-
-.loginButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
+/* Estilos para los botones de inicio y cierre de sesión */
+.loginButton,
 .logoutButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
+    background-color: #4CAF50; /* Color de fondo para los botones */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Relleno interno */
+    text-align: center; /* Alineación del texto al centro */
+    text-decoration: none; /* Sin decoración de texto */
+    display: inline-block; /* Mostrar como bloque en línea */
+    font-size: 16px; /* Tamaño de la fuente */
+    margin: 4px 2px; /* Márgenes */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 5px; /* Borde redondeado */
 }
 
-
+/* Estilos para los títulos */
 h2 {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    text-align: center; /* Alinea el texto al centro */
+    margin-top: 20px; /* Márgen superior */
+    margin-bottom: 30px; /* Márgen inferior */
 }
 
+/* Estilos para formularios */
 form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+    padding: 20px; /* Relleno interno */
+    background-color: #fff; /* Color de fondo del formulario */
+    border-radius: 8px; /* Borde redondeado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
+/* Estilos para etiquetas de formulario */
 label {
-    display: block;
-    margin-bottom: 10px;
+    display: block; /* Muestra las etiquetas como bloques */
+    margin-bottom: 10px; /* Márgen inferior */
 }
 
+/* Estilos para campos de entrada de formulario */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="password"],
 input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Relleno interno */
+    margin-bottom: 15px; /* Márgen inferior */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 5px; /* Borde redondeado */
+    box-sizing: border-box; /* Incluye el relleno y el borde en el ancho total */
 }
 
+/* Estilos para botones */
 button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #007bff; /* Color de fondo para los botones */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px; /* Relleno interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Borde redondeado */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
 }
 
+/* Estilos para botones al pasar el cursor */
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Color de fondo alternativo al pasar el cursor */
 }
 
+/* Estilos para el pie de página */
 footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    background-color: #333; /* Color de fondo para el pie de página */
+    color: #fff; /* Color del texto */
+    padding: 10px; /* Relleno alrededor del pie de página */
+    text-align: center; /* Alineación del texto al centro */
+    position: relative; /* Posicionamiento relativo */
+    bottom: 0; /* Coloca el pie de página en la parte inferior */
+    width: 100%; /* Ancho completo */
 }

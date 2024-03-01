@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
+		<!-- Configuración del documento -->
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Recuperación de Contraseña - Paso 1</title>
-		<!-- Agrega aquí tus enlaces a hojas de estilo si es necesario -->
+		<!-- Se incluye un enlace a una hoja de estilos externa -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/quickalive/frontend/common/css/enviaEmail.css"
+		/>
 	</head>
 	<body>
-		<!-- Contenido de tu página -->
-
+		<!-- Contenido de la página -->
 		<div id="content">
+			<!-- Formulario para enviar correo de recuperación de contraseña -->
 			<form
 				action="http://localhost/quickalive/backend/api/recuContraseña/enviaEmail.php"
 				method="POST"
@@ -21,27 +27,25 @@
 					recibir un enlace de recuperación de contraseña.
 				</p>
 
+				<!-- Campo para ingresar el correo electrónico -->
 				<label for="email">Correo Electrónico:</label>
 				<input type="email" id="email" name="email" required />
 
-				<label for="nickName">Nombre de Usuario:</label>
-				<input type="text" id="nickName" name="nickName" required />
-
+				<!-- Botón para enviar el formulario -->
 				<button type="submit">Enviar Correo de Recuperación</button>
 			</form>
 		</div>
 
-		<div id="mensaje-confirmacion" style="display: none">
+		<!-- Mensaje de confirmación de correo enviado -->
+		<div id="mensaje-confirmacion">
 			<p>
 				¡Correo enviado! Por favor, revisa tu bandeja de entrada y haz clic en
 				el enlace de recuperación.
 			</p>
 		</div>
 
-		<!-- Puedes agregar más contenido aquí -->
-
+		<!-- Script JavaScript para mostrar el mensaje de confirmación y ocultar el formulario -->
 		<script>
-			// Función para mostrar el mensaje de confirmación y ocultar el formulario
 			function mostrarMensajeConfirmacion() {
 				document.getElementById("content").style.display = "none";
 				document.getElementById("mensaje-confirmacion").style.display = "block";

@@ -1,84 +1,78 @@
+/* Estilo para el cuerpo de la página */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    min-height: 100vh;
+    min-height: 100vh; /* El cuerpo de la página ocupará al menos el 100% de la altura visible del dispositivo */
 }
 
+/* Estilo para el encabezado */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #333;
-    color: white;
+    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
+    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos del encabezado */
+    align-items: center; /* Alinea los elementos verticalmente en el centro del encabezado */
+    padding: 10px; /* Añade relleno alrededor del encabezado */
+    background-color: #333; /* Color de fondo oscuro para el encabezado */
+    color: white; /* Color del texto del encabezado */
 }
 
+/* Estilo para el contenedor de la marca o logo */
 .brand {
-    flex: 1;
-    text-align: center;
+    flex: 1; /* El contenedor de la marca ocupará el espacio restante */
+    text-align: center; /* Alineación del texto al centro */
 }
 
-
-.loginButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
+/* Estilos para los botones de inicio de sesión y cierre de sesión */
+.loginButton,
 .logoutButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
+    background-color: #4CAF50; /* Color de fondo para los botones de inicio de sesión y cierre de sesión */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Relleno interno */
+    text-align: center; /* Alineación del texto al centro */
+    text-decoration: none; /* Sin decoración de texto */
+    display: inline-block; /* Mostrar como bloque en línea */
+    font-size: 16px; /* Tamaño de fuente */
+    margin: 4px 2px; /* Márgenes */
+    cursor: pointer; /* Cursor al pasar sobre el botón */
+    border-radius: 5px; /* Borde redondeado */
 }
 
+/* Estilo para la sección principal */
 main {
-    padding: 20px;
-    max-width: 800px;
-  
+    padding: 20px; /* Añade relleno alrededor del contenido principal */
+    max-width: 800px; /* Ancho máximo del contenido principal */
 }
 
+/* Estilo para el contenedor de botones */
 .button-container {
-    text-align: center;
+    text-align: center; /* Alinea los botones al centro */
 }
 
+/* Estilo para los botones */
 .button-container button {
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    transition: background-color 0.3s ease;
+    padding: 10px 20px; /* Relleno interno */
+    margin: 10px; /* Márgenes */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cursor al pasar sobre el botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Borde redondeado */
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    transition: background-color 0.3s ease; /* Transición suave en el cambio de color de fondo */
 }
 
+/* Estilo para los botones al pasar el cursor */
 .button-container button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Color de fondo alterno */
 }
 
+/* Estilo para el pie de página */
 footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    background-color: #333; /* Color de fondo oscuro para el pie de página */
+    color: #fff; /* Color del texto */
+    padding: 10px; /* Añade relleno alrededor del pie de página */
+    text-align: center; /* Alineación del texto al centro */
+    position: relative; /* Posición relativa para permitir posicionamiento */
+    bottom: 0; /* Colocar en la parte inferior */
+    width: 100%; /* Ancho completo del pie de página */
 }

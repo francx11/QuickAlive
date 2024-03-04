@@ -1,7 +1,9 @@
 /* Estilos generales para el cuerpo de la página */
 body {
     font-family: Arial, sans-serif; /* Tipo de fuente para el texto */
-    margin: 20px; /* Márgenes alrededor del cuerpo de la página */
+    margin: 0;
+    padding: 0;;
+ 
 }
 
 /* Estilos para el encabezado */
@@ -74,13 +76,3 @@ button:hover {
     background-color: #45a049; /* Color de fondo alternativo */
 }
 
-/* Estilos para el pie de página */
-footer {
-    background-color: #333; /* Color de fondo para el pie de página */
-    color: #fff; /* Color del texto */
-    padding: 10px; /* Añade relleno alrededor del pie de página */
-    text-align: center; /* Alinea el texto al centro */
-    position: relative; /* Posicionamiento relativo */
-    bottom: 0; /* Coloca el pie de página en la parte inferior */
-    width: 100%; /* Ancho completo */
-}

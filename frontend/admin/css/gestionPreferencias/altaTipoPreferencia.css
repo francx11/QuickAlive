@@ -90,13 +90,3 @@ button:hover {
     background-color: #0056b3; /* Color de fondo alternativo al pasar el cursor */
 }
 
-/* Estilos para el pie de página */
-footer {
-    background-color: #333; /* Color de fondo para el pie de página */
-    color: #fff; /* Color del texto */
-    padding: 10px; /* Relleno alrededor del pie de página */
-    text-align: center; /* Alineación del texto al centro */
-    position: relative; /* Posicionamiento relativo */
-    bottom: 0; /* Coloca el pie de página en la parte inferior */
-    width: 100%; /* Ancho completo */
-}

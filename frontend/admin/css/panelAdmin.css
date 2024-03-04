@@ -1,11 +1,12 @@
-/* Estilo para el cuerpo de la página */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    min-height: 100vh; /* El cuerpo de la página ocupará al menos el 100% de la altura visible del dispositivo */
+/* Estilos generales */
+body, html {
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Elimina el relleno predeterminado */
+    font-family: Arial, sans-serif; /* Utiliza la fuente Arial o una fuente sans-serif como predeterminada */
+    height: 100%; /* Establece que el cuerpo y el HTML ocupen el 100% de la altura */
 }
 
-/* Estilo para el encabezado */
+/* Estilos para el encabezado */
 header {
     display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
     justify-content: space-between; /* Distribuye el espacio disponible entre los elementos del encabezado */
@@ -21,58 +22,38 @@ header {
     text-align: center; /* Alineación del texto al centro */
 }
 
-/* Estilos para los botones de inicio de sesión y cierre de sesión */
-.loginButton,
-.logoutButton {
-    background-color: #4CAF50; /* Color de fondo para los botones de inicio de sesión y cierre de sesión */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 15px; /* Relleno interno */
-    text-align: center; /* Alineación del texto al centro */
-    text-decoration: none; /* Sin decoración de texto */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 16px; /* Tamaño de fuente */
-    margin: 4px 2px; /* Márgenes */
-    cursor: pointer; /* Cursor al pasar sobre el botón */
-    border-radius: 5px; /* Borde redondeado */
+/* Estilos para los botones */
+button {
+    padding: 10px 20px; /* Añade relleno interno a los botones */
+    margin: 10px; /* Establece márgenes externos para separar los botones */
+    font-size: 16px; /* Tamaño de fuente para los botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre los botones */
+    border: none; /* Elimina los bordes de los botones */
+    border-radius: 5px; /* Añade bordes redondeados a los botones */
+    background-color: #007bff; /* Color de fondo predeterminado para los botones */
+    color: #fff; /* Color del texto de los botones */
+    transition: background-color 0.3s ease; /* Transición suave en el cambio de color de fondo de los botones */
 }
 
-/* Estilo para la sección principal */
+/* Estilos para los botones al pasar el cursor */
+button:hover {
+    background-color: #0056b3; /* Color de fondo alterno cuando se pasa el cursor sobre los botones */
+}
+
+/* Estilos para el contenido principal */
 main {
     padding: 20px; /* Añade relleno alrededor del contenido principal */
-    max-width: 800px; /* Ancho máximo del contenido principal */
+    max-width: 800px; /* Establece el ancho máximo del contenido principal */
+    margin: 0 auto; /* Centra el contenido principal horizontalmente */
 }
 
-/* Estilo para el contenedor de botones */
-.button-container {
-    text-align: center; /* Alinea los botones al centro */
-}
-
-/* Estilo para los botones */
-.button-container button {
-    padding: 10px 20px; /* Relleno interno */
-    margin: 10px; /* Márgenes */
-    font-size: 16px; /* Tamaño de fuente */
-    cursor: pointer; /* Cursor al pasar sobre el botón */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Borde redondeado */
-    background-color: #007bff; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    transition: background-color 0.3s ease; /* Transición suave en el cambio de color de fondo */
-}
-
-/* Estilo para los botones al pasar el cursor */
-.button-container button:hover {
-    background-color: #0056b3; /* Color de fondo alterno */
-}
-
-/* Estilo para el pie de página */
+/* Estilos para el pie de página */
 footer {
     background-color: #333; /* Color de fondo oscuro para el pie de página */
-    color: #fff; /* Color del texto */
+    color: #fff; /* Color del texto del pie de página */
     padding: 10px; /* Añade relleno alrededor del pie de página */
     text-align: center; /* Alineación del texto al centro */
-    position: relative; /* Posición relativa para permitir posicionamiento */
-    bottom: 0; /* Colocar en la parte inferior */
+    position: absolute; /* Posición relativa para permitir posicionamiento */
+    bottom: 0; /* Coloca el pie de página en la parte inferior */
     width: 100%; /* Ancho completo del pie de página */
 }

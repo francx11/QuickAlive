@@ -22,6 +22,24 @@ header {
     text-align: center; /* Alinea el texto al centro */
 }
 
+/* Estilos para el icono de flecha de retroceso */
+.fa-arrow-left {
+    margin-right: 10px; /* Margen derecho para separar el icono del texto */
+    color: #ffffff; /* Cambia el color del icono a blanco */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Agrega una sombra al texto para hacerlo más visible */
+
+}
+
+/* Estilos para el texto "Volver" */
+a {
+    color: #ffffff; /* Cambia el color del texto a blanco */
+    text-decoration: none; /* Quita la decoración de subrayado del enlace */
+}
+
+a:hover {
+    text-decoration: underline; /* Agrega subrayado al pasar el mouse sobre el enlace */
+}
+
 /* Estilos para los botones de inicio de sesión */
 .loginButton,
 .logoutButton {
@@ -102,13 +120,4 @@ input {
     margin-right: 5px; /* Margen derecho para los botones */
 }
 
-/* Estilos para el pie de página */
-footer {
-    background-color: #333; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    padding: 10px; /* Espaciado interno */
-    text-align: center; /* Alineación del texto al centro */
-    position: relative; /* Posición relativa */
-    bottom: 0; /* Coloca el pie de página en la parte inferior */
-    width: 100%; /* Ancho completo */
-}
+

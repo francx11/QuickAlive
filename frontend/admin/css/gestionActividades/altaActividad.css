@@ -95,13 +95,3 @@ input[type="submit"]:hover {
     background-color: #0056b3; /* Cambio de color de fondo */
 }
 
-/* Estilos para el pie de página */
-footer {
-    background-color: #333; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    padding: 10px; /* Relleno interno */
-    text-align: center; /* Alineación del texto al centro */
-    position: relative; /* Posición relativa */
-    bottom: 0; /* Coloca el pie de página en la parte inferior */
-    width: 100%; /* Ancho completo */
-}

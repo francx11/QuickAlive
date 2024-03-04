@@ -60,9 +60,11 @@ if ($registradoRoot) {
                 }
 
                 //echo "Actividad creada exitosamente.";
+                header("Location: gestionActividades.php");
             } else {
                 echo "Error al crear la actividad.";
             }
+
         } else {
             echo "Todos los campos son obligatorios.";
         }

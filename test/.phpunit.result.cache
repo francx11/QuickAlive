@@ -1,0 +1,1 @@
+{"version":1,"defects":{"TestUsuario::testGetTokenRecuperacionExistente":7,"TestUsuario::testGetTokenRecuperacionNoExistente":8},"times":{"TestUsuario::testGetTokenRecuperacionExistente":0.013,"TestUsuario::testGetTokenRecuperacionNoExistente":0.002}}

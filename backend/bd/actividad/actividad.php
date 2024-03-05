@@ -4,12 +4,12 @@
  */
 class Actividad
 {
-    public $idActividad;
-    public $nombreActividad;
-    public $descripcion;
-    public $tipoActividad;
-    public $duracion;
-    public $galeriaFotos = [];
+    private $idActividad;
+    private $nombreActividad;
+    private $descripcion;
+    private $tipoActividad;
+    private $duracion;
+    private $galeriaFotos = [];
 
     /**
      * Constructor de la clase Actividad.
@@ -19,13 +19,24 @@ class Actividad
      * @param string $tipoActividad Tipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
+        $this->idActividad = $idActividad;
         $this->nombreActividad = $nombreActividad;
         $this->descripcion = $descripcion;
         $this->tipoActividad = $tipoActividad;
         $this->duracion = $duracion;
         $this->galeriaFotos = [];
+    }
+
+    /**
+     * Obtiene el id de la actividad.
+     *
+     * @return int Id de la actividad.
+     */
+    public function getIdActividad()
+    {
+        return $this->idActividad;
     }
 
     /**
@@ -142,9 +153,9 @@ class ActividadSimple extends Actividad
      * @param string $tipoActividad Tipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)
     {
-        parent::__construct($nombreActividad, $descripcion, $tipoActividad, $duracion);
+        parent::__construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion);
     }
 }
 

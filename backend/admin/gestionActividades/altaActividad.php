@@ -50,7 +50,7 @@ if ($registradoRoot) {
                         $url = $directorioDestino . $nombreImagen;
 
                         if (move_uploaded_file($_FILES['imagenes']['tmp_name'][$i], $url)) {
-                            if ($bd->agregarFotoGaleria($idActividad, $url)) {
+                            if ($bd->agregarFotoGaleria($idActividad, $url) != -1) {
                                 echo 'Imagen insertada con éxito';
                             } else {
                                 echo 'Fallo al insertar la imagen';

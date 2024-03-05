@@ -82,7 +82,7 @@ if ($registradoRoot) {
                         echo "La imagen $nombreImagen se ha subido correctamente. Ruta: $url<br>";
 
                         // Agrega la imagen a la galería de la actividad en la base de datos
-                        if ($bd->agregarFotoGaleria($idActividad, $url)) {
+                        if ($bd->agregarFotoGaleria($idActividad, $url) != -1) {
                             echo 'Imagen insertada con éxito';
                         } else {
                             echo 'Fallo al insertar la imagen';

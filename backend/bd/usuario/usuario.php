@@ -26,8 +26,9 @@ class Usuario
      * @param int $edad Edad del usuario.
      * @param string $rol Rol del usuario en el sistema.
      */
-    public function __construct($nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)
+    public function __construct($idUsuario, $nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)
     {
+        $this->idUsuario = $idUsuario;
         $this->nickName = $nickName;
         $this->telefono = $telefono;
         $this->correo = $correo;

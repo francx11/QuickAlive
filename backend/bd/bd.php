@@ -151,7 +151,7 @@ class BD
  */
     public function getUsuarioPorId($idUsuario)
     {
-        $query = "SELECT nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE idUsuario = ?";
+        $query = "SELECT idUsuario, nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE idUsuario = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('i', $idUsuario);
@@ -167,6 +167,7 @@ class BD
 
             // Crear una instancia de la clase Usuario con los datos obtenidos de la base de datos
             $usuarioEncontrado = new Usuario(
+                $fila['idUsuario'],
                 $fila['nickName'],
                 $fila['telefono'],
                 $fila['correo'],
@@ -207,6 +208,7 @@ class BD
 
             // Crear una instancia de la clase Usuario con los datos obtenidos de la base de datos
             $usuarioEncontrado = new Usuario(
+                $fila['idUsuario'],
                 $fila['nickName'],
                 $fila['telefono'],
                 $fila['correo'],
@@ -231,7 +233,7 @@ class BD
  */
     public function getUsuario($nickName)
     {
-        $query = "SELECT nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE nickName = ?";
+        $query = "SELECT idUsuario, nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE nickName = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('s', $nickName);
@@ -247,6 +249,7 @@ class BD
 
             // Crear una instancia de la clase Usuario con los datos obtenidos de la base de datos
             $usuarioEncontrado = new Usuario(
+                $fila['idUsuario'],
                 $fila['nickName'],
                 $fila['telefono'],
                 $fila['correo'],
@@ -604,7 +607,7 @@ class BD
  *
  * @param int $idActividad ID de la actividad a la que se agrega la foto.
  * @param string $foto URL de la foto a agregar.
- * @return bool true si la adición fue exitosa, false si falló.
+ * @return int Retorna el ID de la foto agregada si la adición fue exitosa, de lo contrario, retorna -1.
  */
     public function agregarFotoGaleria($idActividad, $foto)
     {
@@ -615,10 +618,14 @@ class BD
 
         try {
             $stmt->execute();
-            return true; // Éxito al agregar la foto a la galería
+
+            // Obtener el ID de la foto insertada
+            $idFoto = $stmt->insert_id;
+
+            return $idFoto; // Retorna el ID de la foto agregada
         } catch (PDOException $e) {
             echo "Error al agregar foto a la galería: " . $e->getMessage();
-            return false; // Fallo al agregar la foto a la galería
+            return -1; // Fallo al agregar la foto a la galería
         }
     }
 
@@ -664,7 +671,7 @@ class BD
  */
     public function getActividad($idActividad)
     {
-        $query = "SELECT nombreActividad, descripcion, tipoActividad, duracion FROM Actividad WHERE idActividad = ?";
+        $query = "SELECT idActividad, nombreActividad, descripcion, tipoActividad, duracion FROM Actividad WHERE idActividad = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('i', $idActividad);
@@ -680,6 +687,7 @@ class BD
 
             // Crear una instancia de la clase ActividadSimple con los datos obtenidos de la base de datos
             $actividadSimpleEncontrada = new ActividadSimple(
+                $fila['idActividad'],
                 $fila['nombreActividad'],
                 $fila['descripcion'],
                 $fila['tipoActividad'],

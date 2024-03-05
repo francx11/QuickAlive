@@ -52,7 +52,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
             }
 
             // Llamar a la función para añadir una preferencia hija
-            if ($bd->insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia)) {
+            if ($bd->insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia) != -1) {
                 header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $idTipoPreferencia);
             } else {
                 echo "Error en la adición de una subPreferencia";

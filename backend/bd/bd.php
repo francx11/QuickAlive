@@ -808,7 +808,7 @@ class BD
  * @param int $idTipoPreferencia ID del tipo de preferencia al que pertenece la preferencia.
  * @param string $tipoPreferencia Nombre del tipo de preferencia.
  * @param string $nombrePreferencia Nombre de la preferencia específica a insertar.
- * @return bool true si la inserción fue exitosa, false si falló.
+ * @return int Número distinto de -1 si la inserción fue exitosa, -1 si falló.
  */
     public function insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia)
     {
@@ -826,10 +826,10 @@ class BD
             // Ejecutar la consulta
             $stmt->execute();
             $idPreferencia = $stmt->insert_id; // Obtener el ID de la preferencia específica insertada
-            return true;
+            return $idPreferencia;
         } catch (PDOException $e) {
             echo "Error al insertar preferencia específica: " . $e->getMessage();
-            return false; // Fallo al insertar la preferencia específica
+            return -1; // Fallo al insertar la preferencia específica
         }
     }
 
@@ -985,4 +985,76 @@ class BD
         }
     }
 
+    /**
+     * Obtiene una fila de la tabla tipoPreferencias basada en el tipo de preferencia.
+     *
+     * @param string $tipoPreferencia El tipo de preferencia a buscar.
+     * @return array|null|false Devuelve un array con los datos del tipo de preferencia si se encuentra,
+     *                          null si no se encuentra, o false si hay un error al ejecutar la consulta.
+     */
+    public function getTipoPreferencia($tipoPreferencia)
+    {
+        // Consulta SQL para obtener el tipo de preferencia
+        $query = "SELECT idTipoPreferencia, tipoPreferencia FROM tipoPreferencias WHERE tipoPreferencia = ?";
+
+        // Preparar la consulta
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('s', $tipoPreferencia);
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            // Obtener el resultado de la consulta
+            $result = $stmt->get_result();
+
+            // Verificar si se encontró el tipo de preferencia
+            if ($result->num_rows > 0) {
+                // Obtener la fila del resultado
+                $row = $result->fetch_assoc();
+
+                // Crear un array con los datos del tipo de preferencia
+                $tipoPreferenciaData = array(
+                    'idTipoPreferencia' => $row['idTipoPreferencia'],
+                    'tipoPreferencia' => $row['tipoPreferencia'],
+                    // Agregar otros campos según la estructura de tu tabla tipoPreferencias
+                );
+
+                // Devolver los datos del tipo de preferencia
+                return $tipoPreferenciaData;
+            } else {
+                // Si no se encuentra el tipo de preferencia, devolver null
+                return null;
+            }
+        } else {
+            // Si hay un error al ejecutar la consulta, devolver false
+            return false;
+        }
+    }
+
+    public function testGetTipoPreferenciaExistente()
+    {
+        // Insertar un tipo de preferencia de prueba
+        $tipoPreferencia = "Prueba";
+        $this->bd->insertarTipoDePreferencia($tipoPreferencia);
+
+        // Obtener el tipo de preferencia
+        $resultado = $this->bd->getTipoPreferencia($tipoPreferencia);
+
+        // Verificar que se obtenga un resultado
+        $this->assertNotNull($resultado);
+
+        // Verificar que los datos obtenidos coincidan con los esperados
+        $this->assertEquals($tipoPreferencia, $resultado['tipoPreferencia']);
+
+        // Limpiar el estado de la base de datos eliminando el tipo de preferencia de prueba
+        $this->assertTrue($this->bd->eliminarTipoPreferencia($resultado['idTipoPreferencia']));
+    }
+
+    public function testGetTipoPreferenciaNoExistente()
+    {
+        // Obtener un tipo de preferencia que no existe en la base de datos
+        $resultado = $this->bd->getTipoPreferencia("TipoInexistente");
+
+        // Verificar que se devuelva null ya que el tipo de preferencia no existe
+        $this->assertNull($resultado);
+    }
 }

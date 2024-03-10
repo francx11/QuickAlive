@@ -13,7 +13,6 @@ $twig = new \Twig\Environment($loader);
 echo $twig->render('enviaEmail.html', []);
 
 $bd = new BD();
-$bd->iniciarConexion();
 
 // Verificar si se está realizando una petición POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

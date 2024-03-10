@@ -17,7 +17,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         $numImagen = $_POST['imagenId'];
         // Crear una instancia de la clase BD y establecer la conexión
         $bd = new BD();
-        $bd->iniciarConexion();
 
         // Intentar eliminar la imagen de la galería
         if ($bd->eliminarFotoGaleria($numImagen)) {
@@ -31,8 +30,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             echo json_encode(array('success' => false, 'message' => 'Error en la eliminación de la imagen'));
         }
 
-        // Cerrar la conexión a la base de datos
-        $bd->cerrarConexion();
     } else {
         // Enviar una respuesta JSON con el estado de error si el usuario no tiene permisos de administrador o no se proporciona un ID de imagen válido
         echo json_encode(array('success' => false, 'message' => 'Acceso no autorizado o ID de imagen no válido'));

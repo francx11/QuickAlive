@@ -24,8 +24,6 @@ if (isset($_GET['token']) && isset($_GET['email'])) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Crear una instancia de la clase BD para interactuar con la base de datos
         $bd = new BD();
-        // Iniciar una conexión a la base de datos
-        $bd->iniciarConexion();
 
         // Obtener el token de recuperación correspondiente al correo electrónico de la base de datos
         $tokenBD = $bd->getTokenRecuperacion($correo);
@@ -54,8 +52,6 @@ if (isset($_GET['token']) && isset($_GET['email'])) {
             }
         }
 
-        // Cerrar la conexión a la base de datos
-        $bd->cerrarConexion();
     }
 } else {
     // No se recibió el token por GET

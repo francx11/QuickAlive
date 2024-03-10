@@ -19,8 +19,6 @@ $idUsuario = -1;
 
 // Si el usuario está registrado como 'root', proceder con la eliminación del usuario
 if ($registradoRoot) {
-    // Iniciar la conexión a la base de datos
-    $bd->iniciarConexion();
 
     // Verificar si se proporcionó un ID de usuario a eliminar a través de la variable $_GET
     if (isset($_GET['id'])) {
@@ -37,6 +35,3 @@ if ($registradoRoot) {
         echo 'Error en la eliminación del usuario';
     }
 }
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();

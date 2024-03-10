@@ -41,7 +41,17 @@ class BD
             echo ("Fallo en la conexion: " . $this->mysqli->connect_errno);
         }
 
+        $this->iniciarConexion();
+
         return $this->mysqli;
+    }
+
+    /**
+     * Destructor de la clase BD. Cierra la conexión con la base de datos utilizando el método cerrarConexion().
+     */
+    public function __destruct()
+    {
+        $this->cerrarConexion();
     }
 
     /**
@@ -970,8 +980,8 @@ class BD
             // Recorrer el resultado y guardar las preferencias hijas en el array
             while ($row = $result->fetch_assoc()) {
                 $preferencia = array(
-                    'id' => $row[$campoId],
-                    'nombre' => $row[$campoNombre],
+                    'idPreferencia' => $row[$campoId],
+                    'nombrePreferencia' => $row[$campoNombre],
                     // Agregar otros campos según la estructura de tu tabla de preferencias hijas
                 );
                 $preferencias[] = $preferencia;
@@ -1030,31 +1040,44 @@ class BD
         }
     }
 
-    public function testGetTipoPreferenciaExistente()
+    /**
+     * Obtiene todas las filas de la tabla tipoPreferencias.
+     *
+     * @return array|false Devuelve un array con todas las filas de tipoPreferencias si se encuentran,
+     *                    o false si hay un error al ejecutar la consulta.
+     */
+    public function getAllTipoPreferencias()
     {
-        // Insertar un tipo de preferencia de prueba
-        $tipoPreferencia = "Prueba";
-        $this->bd->insertarTipoDePreferencia($tipoPreferencia);
+        // Consulta SQL para obtener todas las filas de tipoPreferencias
+        $query = "SELECT idTipoPreferencia, tipoPreferencia FROM tipoPreferencias";
 
-        // Obtener el tipo de preferencia
-        $resultado = $this->bd->getTipoPreferencia($tipoPreferencia);
+        // Preparar la consulta
+        $stmt = $this->mysqli->prepare($query);
 
-        // Verificar que se obtenga un resultado
-        $this->assertNotNull($resultado);
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            // Obtener el resultado de la consulta
+            $result = $stmt->get_result();
 
-        // Verificar que los datos obtenidos coincidan con los esperados
-        $this->assertEquals($tipoPreferencia, $resultado['tipoPreferencia']);
+            // Inicializar un array para almacenar todas las filas de tipoPreferencias
+            $tipoPreferencias = array();
 
-        // Limpiar el estado de la base de datos eliminando el tipo de preferencia de prueba
-        $this->assertTrue($this->bd->eliminarTipoPreferencia($resultado['idTipoPreferencia']));
+            // Recorrer el resultado y guardar las filas en el array
+            while ($row = $result->fetch_assoc()) {
+                $tipoPreferenciaData = array(
+                    'idTipoPreferencia' => $row['idTipoPreferencia'],
+                    'tipoPreferencia' => $row['tipoPreferencia'],
+                    // Agregar otros campos según la estructura de tu tabla tipoPreferencias
+                );
+                $tipoPreferencias[] = $tipoPreferenciaData;
+            }
+
+            // Devolver todas las filas de tipoPreferencias
+            return $tipoPreferencias;
+        } else {
+            // Si hay un error al ejecutar la consulta, devolver false
+            return false;
+        }
     }
 
-    public function testGetTipoPreferenciaNoExistente()
-    {
-        // Obtener un tipo de preferencia que no existe en la base de datos
-        $resultado = $this->bd->getTipoPreferencia("TipoInexistente");
-
-        // Verificar que se devuelva null ya que el tipo de preferencia no existe
-        $this->assertNull($resultado);
-    }
 }

@@ -17,9 +17,6 @@ $bd = new BD();
 // Establecer el tipo de contenido de la respuesta HTTP como JSON
 header('Content-Type: application/json');
 
-// Iniciar una conexión a la base de datos
-$bd->iniciarConexion();
-
 // Verificar si el usuario está registrado como 'root' y está logueado
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
 // Obtener el estado de inicio de sesión del usuario
@@ -38,6 +35,3 @@ if (isset($_POST['nombreActividadBuscado'])) {
 
 // Convertir los resultados de la búsqueda en formato JSON y enviar la respuesta
 echo json_encode($actividadesBuscadas);
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();

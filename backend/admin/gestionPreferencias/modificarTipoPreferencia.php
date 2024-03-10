@@ -11,7 +11,6 @@ $bd = new BD();
 
 // Verificar la sesión del usuario
 if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
-    $bd->iniciarConexion();
     $logueado = $_SESSION['loggedin'];
 
     $tipoOperacion = isset($_GET['tipoOperacion']) ? $_GET['tipoOperacion'] : "añadir";
@@ -68,5 +67,3 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
     // Si el usuario no tiene permisos suficientes, mostrar un mensaje de error en la página
     echo "No tienes permiso para realizar esta acción";
 }
-
-$bd->cerrarConexion();

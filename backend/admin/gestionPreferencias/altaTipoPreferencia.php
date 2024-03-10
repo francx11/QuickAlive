@@ -22,8 +22,6 @@ $logueado = $_SESSION['loggedin'];
 
 // Si el usuario está registrado como 'root'
 if ($registradoRoot) {
-    // Iniciar la conexión a la base de datos
-    $bd->iniciarConexion();
 
     // Si se recibió una solicitud POST desde el formulario
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -44,6 +42,3 @@ if ($registradoRoot) {
     // Renderizar el formulario de alta de tipo de preferencia utilizando Twig y enviar la variable de sesión 'logueado'
     echo $twig->render('altaTipoPreferencia.html', ['logueado' => $logueado]);
 }
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();

@@ -19,8 +19,6 @@ $idTipoPreferencia = -1;
 
 // Si el usuario está registrado como 'root'
 if ($registradoRoot) {
-    // Iniciar la conexión a la base de datos
-    $bd->iniciarConexion();
 
     // Verificar si se proporcionó un ID de tipo de preferencia en la URL
     if (isset($_GET['id'])) {
@@ -38,6 +36,3 @@ if ($registradoRoot) {
     }
 
 }
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();

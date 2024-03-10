@@ -21,8 +21,6 @@ $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_S
 
 // Si el usuario es root, procede con la modificación de la actividad
 if ($registradoRoot) {
-    // Inicia la conexión con la base de datos
-    $bd->iniciarConexion();
 
     // Obtiene los datos de la actividad original
     $actividadOriginal = $bd->getActividad($idActividad);

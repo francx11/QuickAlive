@@ -19,8 +19,6 @@ $idUsuario = -1;
 
 // Si el usuario está registrado como 'root'
 if ($registradoRoot) {
-    // Iniciar una conexión a la base de datos
-    $bd->iniciarConexion();
 
     // Obtener el ID del usuario desde la consulta GET si está presente
     if (isset($_GET['id'])) {
@@ -37,6 +35,3 @@ if ($registradoRoot) {
     }
 
 }
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();

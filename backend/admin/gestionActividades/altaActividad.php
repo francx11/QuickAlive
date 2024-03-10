@@ -21,9 +21,6 @@ $logueado = $_SESSION['loggedin'];
 
 // Si el usuario está registrado como 'root'
 if ($registradoRoot) {
-    // Iniciar una conexión a la base de datos
-    $bd->iniciarConexion();
-
     // Si se ha enviado una solicitud POST
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verificar si se han enviado los datos del formulario
@@ -73,6 +70,3 @@ if ($registradoRoot) {
     // Renderizar la plantilla 'altaActividad.html' utilizando Twig
     echo $twig->render('altaActividad.html', ['logueado' => $logueado]);
 }
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();

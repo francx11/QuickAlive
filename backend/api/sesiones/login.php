@@ -11,9 +11,6 @@ $twig = new \Twig\Environment($loader);
 // Crear una instancia de la clase BD para interactuar con la base de datos
 $bd = new BD();
 
-// Iniciar una conexión a la base de datos
-$bd->iniciarConexion();
-
 $inicio = 0; // Variable para controlar el estado del inicio de sesión
 
 // Verificar si se ha enviado el formulario de inicio de sesión mediante el método POST
@@ -39,16 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../../../backend/admin/panelAdmin.php");
         } else {
             // Si el usuario no es administrador, redirigir a la página principal
-            header("Location: ../../../index.php");
+            header("Location: ../../../bakend/user/gestionRecomendaciones/pantallaInicial.php");
         }
     } else {
         // Las credenciales son incorrectas
         $inicio = 2;
     }
 }
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();
 
 // Renderizar la plantilla 'login.html' utilizando Twig, pasando el estado del inicio de sesión
 echo $twig->render('login.html', ['inicio' => $inicio]);

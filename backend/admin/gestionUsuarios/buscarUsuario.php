@@ -18,9 +18,6 @@ $bd = new BD();
 // Establecer el encabezado de la respuesta HTTP como JSON
 header('Content-Type: application/json');
 
-// Iniciar la conexión a la base de datos
-$bd->iniciarConexion();
-
 // Verificar si el usuario está registrado como 'root' y está logueado
 $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root';
 // Obtener el estado de inicio de sesión del usuario
@@ -39,6 +36,3 @@ if ($registradoRoot && isset($_POST['nickNameBuscado'])) {
     // Enviar la respuesta JSON con los usuarios encontrados
     echo json_encode($usuariosBuscados);
 }
-
-// Cerrar la conexión a la base de datos
-$bd->cerrarConexion();

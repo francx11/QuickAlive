@@ -64,3 +64,17 @@ button:hover {
 .recuperacion-contrasena a:hover {
     text-decoration: underline; /* Subrayado al pasar el cursor */
 }
+
+/* Estilo para el contenedor del enlace de registro */
+.registro {
+    text-align: center; /* Alineación centrada del texto */
+    margin-top: 20px; /* Margen superior */
+    display: flex; /* Utiliza el modelo de caja flexible */
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+/* Estilo para el enlace de registro */
+.registro a {
+    color: #007BFF; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+}

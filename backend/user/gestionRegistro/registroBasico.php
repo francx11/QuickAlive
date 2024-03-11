@@ -11,31 +11,36 @@ $twig = new \Twig\Environment($loader);
 // Crear una instancia de la clase BD para interactuar con la base de datos
 $bd = new BD();
 
-$tipoPreferencias = $bd->getAllTipoPreferencias();
+// Si se ha enviado una solicitud POST desde el formulario
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    echo '<pre>';
+    print_r($_POST);
+    echo '</pre>';
 
-//echo var_dump($tipoPreferencias);
+    // Obtener los datos del formulario
+    $nickName = $_POST['nickName'];
+    $telefono = $_POST['telefono'];
+    $correo = $_POST['correo'];
+    $password = $_POST['password'];
+    $nombre = $_POST['nombre'];
+    $apellidos = $_POST['apellidos'];
+    $edad = $_POST['edad'];
+    $rol = $_POST['role'];
 
-// Crear un nuevo array para almacenar los datos con el formato deseado
-$tipoPreferenciasFormateado = [];
+    echo var_dump($rol);
 
-// Iterar sobre cada tipo de preferencia y obtener sus preferencias asociadas
-foreach ($tipoPreferencias as $tipoPreferencia) {
-    $idTipoPreferencia = $tipoPreferencia['idTipoPreferencia'];
-    $nombreTipoPreferencia = $tipoPreferencia['tipoPreferencia'];
+    // Insertar el nuevo usuario en la base de datos
+    if (!$bd->insertarUsuario($nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)) {
+        echo 'Error en la inserción del usuario';
+    }
 
-    // Obtener las preferencias asociadas a este tipo de preferencia
-    $preferencias = $bd->obtenerPreferencias($idTipoPreferencia, $nombreTipoPreferencia);
+    $usuario = $bd->getUsuario($nickName);
 
-    // Construir el array asociativo para este tipo de preferencia
-    $tipoPreferenciaFormateado = [
-        'idTipoPreferencia' => $idTipoPreferencia,
-        'tipoPreferencia' => $nombreTipoPreferencia,
-        'preferencias' => $preferencias,
-    ];
+    $idUsuario = $usuario->getIdUsuario();
 
-    // Agregar el array asociativo al array principal
-    $tipoPreferenciasFormateado[] = $tipoPreferenciaFormateado;
-
+    // Redirigir al usuario de vuelta a la misma página para evitar envíos duplicados del formulario
+    header("Location: registroPreferencias.php?id=" . $idUsuario);
+    exit();
 }
 
-echo $twig->render('registroBasico.html', ['tiposPreferencias' => $tipoPreferenciasFormateado]);
+echo $twig->render('registroBasico.html', []);

@@ -10,16 +10,10 @@ header {
     padding: 20px 0;
 }
 
-.container {
-    display: flex;
-    justify-content: space-between;
+.registro {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-}
-
-.registro {
-    flex: 0 0 45%;
 }
 
 .registro form {
@@ -60,17 +54,4 @@ header {
 
 .registro button:hover {
     background-color: #0056b3;
-}
-
-.preferencia {
-    background-color: #f0f0f0;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.preferencia.seleccionada {
-    background-color: #007bff;
-    color: #fff;
 }

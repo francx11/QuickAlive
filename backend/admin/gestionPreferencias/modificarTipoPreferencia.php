@@ -20,6 +20,8 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
     // Obtener el tipo de prefencia al que pertenece
     $tipoPreferencia = isset($_GET['tipoPreferencia']) ? $_GET['tipoPreferencia'] : "Deportivas";
 
+    //echo $tipoPreferencia;
+
     // Obtener las preferencias hijas de la preferencia padre
     $preferencias = $bd->obtenerPreferencias($idTipoPreferencia, $tipoPreferencia);
 
@@ -34,7 +36,8 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
             // Llamar a la función para eliminar la preferencia hija
             if ($bd->eliminarPreferencia($idPreferencia, $tipoPreferencia)) {
                 // Si la eliminación fue exitosa, redirigir a la misma página para actualizar la lista
-                header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $idTipoPreferencia);
+                header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $idTipoPreferencia . "&tipoPreferencia=" . urlencode($tipoPreferencia));
+
                 exit();
             } else {
                 // Si la eliminación falló, mostrar un mensaje de error en la página
@@ -52,7 +55,8 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
 
             // Llamar a la función para añadir una preferencia hija
             if ($bd->insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia) != -1) {
-                header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $idTipoPreferencia);
+                header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $idTipoPreferencia . "&tipoPreferencia=" . urlencode($tipoPreferencia));
+
             } else {
                 echo "Error en la adición de una subPreferencia";
             }
@@ -60,8 +64,10 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
 
     }
 
+    //echo var_dump($preferencias);
     // Renderizar el template con la lista de preferencias hijas
-    echo $twig->render('modificarTipoPreferencia.html', ['preferencias' => $preferencias, 'idTipoPreferencia' => $idTipoPreferencia, 'logueado' => $logueado]);
+    echo $twig->render('modificarTipoPreferencia.html', ['preferencias' => $preferencias, 'idTipoPreferencia' => $idTipoPreferencia,
+        'tipoPreferencia' => $tipoPreferencia, 'logueado' => $logueado]);
 
 } else {
     // Si el usuario no tiene permisos suficientes, mostrar un mensaje de error en la página

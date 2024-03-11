@@ -1080,4 +1080,36 @@ class BD
         }
     }
 
+    /**
+     * Inserta una preferencia personal para un usuario en las tablas PreferenciasPersonales y UsuarioPreferencias.
+     *
+     * @param int $idUsuario ID del usuario al que se asociará la preferencia personal.
+     * @param string $nombrePreferencia Nombre de la preferencia personal.
+     * @return int El ID de la preferencia personal insertada si la inserción fue exitosa, de lo contrario, retorna -1.
+     */
+    public function insertarPreferenciaPersonal($idUsuario, $nombrePreferencia)
+    {
+        // Insertar la preferencia personal en la tabla PreferenciasPersonales
+        $queryPreferenciaPersonal = "INSERT INTO PreferenciasPersonales (nombrePreferencia) VALUES (?)";
+        $stmtPreferenciaPersonal = $this->mysqli->prepare($queryPreferenciaPersonal);
+        $stmtPreferenciaPersonal->bind_param('s', $nombrePreferencia);
+
+        try {
+            $stmtPreferenciaPersonal->execute();
+            $idPreferenciaPersonal = $stmtPreferenciaPersonal->insert_id; // Obtener el ID de la preferencia personal insertada
+
+            // Insertar la relación en la tabla UsuarioPreferencias
+            $queryUsuarioPreferencias = "INSERT INTO UsuarioPreferencias (idUsuario, idPreferencia) VALUES (?, ?)";
+            $stmtUsuarioPreferencias = $this->mysqli->prepare($queryUsuarioPreferencias);
+            $stmtUsuarioPreferencias->bind_param('ii', $idUsuario, $idPreferenciaPersonal);
+
+            $stmtUsuarioPreferencias->execute(); // Ejecutar la consulta de inserción en UsuarioPreferencias
+
+            return $idPreferenciaPersonal; // Devolver el ID de la preferencia personal insertada
+        } catch (PDOException $e) {
+            echo "Error al insertar preferencia personal: " . $e->getMessage(); // Manejar cualquier excepción que pueda ocurrir durante la inserción
+            return -1; // Retornar un valor negativo en caso de error
+        }
+    }
+
 }

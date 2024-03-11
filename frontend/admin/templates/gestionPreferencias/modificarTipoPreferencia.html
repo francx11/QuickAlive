@@ -38,15 +38,15 @@
 		<ul>
 			{% for preferencia in preferencias %}
 			<li>
-				<span class="nombre">Nombre: {{ preferencia.nombre }}</span>
+				<span class="nombre">Nombre: {{ preferencia.nombrePreferencia }}</span>
 				<form
-					action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=borrar"
+					action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=borrar&tipoPreferencia={{tipoPreferencia}}"
 					method="post"
 				>
 					<input
 						type="hidden"
 						name="idPreferencia"
-						value="{{ preferencia.id }}"
+						value="{{ preferencia.idPreferencia }}"
 					/>
 					<button type="submit">Eliminar</button>
 				</form>
@@ -57,7 +57,7 @@
 		<!-- Formulario para agregar nueva preferencia hija -->
 		<h3>Agregar Nueva Preferencia</h3>
 		<form
-			action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=añadir"
+			action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=añadir&tipoPreferencia={{tipoPreferencia}}"
 			method="post"
 		>
 			<input

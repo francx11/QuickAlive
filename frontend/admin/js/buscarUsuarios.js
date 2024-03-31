@@ -14,7 +14,7 @@ $(document).ready(function() {
             // Realizar una solicitud AJAX utilizando jQuery
             $.ajax({
                 type: 'POST', // Método de la solicitud AJAX
-                url: 'http://localhost/quickalive/backend/admin/gestionUsuarios/buscarUsuario.php', // URL del script PHP para buscar usuarios
+                url: 'buscarUsuario.php', // URL del script PHP para buscar usuarios
                 data: { nickNameBuscado: nickNameBuscado }, // Datos a enviar al servidor (nombre de usuario buscado)
                 dataType: 'json', // Tipo de datos esperados en la respuesta (JSON)
                 success: function(resultados) {

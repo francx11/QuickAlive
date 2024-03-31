@@ -14,7 +14,7 @@ $(document).ready(function() {
             // Realizar una solicitud AJAX utilizando jQuery
             $.ajax({
                 type: 'POST', // Método de la solicitud AJAX
-                url: 'http://localhost/quickalive/backend/admin/gestionActividades/buscarActividad.php', // URL del script PHP para buscar actividades
+                url: 'buscarActividad.php', // URL del script PHP para buscar actividades
                 data: { nombreActividadBuscado: nombreActividadBuscado }, // Datos a enviar al servidor (nombre de actividad buscado)
                 dataType: 'json', // Tipo de datos esperados en la respuesta (JSON)
                 success: function(resultados) {

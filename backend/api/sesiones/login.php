@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../../../backend/admin/panelAdmin.php");
         } else {
             // Si el usuario no es administrador, redirigir a la página principal
-            header("Location: ../../../bakend/user/gestionRecomendaciones/pantallaInicial.php");
+            header("Location: ../../../backend/user/pantallaInicial.php");
         }
     } else {
         // Las credenciales son incorrectas

@@ -64,15 +64,13 @@
 					Galería de imágenes Actual: {% for imagen in imagenes %}
 					<div class="imagen">
 						<img src="{{ imagen.url }}" alt="Imagen de la galería" />
-						<a href="modificarActividad.php?id= {{ idActividad }}">
-							<button
-								type="button"
-								class="eliminar-imagen"
-								data-id="{{ imagen.numImagen }}"
-							>
-								&#128465;
-							</button>
-						</a>
+						<button
+							type="button"
+							class="eliminar-imagen"
+							data-id="{{ imagen.numImagen }}"
+						>
+							&#128465;
+						</button>
 					</div>
 
 					{% endfor %}

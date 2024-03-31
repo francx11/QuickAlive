@@ -14,7 +14,7 @@ $(document).ready(function() {
             // Realizar una solicitud AJAX utilizando jQuery
             $.ajax({
                 type: 'POST', // Método de la solicitud AJAX
-                url: 'http://localhost/quickalive/backend/admin/gestionPreferencias/buscarTipoPreferencia.php', // URL del script PHP para buscar tipos de preferencia
+                url: 'buscarTipoPreferencia.php', // URL del script PHP para buscar tipos de preferencia
                 data: { tipoPreferenciaBuscado: tipoPreferenciaBuscado }, // Datos a enviar al servidor (nombre de tipo de preferencia buscado)
                 dataType: 'json', // Tipo de datos esperados en la respuesta (JSON)
                 success: function(resultados) {

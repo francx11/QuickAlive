@@ -9,10 +9,12 @@ if (navigator.geolocation) {
         var longitude = position.coords.longitude;
 
         // Define el radio en km
-        var radius = 1000;
+        var radius = 50;
 
         // Construye la URL de la API
-        var url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + API_KEY + '&geoPoint=' + latitude + ',' + longitude + '&radius=' + radius;
+        //var url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + API_KEY + '&geoPoint=' + latitude + ',' + longitude + '&radius=' + radius;
+        var url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + API_KEY + '&keyword=Granada';
+
 
         $.ajax({
             type:"GET",
@@ -20,13 +22,27 @@ if (navigator.geolocation) {
             async:true,
             dataType: "json",
             success: function(json) {
-                console.log(json);
-                // Imprime los eventos
+                console.log(json._embedded.events);
+                // Muestra los eventos en tarjetas HTML
+                var eventsContainer = document.getElementById('events-container');
                 for (let event of json._embedded.events) {
-                    console.log('Nombre del evento: ' + event.name);
-                    console.log('Fecha del evento: ' + event.dates.start.localDate);
-                    console.log('URL del evento: ' + event.url);
-                    console.log('---');
+                    var eventCard = document.createElement('div');
+                    eventCard.classList.add('event-card');
+
+                    var eventName = document.createElement('h3');
+                    eventName.textContent = event.name;
+                    eventCard.appendChild(eventName);
+
+                    var eventDate = document.createElement('p');
+                    eventDate.textContent = 'Fecha del evento: ' + event.dates.start.localDate;
+                    eventCard.appendChild(eventDate);
+
+                    var eventUrl = document.createElement('a');
+                    eventUrl.href = event.url;
+                    eventUrl.textContent = 'Ver más';
+                    eventCard.appendChild(eventUrl);
+
+                    eventsContainer.appendChild(eventCard);
                 }
             },
             error: function(xhr, status, err) {

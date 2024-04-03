@@ -403,6 +403,19 @@ class BD
 
         return $rol;
     }
+/**
+ * Obtiene el id de un usuario por su nombre de usuario (nickName).
+ *
+ * @param string $nickName Nombre de usuario del usuario.
+ * @return string Id del usuario.
+ */
+    public function getIdUsuario($nickName)
+    {
+        $usuario = $this->getUsuario($nickName);
+        $rol = $usuario->getIdUsuario();
+
+        return $rol;
+    }
 
 /**
  * Verifica las credenciales de inicio de sesión de un usuario.

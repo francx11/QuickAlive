@@ -45,14 +45,11 @@ class TestUsuario extends TestCase
     {
         // Aquí puedes realizar configuraciones necesarias antes de cada prueba
         $this->bd = new BD();
-        $this->bd->iniciarConexion();
     }
 
     // Método para limpiar el entorno de pruebas
     protected function tearDown(): void
     {
-        // Aquí puedes limpiar los recursos o deshacer cambios después de cada prueba
-        $this->bd->cerrarConexion();
     }
     public function testGetTokenRecuperacionExistente()
     {
@@ -340,6 +337,21 @@ class TestUsuario extends TestCase
 
         // Verificar si se obtiene el rol esperado
         $this->assertEquals($rolEsperado, $rolObtenido);
+    }
+
+    public function testGetIdUsuario()
+    {
+        // NickName del usuario existente
+        $nickName = 'root';
+
+        // Id esperado del usuario
+        $idEsperado = '7'; // Supongamos que el id esperado es 7
+
+        // Ejecutar la función que se está probando
+        $idObtenido = $this->bd->getIdUsuario($nickName);
+
+        // Verificar si se obtiene el rol esperado
+        $this->assertEquals($idEsperado, $idObtenido);
     }
 
     public function testCheckLogin()

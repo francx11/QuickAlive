@@ -16,31 +16,23 @@ h1 {
     margin: 0;
 }
 
-#actividades-lista {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.actividad {
-    margin-bottom: 20px;
-    padding: 10px;
+.event-card {
     border: 1px solid #ccc;
     border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
-.actividad h2 {
+.event-card h3 {
     margin-top: 0;
 }
 
-.actividad p {
-    margin: 0;
+.event-card p {
+    margin-bottom: 5px;
 }
 
-.actividad .tipo {
-    font-style: italic;
-    color: #007BFF;
+.event-card a {
+    text-decoration: none;
+    color: blue;
 }
+

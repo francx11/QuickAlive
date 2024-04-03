@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['loggedin'] = true; // Variable para indicar que el usuario está logueado
         $_SESSION['password'] = $pass; // Contraseña del usuario (nota: guardar contraseñas en sesión no es recomendado por motivos de seguridad)
         $_SESSION['rol'] = $bd->getRol($nick); // Rol del usuario
+        $_SESSION['idUsuario'] = $bd->getIdUsuario($nick); // Id del usuario
 
         // Redirigir al usuario según su rol
         if ($_SESSION['rol'] == 'root') {

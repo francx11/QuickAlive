@@ -5,7 +5,7 @@ $(document).ready(function() {
     });
 
     // Evento click para el botón de guardar preferencias
-    $("#guardarPreferencias").click(function() {
+    $("#actualizarPreferencias").click(function() {
         // Obtener el ID del usuario del atributo de datos del elemento HTML
         var idUsuario = $("#usuario").data("id-usuario");
 
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
         // Realizar la solicitud AJAX para enviar las preferencias seleccionadas y el ID del usuario al archivo PHP
         $.ajax({
-            url: "guardarPreferencias.php",
+            url: "actualizarPreferencias.php",
             type: "POST",
             data: { idUsuario: idUsuario, preferencias: preferenciasSeleccionadas },
             success: function(response) {
@@ -39,7 +39,7 @@ $(document).ready(function() {
                 //window.location.href = '../../../backend/api/sesiones/login.php';
                 //window.location.href = '../../../backend/user/gestionRegistro/registroPreferencias.php'
                 // Manejar la respuesta del servidor si es necesario
-                window.location.href = '../../../backend/api/sesiones/login.php';
+                window.location.href = '../../../backend/user/pantallaInicial.php';
             },
             error: function(xhr, status, error) {
                 // Manejar errores de la solicitud AJAX si es necesario

@@ -995,6 +995,7 @@ class BD
                 $preferencia = array(
                     'idPreferencia' => $row[$campoId],
                     'nombrePreferencia' => $row[$campoNombre],
+                    'idTipoPreferencia' => $idTipoPreferencia,
                     // Agregar otros campos según la estructura de tu tabla de preferencias hijas
                 );
                 $preferencias[] = $preferencia;
@@ -1094,34 +1095,107 @@ class BD
     }
 
     /**
-     * Inserta una preferencia personal para un usuario en las tablas PreferenciasPersonales y UsuarioPreferencias.
+     * Inserta una preferencia personal para un usuario en la tabla UsuarioPreferencias.
      *
      * @param int $idUsuario ID del usuario al que se asociará la preferencia personal.
-     * @param string $nombrePreferencia Nombre de la preferencia personal.
-     * @return int El ID de la preferencia personal insertada si la inserción fue exitosa, de lo contrario, retorna -1.
-     */
-    public function insertarPreferenciaPersonal($idUsuario, $nombrePreferencia)
+     * @param int $nombrePreferencia NOMBRE de la preferencia personal.
+     * @param int $idTipoPreferencia ID del tipo de preferencia.
+     * @return bool Devuelve true si la inserción fue exitosa
+     * */
+    public function insertarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia)
     {
-        // Insertar la preferencia personal en la tabla PreferenciasPersonales
-        $queryPreferenciaPersonal = "INSERT INTO PreferenciasPersonales (nombrePreferencia) VALUES (?)";
-        $stmtPreferenciaPersonal = $this->mysqli->prepare($queryPreferenciaPersonal);
-        $stmtPreferenciaPersonal->bind_param('s', $nombrePreferencia);
+        // Insertar la relación en la tabla UsuarioPreferencias
+        $queryUsuarioPreferencias = "INSERT INTO UsuarioPreferencias (idUsuario, nombrePreferencia, idTipoPreferencia) VALUES (?, ?, ?)";
+        $stmtUsuarioPreferencias = $this->mysqli->prepare($queryUsuarioPreferencias);
+        $stmtUsuarioPreferencias->bind_param('isi', $idUsuario, $nombrePreferencia, $idTipoPreferencia);
 
         try {
-            $stmtPreferenciaPersonal->execute();
-            $idPreferenciaPersonal = $stmtPreferenciaPersonal->insert_id; // Obtener el ID de la preferencia personal insertada
-
-            // Insertar la relación en la tabla UsuarioPreferencias
-            $queryUsuarioPreferencias = "INSERT INTO UsuarioPreferencias (idUsuario, idPreferencia) VALUES (?, ?)";
-            $stmtUsuarioPreferencias = $this->mysqli->prepare($queryUsuarioPreferencias);
-            $stmtUsuarioPreferencias->bind_param('ii', $idUsuario, $idPreferenciaPersonal);
-
             $stmtUsuarioPreferencias->execute(); // Ejecutar la consulta de inserción en UsuarioPreferencias
-
-            return $idPreferenciaPersonal; // Devolver el ID de la preferencia personal insertada
+            //$idUsuarioPreferencia = $stmtUsuarioPreferencias->insert_id; // Obtener el ID de la preferencia personal insertada
+            return true;
         } catch (PDOException $e) {
             echo "Error al insertar preferencia personal: " . $e->getMessage(); // Manejar cualquier excepción que pueda ocurrir durante la inserción
-            return -1; // Retornar un valor negativo en caso de error
+            return false; // Retornar un valor negativo en caso de error
+        }
+    }
+
+    /**
+     * Elimina una preferencia personal de un usuario de la base de datos.
+     *
+     * @param int $idUsuario El ID del usuario cuya preferencia personal se desea eliminar.
+     * @param string $nombrePreferencia El nombre de la preferencia personal que se desea eliminar.
+     * @param int $idTipoPreferencia El ID del tipo de preferencia asociado a la preferencia personal.
+     * @return bool Devuelve true si la preferencia personal fue eliminada correctamente, false en caso contrario.
+     */
+    public function eliminarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia)
+    {
+        // Consulta SQL para eliminar la preferencia personal de la tabla UsuarioPreferencias
+        $query = "DELETE FROM UsuarioPreferencias WHERE idUsuario = ? AND nombrePreferencia = ? AND idTipoPreferencia = ?";
+
+        // Preparar la consulta
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('isi', $idUsuario, $nombrePreferencia, $idTipoPreferencia);
+
+        // Ejecutar la consulta y verificar si se ejecuta correctamente
+        if ($stmt->execute()) {
+            // Verificar si se eliminó alguna fila
+            if ($stmt->affected_rows > 0) {
+                return true; // La preferencia personal fue eliminada correctamente
+            } else {
+                return false; // No se eliminó ninguna fila, probablemente los datos proporcionados no coinciden con ninguna preferencia personal existente
+            }
+        } else {
+            return false; // Ocurrió un error al ejecutar la consulta de eliminación
+        }
+    }
+
+    /**
+     * Elimina todas las preferencias personales asociadas a un usuario de la base de datos.
+     *
+     * @param int $idUsuario El ID del usuario cuyas preferencias personales se desean eliminar.
+     * @return bool Devuelve true si las preferencias personales del usuario fueron eliminadas correctamente, false si no se eliminó ninguna fila o si hay un error al ejecutar la consulta.
+     */
+    public function eliminarPreferenciasPersonalesUsuario($idUsuario)
+    {
+        // Consulta SQL para eliminar las preferencias personales del usuario de la tabla UsuarioPreferencias
+        $query = "DELETE FROM usuariopreferencias WHERE idUsuario = ?";
+
+        // Preparar la consulta
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+
+        // Ejecutar la consulta y verificar si se ejecuta correctamente
+        if ($stmt->execute()) {
+            // Verificar si se eliminó alguna fila
+            if ($stmt->affected_rows > 0) {
+                return true; // Las preferencias personales del usuario fueron eliminadas correctamente
+            } else {
+                return false; // No se eliminó ninguna fila, probablemente el usuario no tenía preferencias personales asociadas
+            }
+        } else {
+            return false; // Ocurrió un error al ejecutar la consulta de eliminación
+        }
+    }
+
+    /**
+     * Actualiza las preferencias personales de un usuario en la base de datos.
+     *
+     * Este método elimina todas las preferencias personales existentes del usuario y luego inserta las nuevas preferencias proporcionadas.
+     *
+     * @param int $idUsuario El ID del usuario cuyas preferencias personales se van a actualizar.
+     * @param array $preferencias Un array que contiene las nuevas preferencias personales del usuario.
+     * @return void
+     */
+    public function actualizarPreferenciasPersonales($idUsuario, $preferencias)
+    {
+        // Eliminar todas las preferencias personales del usuario
+        $this->eliminarPreferenciasPersonalesUsuario($idUsuario);
+
+        // Insertar las nuevas preferencias personales del usuario
+        foreach ($preferencias as $preferencia) {
+            $nombrePreferencia = $preferencia["nombrePreferencia"];
+            $idTipoPreferencia = $preferencia["idTipoPreferencia"];
+            $this->insertarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia);
         }
     }
 

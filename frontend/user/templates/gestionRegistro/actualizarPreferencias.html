@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Registro de Preferencias</title>
+		<link
+			rel="stylesheet"
+			href="/quickalive/frontend/user/css/actualizarPreferencias.css"
+		/>
+	</head>
+	<body>
+		<header>
+			<h1>Actualización de Preferencias</h1>
+		</header>
+		<div class="tipo-preferencia">
+			<h2>Indica tus preferencias</h2>
+			{% for tipoPreferencia in tiposPreferencias %}
+			<h3>{{ tipoPreferencia.tipoPreferencia }}</h3>
+			<ul>
+				{% for preferencia in tipoPreferencia.preferencias %}
+				<li
+					class="preferencia"
+					data-id="{{ preferencia.idPreferencia }}"
+					data-tipo-preferencia="{{ preferencia.idTipoPreferencia }}"
+					data-nombre-preferencia="{{ preferencia.nombrePreferencia }}"
+				>
+					{{ preferencia.nombrePreferencia }}
+				</li>
+
+				{% endfor %}
+			</ul>
+			{% endfor %}
+		</div>
+		<button id="actualizarPreferencias">Actualizar Preferencias</button>
+
+		<div id="usuario" data-id-usuario="{{ idUsuario }}"></div>
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="/quickalive/frontend/user/js/actualizarPreferencias.js"></script>
+	</body>
+</html>

@@ -15,7 +15,7 @@ $idUsuario = isset($_GET['id']) ? $_GET['id'] : -1;
 
 // Verificar la sesión del usuario y sus permisos
 if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $_SESSION['rol'] == 'root') {
-    $bd->iniciarConexion();
+    $logueado = $_SESSION['loggedin'];
 
     // Obtener los datos del usuario original
     $usuarioOriginal = $bd->getUsuarioPorId($idUsuario);
@@ -64,11 +64,9 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
         }
     }
     // Renderizar el formulario de modificación del usuario
-    echo $twig->render('modificarUsuario.html', ['idUsuario' => $idUsuario, 'rol' => $rolOriginal]);
+    echo $twig->render('modificarUsuario.html', ['idUsuario' => $idUsuario, 'rol' => $rolOriginal, 'logueado' => $logueado]);
 
 } else {
     // Si el usuario no tiene permisos suficientes, mostrar un mensaje de error en la página
     echo "No tienes permiso para realizar esta acción";
 }
-
-$bd->cerrarConexion();

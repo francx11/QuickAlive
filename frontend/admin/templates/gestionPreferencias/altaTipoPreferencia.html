@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="/QuickAlive/frontend/admin/css/gestionPreferencias/altaTipoPreferencia.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<title>Alta de Tipo de Preferencia</title>
+	</head>
+	<body>
+		<header>
+			<a href="./gestionPreferencias.php"
+				><i class="fas fa-arrow-left"></i> Volver</a
+			>
+			<div class="brand">
+				<h2>Alta Tipo de Prefencia</h2>
+			</div>
+
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
+		</header>
+
+		<form
+			action="http://localhost/quickalive/backend/admin/gestionPreferencias/altaTipoPreferencia.php"
+			method="post"
+		>
+			<label for="tipoPreferencia">Tipo de Preferencia:</label>
+			<input type="text" id="tipoPreferencia" name="tipoPreferencia" required />
+
+			<button type="submit">Crear Tipo Preferencia</button>
+		</form>
+	</body>
+</html>

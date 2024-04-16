@@ -1,0 +1,108 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif; /* Tipo de fuente para el texto */
+    margin: 0; /* Elimina los márgenes alrededor del cuerpo de la página */
+    padding: 0; /* Elimina el relleno alrededor del cuerpo de la página */
+    background-color: #f4f4f4; /* Color de fondo para el cuerpo de la página */
+}
+
+/* Estilos para el encabezado */
+header {
+    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
+    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos */
+    align-items: center; /* Alinea verticalmente los elementos en el centro */
+    padding: 10px; /* Añade relleno alrededor del encabezado */
+    background-color: #333; /* Color de fondo oscuro para el encabezado */
+    color: white; /* Color del texto en el encabezado */
+}
+
+/* Estilos para la marca o logo */
+.brand {
+    flex: 1; /* La marca ocupará el espacio restante */
+    text-align: center; /* Alinea el texto al centro */
+}
+
+/* Estilos para el icono de flecha de retroceso */
+.fa-arrow-left {
+    margin-right: 10px; /* Margen derecho para separar el icono del texto */
+    color: #ffffff; /* Cambia el color del icono a blanco */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Agrega una sombra al texto para hacerlo más visible */
+
+}
+
+/* Estilos para el texto "Volver" */
+a {
+    color: #ffffff; /* Cambia el color del texto a blanco */
+    text-decoration: none; /* Quita la decoración de subrayado del enlace */
+}
+
+a:hover {
+    text-decoration: underline; /* Agrega subrayado al pasar el mouse sobre el enlace */
+}
+
+/* Estilos para los botones de inicio y cierre de sesión */
+.loginButton,
+.logoutButton {
+    background-color: #4CAF50; /* Color de fondo para los botones */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Relleno interno */
+    text-align: center; /* Alineación del texto al centro */
+    text-decoration: none; /* Sin decoración de texto */
+    display: inline-block; /* Mostrar como bloque en línea */
+    font-size: 16px; /* Tamaño de la fuente */
+    margin: 4px 2px; /* Márgenes */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 5px; /* Borde redondeado */
+}
+
+/* Estilos para los títulos de nivel 2 */
+h2 {
+    text-align: center; /* Alinea el texto al centro */
+    margin-top: 20px; /* Márgen superior */
+    margin-bottom: 30px; /* Márgen inferior */
+}
+
+/* Estilos para listas no ordenadas */
+ul {
+    list-style-type: none; /* Elimina los estilos de viñetas de la lista */
+    padding: 0; /* Elimina el relleno interior de la lista */
+    margin: 0; /* Elimina los márgenes exteriores de la lista */
+}
+
+/* Estilos para los elementos de lista */
+li {
+    background-color: #fff; /* Color de fondo para los elementos de lista */
+    margin-bottom: 10px; /* Márgen inferior */
+    padding: 10px; /* Relleno interno */
+    border-radius: 8px; /* Borde redondeado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Estilos específicos para elementos de lista con la clase "nombre" */
+li span.nombre {
+    font-weight: bold; /* Hace que el texto sea más grueso */
+}
+
+/* Estilos para formularios en línea */
+form {
+    display: inline; /* Muestra el formulario en línea */
+}
+
+/* Estilos para botones */
+button {
+    background-color: #007bff; /* Color de fondo para los botones */
+    color: #fff; /* Color del texto */
+    padding: 5px 10px; /* Relleno interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Borde redondeado */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-left: 10px; /* Márgen izquierdo */
+}
+
+/* Estilos para botones al pasar el cursor */
+button:hover {
+    background-color: #007bff; /* Color de fondo alternativo */
+}
+
+

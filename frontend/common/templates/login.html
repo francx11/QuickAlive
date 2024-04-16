@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Inicio de Sesión</title>
+		<!-- Se incluye un enlace a una hoja de estilos externa -->
 		<link
 			rel="stylesheet"
 			type="text/css"
@@ -13,25 +14,50 @@
 		<!-- Agrega aquí tus enlaces a hojas de estilo si es necesario -->
 	</head>
 	<body>
-		<!-- Contenido de tu página -->
-
+		<!-- Sección del formulario de inicio de sesión -->
 		<form
 			action="http://localhost/quickalive/backend/api/sesiones/login.php"
 			method="POST"
 		>
 			<label for="nickName">Nombre de Usuario:</label>
-			<input type="text" id="nickName" name="nickName" required />
+			<input
+				type="text"
+				id="nickName"
+				name="nickName"
+				required
+				autocomplete="off"
+			/>
 
 			<label for="password">Contraseña:</label>
 			<input type="password" id="password" name="password" required />
 
+			<!-- Sección para mostrar un mensaje de error si las credenciales son incorrectas -->
 			{% if inicio == 2 %}
 			<p>Nombre de usuario o contraseña incorrectos</p>
 			{% endif %}
 
+			<!-- Botón para enviar el formulario -->
 			<button type="submit">Iniciar Sesión</button>
 		</form>
 
-		<!-- Puedes agregar más contenido aquí -->
+		<!-- Sección para recuperación de contraseña -->
+		<div class="recuperacion-contrasena">
+			<!-- Enlace para recuperar contraseña -->
+			<p>
+				<a href="../../../backend/api/recuContraseña/enviaEmail.php">
+					¿Olvidaste tu contraseña?
+				</a>
+			</p>
+		</div>
+
+		<!-- Sección para el enlace de registro -->
+		<div class="registro">
+			<p>
+				¿No tienes una cuenta?
+				<a href="../../../backend/user/gestionRegistro/registroBasico.php"
+					>Regístrate aquí</a
+				>.
+			</p>
+		</div>
 	</body>
 </html>

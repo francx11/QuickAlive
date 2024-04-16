@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="/quickalive/frontend/admin/css/gestionPreferencias/gestionPreferencias.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		/>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<title>Gestión de preferencias</title>
+	</head>
+	<body>
+		<header>
+			<a href="../panelAdmin.php"><i class="fas fa-arrow-left"></i> Volver</a>
+
+			<div class="brand">
+				<h2>Gestión de Preferencias</h2>
+			</div>
+
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
+		</header>
+
+		<main>
+			<button
+				id="altaTipoPreferenciaButton"
+				onclick="window.location.href='/quickalive/backend/admin/gestionPreferencias/altaTipoPreferencia.php'"
+			>
+				Crear Nuevo Tipo de Preferencia
+			</button>
+
+			<div>
+				<label for="nombreTipoPreferenciaBuscado"
+					>Buscar Tipo de Preferencia:</label
+				>
+				<input
+					type="text"
+					id="nombreTipoPreferenciaBuscado"
+					name="nombreTipoPreferenciaBuscado"
+					placeholder="Buscar tipo preferencia"
+				/>
+			</div>
+
+			<div id="resultadosBusqueda"></div>
+		</main>
+
+		<script src="/quickalive/frontend/admin/js/buscarTipoPreferencias.js"></script>
+	</body>
+</html>

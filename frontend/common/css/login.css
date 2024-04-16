@@ -1,44 +1,80 @@
+/* Estilo para el cuerpo de la página */
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif; /* Fuente predeterminada */
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Elimina el relleno predeterminado */
+    background-color: #f4f4f4; /* Color de fondo */
 }
 
+/* Estilo para el formulario */
 form {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    max-width: 400px; /* Ancho máximo del formulario */
+    margin: 50px auto; /* Centra el formulario horizontalmente con un margen superior e inferior de 50px */
+    padding: 20px; /* Espaciado interno del formulario */
+    background-color: #fff; /* Color de fondo del formulario */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border-radius: 5px; /* Borde redondeado */
 }
 
+/* Estilo para las etiquetas de los campos */
 label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
+    display: block; /* Muestra las etiquetas en una línea separada */
+    margin-bottom: 8px; /* Margen inferior */
+    font-weight: bold; /* Texto en negrita */
 }
 
+/* Estilo para los campos de entrada */
 input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    width: 100%; /* Ancho completo */
+    padding: 8px; /* Espaciado interno */
+    margin-bottom: 16px; /* Margen inferior */
+    box-sizing: border-box; /* Incluye el relleno y el borde en el ancho total */
+    border: 1px solid #ccc; /* Borde con color gris claro */
+    border-radius: 4px; /* Borde redondeado */
 }
 
+/* Estilo para el botón de enviar */
 button {
-    background-color: #007BFF;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    background-color: #007BFF; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Borde redondeado */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
 }
 
+/* Estilo para el botón de enviar al pasar el cursor sobre él */
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el cursor */
 }
 
+/* Estilo para el contenedor del enlace de recuperación de contraseña */
+.recuperacion-contrasena {
+    text-align: center; /* Alineación centrada del texto */
+    margin-top: 20px; /* Margen superior */
+}
+
+/* Estilo para el enlace de recuperación de contraseña */
+.recuperacion-contrasena a {
+    color: #007BFF; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+}
+
+/* Estilo para el enlace de recuperación de contraseña al pasar el cursor sobre él */
+.recuperacion-contrasena a:hover {
+    text-decoration: underline; /* Subrayado al pasar el cursor */
+}
+
+/* Estilo para el contenedor del enlace de registro */
+.registro {
+    text-align: center; /* Alineación centrada del texto */
+    margin-top: 20px; /* Margen superior */
+    display: flex; /* Utiliza el modelo de caja flexible */
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+/* Estilo para el enlace de registro */
+.registro a {
+    color: #007BFF; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+}

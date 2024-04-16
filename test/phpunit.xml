@@ -1,0 +1,26 @@
+<!-- phpunit.xml.dist -->
+<phpunit>
+    <testsuites>
+        <!-- Define tus suites de pruebas aquí -->
+        <testsuite name="testUsuario"> 
+            <directory>testUsuario</directory>
+        </testsuite>
+
+        <testsuite name="testPreferencias"> 
+            <directory>testPreferencias</directory>
+        </testsuite>
+
+        <testsuite name="testActividades"> 
+            <directory>testActividades</directory>
+        </testsuite>
+        
+        
+    </testsuites>
+    <php>
+        <!-- Configura las variables de entorno para la conexión a la base de datos -->
+        <env force="true" name="DB_HOST" value="localhost"/>
+        <env force="true" name="DB_USER" value="root"/>
+        <env force="true" name="DB_PASS" value="jaimeJudio"/>
+        <env force="true" name="DB_NAME" value="quickalivedb"/>
+    </php>
+</phpunit>

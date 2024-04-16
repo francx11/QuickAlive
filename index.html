@@ -2,39 +2,51 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
+		<!-- Codificación de caracteres -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Configuración de la visualización en dispositivos móviles -->
 		<link href="index.css" rel="stylesheet" type="text/css" />
+		<!-- Enlace al archivo CSS -->
 		<title>Mi Aplicación de Recomendación</title>
+		<!-- Título de la página -->
 	</head>
 	<body>
 		<header>
 			<div class="brand">
 				<h1>QuickAlive</h1>
+				<!-- Título de la aplicación -->
 				<p>Descubre actividades emocionantes cerca de ti</p>
+				<!-- Descripción de la aplicación -->
 			</div>
 
 			{% if logueado %}
 			<a href="./backend/api/sesiones/logout.php"
 				><button class="logoutButton">Cerrar Sesión</button></a
 			>
+			<!-- Botón de cierre de sesión -->
 			{% else %}
 			<a href="./backend/api/sesiones/login.php"
 				><button class="loginButton">Iniciar Sesión</button></a
 			>
+			<!-- Botón de inicio de sesión -->
 			{% endif %}
 		</header>
 
 		<main>
 			<h2>Bienvenido!</h2>
+			<!-- Mensaje de bienvenida -->
 			<p>
 				Explora nuestras recomendaciones personalizadas basadas en tu ubicación
 				y preferencias.
 			</p>
+			<!-- Descripción de la aplicación -->
 			<p>¡Acaba con la monotonía y vive momentos vibrantes!</p>
+			<!-- Invitación a explorar la aplicación -->
 		</main>
 
 		<footer>
 			<p>&copy; 2024 QuickAlive</p>
+			<!-- Derechos de autor -->
 		</footer>
 	</body>
 </html>

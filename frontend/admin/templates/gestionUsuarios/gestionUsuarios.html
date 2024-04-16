@@ -8,12 +8,30 @@
 			rel="stylesheet"
 			type="text/css"
 		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		/>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<title>Gestión de usuarios</title>
 	</head>
 	<body>
 		<header>
-			<h1>Gestión de usuarios</h1>
+			<a href="../panelAdmin.php"><i class="fas fa-arrow-left"></i> Volver</a>
+
+			<div class="brand">
+				<h2>Gestión de Usuarios</h2>
+			</div>
+
+			{% if logueado %}
+			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+				><button class="logoutButton">Cerrar Sesión</button></a
+			>
+			{% else %}
+			<a href="./backend/api/sesiones/login.php"
+				><button class="loginButton">Iniciar Sesión</button></a
+			>
+			{% endif %}
 		</header>
 
 		<main>
@@ -39,8 +57,4 @@
 
 		<script src="/quickalive/frontend/admin/js/buscarUsuarios.js"></script>
 	</body>
-
-	<footer>
-		<p>&copy; 2024 QuickAlive</p>
-	</footer>
 </html>

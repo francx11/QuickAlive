@@ -1,48 +1,59 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
+/* Estilos generales */
+body, html {
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Elimina el relleno predeterminado */
+    font-family: Arial, sans-serif; /* Utiliza la fuente Arial o una fuente sans-serif como predeterminada */
+    height: 100%; /* Establece que el cuerpo y el HTML ocupen el 100% de la altura */
 }
 
+/* Estilos para el encabezado */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #333;
-    color: white;
+    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
+    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos del encabezado */
+    align-items: center; /* Alinea los elementos verticalmente en el centro del encabezado */
+    padding: 10px; /* Añade relleno alrededor del encabezado */
+    background-color: #333; /* Color de fondo oscuro para el encabezado */
+    color: white; /* Color del texto del encabezado */
 }
 
+/* Estilo para el contenedor de la marca o logo */
+.brand {
+    flex: 1; /* El contenedor de la marca ocupará el espacio restante */
+    text-align: center; /* Alineación del texto al centro */
+}
+
+/* Estilos para los botones */
+button {
+    padding: 10px 20px; /* Añade relleno interno a los botones */
+    margin: 10px; /* Establece márgenes externos para separar los botones */
+    font-size: 16px; /* Tamaño de fuente para los botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre los botones */
+    border: none; /* Elimina los bordes de los botones */
+    border-radius: 5px; /* Añade bordes redondeados a los botones */
+    background-color: #007bff; /* Color de fondo predeterminado para los botones */
+    color: #fff; /* Color del texto de los botones */
+    transition: background-color 0.3s ease; /* Transición suave en el cambio de color de fondo de los botones */
+}
+
+/* Estilos para los botones al pasar el cursor */
+button:hover {
+    background-color: #0056b3; /* Color de fondo alterno cuando se pasa el cursor sobre los botones */
+}
+
+/* Estilos para el contenido principal */
 main {
-    padding: 20px;
-    max-width: 800px;
-  
+    padding: 20px; /* Añade relleno alrededor del contenido principal */
+    max-width: 800px; /* Establece el ancho máximo del contenido principal */
+    margin: 0 auto; /* Centra el contenido principal horizontalmente */
 }
 
+/* Estilos para el pie de página */
 footer {
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    text-align: center;
-}
-
-
-.button-container {
-    text-align: center;
-}
-
-.button-container button {
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    transition: background-color 0.3s ease;
-}
-
-.button-container button:hover {
-    background-color: #0056b3;
+    background-color: #333; /* Color de fondo oscuro para el pie de página */
+    color: #fff; /* Color del texto del pie de página */
+    padding: 10px; /* Añade relleno alrededor del pie de página */
+    text-align: center; /* Alineación del texto al centro */
+    position: absolute; /* Posición relativa para permitir posicionamiento */
+    bottom: 0; /* Coloca el pie de página en la parte inferior */
+    width: 100%; /* Ancho completo del pie de página */
 }

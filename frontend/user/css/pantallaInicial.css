@@ -36,3 +36,35 @@ h1 {
     color: blue;
 }
 
+/* Estilo para el botón de eliminar cuenta */
+.eliminarCuentaBoton {
+    background-color: #ff0000; /* Color de fondo rojo */
+    color: #ffffff; /* Color del texto blanco */
+    padding: 10px 20px; /* Espaciado interior */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el ratón */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Mostrar como bloque en línea */
+  }
+  
+  .eliminarCuentaBoton:hover {
+    background-color: #cc0000; /* Cambiar color de fondo al pasar el ratón */
+  }
+  
+  /* Estilo para el botón de actualizar preferencias */
+  .actualizarPreferenciasBoton {
+    background-color: #007bff; /* Color de fondo azul */
+    color: #ffffff; /* Color del texto blanco */
+    padding: 10px 20px; /* Espaciado interior */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el ratón */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Mostrar como bloque en línea */
+  }
+  
+  .actualizarPreferenciasBoton:hover {
+    background-color: #0056b3; /* Cambiar color de fondo al pasar el ratón */
+  }
+  

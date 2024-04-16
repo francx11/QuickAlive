@@ -51,6 +51,7 @@ $(document).ready(function() {
             actividadDiv.append($('<span>').text('Nombre de actividad: ' + actividad.nombreActividad));
             actividadDiv.append($('<span>').text('Descripción: ' + actividad.descripcion ));
             actividadDiv.append($('<span>').text('Tipo de Actividad: ' + actividad.tipoActividad));
+            actividadDiv.append($('<span>').text('SubTipo de Actividad: ' + actividad.subTipoActividad));
             actividadDiv.append($('<span>').text('Duración: ' + actividad.duracion));
 
             // Crear botones de editar y eliminar

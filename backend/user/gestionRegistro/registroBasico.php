@@ -13,9 +13,12 @@ $bd = new BD();
 
 // Si se ha enviado una solicitud POST desde el formulario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    /*
     echo '<pre>';
     print_r($_POST);
     echo '</pre>';
+     */
 
     // Obtener los datos del formulario
     $nickName = $_POST['nickName'];
@@ -27,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $edad = $_POST['edad'];
     $rol = $_POST['role'];
 
-    echo var_dump($rol);
+    //echo var_dump($rol);
 
     // Insertar el nuevo usuario en la base de datos
     if (!$bd->insertarUsuario($nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)) {

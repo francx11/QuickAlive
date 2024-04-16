@@ -481,15 +481,16 @@ class BD
  * @param string $nombreActividad Nombre de la actividad.
  * @param string $descripcion Descripción de la actividad.
  * @param string $tipoActividad Tipo de actividad.
+ * @param string $subTipoActividad SubTipo de actividad.
  * @param int $duracion Duración de la actividad.
  * @return int|bool ID de la actividad insertada si la inserción fue exitosa, false si falló.
  */
-    public function insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $duracion)
+    public function insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
     {
         // Primero, insertar los datos comunes en la tabla Actividad
-        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, tipoActividad, duracion) VALUES (?, ?, ?, ?)";
+        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, tipoActividad,  duracion, subTipoActividad) VALUES (?, ?, ?, ?, ?)";
         $stmtActividad = $this->mysqli->prepare($queryActividad);
-        $stmtActividad->bind_param('sssi', $nombreActividad, $descripcion, $tipoActividad, $duracion);
+        $stmtActividad->bind_param('sssis', $nombreActividad, $descripcion, $tipoActividad, $duracion, $subTipoActividad);
 
         try {
             $stmtActividad->execute();
@@ -521,14 +522,15 @@ class BD
  * @param string $nombreActividad Nuevo nombre de la actividad.
  * @param string $descripcion Nueva descripción de la actividad.
  * @param string $tipoActividad Nuevo tipo de actividad.
+ * @param string $subTipoActividad Nuevo subtipo de actividad.
  * @param int $duracion Nueva duración de la actividad.
  * @return bool true si la modificación fue exitosa, false si falló.
  */
-    public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)
+    public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
     {
-        $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, duracion = ? WHERE idActividad = ?";
+        $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, subTipoActividad = ?, duracion = ? WHERE idActividad = ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('sssii', $nombreActividad, $descripcion, $tipoActividad, $duracion, $idActividad);
+        $stmt->bind_param('ssssii', $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion, $idActividad);
 
         try {
             $stmt->execute();
@@ -677,6 +679,7 @@ class BD
                 'nombreActividad' => $row['nombreActividad'],
                 'descripcion' => $row['descripcion'],
                 'tipoActividad' => $row['tipoActividad'],
+                'subTipoActividad' => $row['subTipoActividad'],
                 'duracion' => $row['duracion'],
             );
 
@@ -694,7 +697,7 @@ class BD
  */
     public function getActividad($idActividad)
     {
-        $query = "SELECT idActividad, nombreActividad, descripcion, tipoActividad, duracion FROM Actividad WHERE idActividad = ?";
+        $query = "SELECT idActividad, nombreActividad, descripcion, tipoActividad, subTipoActividad, duracion FROM Actividad WHERE idActividad = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('i', $idActividad);
@@ -714,6 +717,7 @@ class BD
                 $fila['nombreActividad'],
                 $fila['descripcion'],
                 $fila['tipoActividad'],
+                $fila['subTipoActividad'],
                 $fila['duracion'],
             );
 

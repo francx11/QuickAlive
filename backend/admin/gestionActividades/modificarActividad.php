@@ -31,7 +31,7 @@ if ($registradoRoot) {
     // Si se ha enviado una solicitud POST, procesa la modificación de la actividad
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verifica si se han proporcionado los datos básicos de la actividad en el formulario
-        $datosBasicosCorrectos = isset($_POST['nombreActividad'], $_POST['descripcion'], $_POST['tipoActividad'], $_POST['duracion']);
+        $datosBasicosCorrectos = isset($_POST['nombreActividad'], $_POST['descripcion'], $_POST['tipoActividad'], $_POST['subtipoActividad'], $_POST['duracion']);
 
         // Si los datos básicos son correctos, procede con la modificación
         if ($datosBasicosCorrectos) {
@@ -39,16 +39,18 @@ if ($registradoRoot) {
             $nombreActividad = $_POST['nombreActividad'];
             $descripcion = $_POST['descripcion'];
             $tipoActividad = $_POST['tipoActividad'];
+            $subTipoActividad = $_POST['subtipoActividad'];
             $duracion = $_POST['duracion'];
 
             // Verifica si se están modificando los campos y establece valores predeterminados si es necesario
             $nombreActividad = ($nombreActividad != '') ? $nombreActividad : $actividadOriginal->getNombreActividad();
             $descripcion = ($descripcion != '') ? $descripcion : $actividadOriginal->getDescripcion();
             $tipoActividad = ($tipoActividad != '') ? $tipoActividad : $actividadOriginal->getTipoActividad();
+            $subTipoActividad = ($subTipoActividad != '') ? $subTipoActividad : $actividadOriginal->getSubTipoActividad();
             $duracion = ($duracion != '') ? $duracion : $actividadOriginal->getDuracion();
 
             // Intenta modificar la actividad en la base de datos
-            if ($bd->modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)) {
+            if ($bd->modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)) {
                 echo 'Datos básicos modificados con éxito';
             } else {
                 echo 'Error en modificación de datos básicos';

@@ -24,16 +24,17 @@ if ($registradoRoot) {
     // Si se ha enviado una solicitud POST
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verificar si se han enviado los datos del formulario
-        if (isset($_POST['nombre'], $_POST['descripcion'], $_POST['tipo'], $_POST['duracion'], $_FILES['imagenes'])) {
+        if (isset($_POST['nombre'], $_POST['descripcion'], $_POST['tipo'], $_POST['subtipo'], $_POST['duracion'], $_FILES['imagenes'])) {
             // Obtener los datos del formulario
             $nombreActividad = $_POST['nombre'];
             $descripcion = $_POST['descripcion'];
             $tipoActividad = $_POST['tipo'];
+            $subTipoActividad = $_POST['subtipo'];
             $duracion = $_POST['duracion'];
             $fotos = $_FILES['imagenes']['tmp_name'];
 
             // Insertar la actividad simple en la base de datos
-            $idActividad = $bd->insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $duracion);
+            $idActividad = $bd->insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion);
 
             // Si se ha insertado correctamente
             if ($idActividad) {

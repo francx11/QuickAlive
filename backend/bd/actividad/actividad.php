@@ -10,6 +10,7 @@ class Actividad
     private $tipoActividad;
     private $duracion;
     private $galeriaFotos = [];
+    private $subTipoActividad;
 
     /**
      * Constructor de la clase Actividad.
@@ -17,9 +18,10 @@ class Actividad
      * @param string $nombreActividad Nombre de la actividad.
      * @param string $descripcion Descripción de la actividad.
      * @param string $tipoActividad Tipo de la actividad.
+     * @param string $subTipoActividad SubTipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
     {
         $this->idActividad = $idActividad;
         $this->nombreActividad = $nombreActividad;
@@ -27,6 +29,7 @@ class Actividad
         $this->tipoActividad = $tipoActividad;
         $this->duracion = $duracion;
         $this->galeriaFotos = [];
+        $this->subTipoActividad = $subTipoActividad;
     }
 
     /**
@@ -67,6 +70,16 @@ class Actividad
     public function getTipoActividad()
     {
         return $this->tipoActividad;
+    }
+
+    /**
+     * Obtiene el tipo de la actividad.
+     *
+     * @return string Tipo de la actividad.
+     */
+    public function getSubTipoActividad()
+    {
+        return $this->subTipoActividad;
     }
 
     /**
@@ -120,6 +133,16 @@ class Actividad
     }
 
     /**
+     * Establece el subtipo de la actividad.
+     *
+     * @param string $subTipoActividad Tipo de la actividad.
+     */
+    public function setSubTipoActividad($subTipoActividad)
+    {
+        $this->subTipoActividad = $subTipoActividad;
+    }
+
+    /**
      * Establece la duración de la actividad en minutos.
      *
      * @param int $duracion Duración de la actividad en minutos.
@@ -153,9 +176,9 @@ class ActividadSimple extends Actividad
      * @param string $tipoActividad Tipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
     {
-        parent::__construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $duracion);
+        parent::__construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion);
     }
 }
 

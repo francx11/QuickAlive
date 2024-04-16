@@ -40,5 +40,5 @@ foreach ($tipoPreferencias as $tipoPreferencia) {
     $tipoPreferenciasFormateado[] = $tipoPreferenciaFormateado;
 
 }
-echo var_dump($tipoPreferenciasFormateado);
+//echo var_dump($tipoPreferenciasFormateado);
 echo $twig->render('registroPreferencias.html', ['tiposPreferencias' => $tipoPreferenciasFormateado, 'idUsuario' => $idUsuario]);

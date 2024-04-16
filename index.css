@@ -3,8 +3,8 @@
    y definir la fuente para todo el documento.
 */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 /*
@@ -12,12 +12,12 @@ body {
    elementos horizontalmente. El fondo es de color oscuro (#333) con texto blanco.
 */
 header {
-    display: flex; /* Usa un modelo de caja flexible (flexbox) */
-    justify-content: space-between; /* Distribuye los elementos de manera uniforme en el espacio disponible */
-    align-items: center; /* Centra verticalmente los elementos */
-    padding: 10px; /* Espaciado interno */
-    background-color: #333; /* Color de fondo */
-    color: white; /* Color del texto */
+  display: flex; /* Usa un modelo de caja flexible (flexbox) */
+  justify-content: space-between; /* Distribuye los elementos de manera uniforme en el espacio disponible */
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 10px; /* Espaciado interno */
+  background-color: #333; /* Color de fondo */
+  color: white; /* Color del texto */
 }
 
 /*
@@ -25,8 +25,8 @@ header {
    horizontalmente y se alinea al centro.
 */
 .brand {
-    flex: 1; /* Ocupa todo el espacio disponible */
-    text-align: center; /* Alinea el texto al centro */
+  flex: 1; /* Ocupa todo el espacio disponible */
+  text-align: center; /* Alinea el texto al centro */
 }
 
 /*
@@ -35,17 +35,17 @@ header {
 */
 .loginButton,
 .logoutButton {
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 15px; /* Relleno interno */
-    text-align: center; /* Alineación del texto */
-    text-decoration: none; /* Sin decoración de texto */
-    display: inline-block; /* Visualizado como un bloque */
-    font-size: 16px; /* Tamaño de fuente */
-    margin: 4px 2px; /* Margen exterior */
-    cursor: pointer; /* Cursor apuntador */
-    border-radius: 5px; /* Bordes redondeados */
+  background-color: #4caf50; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 15px; /* Relleno interno */
+  text-align: center; /* Alineación del texto */
+  text-decoration: none; /* Sin decoración de texto */
+  display: inline-block; /* Visualizado como un bloque */
+  font-size: 16px; /* Tamaño de fuente */
+  margin: 4px 2px; /* Margen exterior */
+  cursor: pointer; /* Cursor apuntador */
+  border-radius: 5px; /* Bordes redondeados */
 }
 
 /*
@@ -53,25 +53,25 @@ header {
    interno de 20px.
 */
 main {
-    padding: 20px; /* Espaciado interno */
+  padding: 20px; /* Espaciado interno */
 }
 
 /*
    Estilos para el pie de página, que tiene un fondo oscuro (#333) con texto blanco y se alinea al centro.
 */
 footer {
-    padding: 10px; /* Espaciado interno */
-    background-color: #333; /* Color de fondo */
-    color: white; /* Color del texto */
-    text-align: center; /* Alineación del texto */
+  padding: 10px; /* Espaciado interno */
+  background-color: #333; /* Color de fondo */
+  color: white; /* Color del texto */
+  text-align: center; /* Alineación del texto */
 }
 /*
    Estilos generales para el cuerpo del documento, como eliminar el margen predeterminado
    y definir la fuente para todo el documento.
 */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 /*
@@ -79,12 +79,12 @@ body {
    elementos horizontalmente. El fondo es de color oscuro (#333) con texto blanco.
 */
 header {
-    display: flex; /* Usa un modelo de caja flexible (flexbox) */
-    justify-content: space-between; /* Distribuye los elementos de manera uniforme en el espacio disponible */
-    align-items: center; /* Centra verticalmente los elementos */
-    padding: 10px; /* Espaciado interno */
-    background-color: #333; /* Color de fondo */
-    color: white; /* Color del texto */
+  display: flex; /* Usa un modelo de caja flexible (flexbox) */
+  justify-content: space-between; /* Distribuye los elementos de manera uniforme en el espacio disponible */
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 10px; /* Espaciado interno */
+  background-color: #333; /* Color de fondo */
+  color: white; /* Color del texto */
 }
 
 /*
@@ -92,8 +92,8 @@ header {
    horizontalmente y se alinea al centro.
 */
 .brand {
-    flex: 1; /* Ocupa todo el espacio disponible */
-    text-align: center; /* Alinea el texto al centro */
+  flex: 1; /* Ocupa todo el espacio disponible */
+  text-align: center; /* Alinea el texto al centro */
 }
 
 /*
@@ -102,17 +102,17 @@ header {
 */
 .loginButton,
 .logoutButton {
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 15px; /* Relleno interno */
-    text-align: center; /* Alineación del texto */
-    text-decoration: none; /* Sin decoración de texto */
-    display: inline-block; /* Visualizado como un bloque */
-    font-size: 16px; /* Tamaño de fuente */
-    margin: 4px 2px; /* Margen exterior */
-    cursor: pointer; /* Cursor apuntador */
-    border-radius: 5px; /* Bordes redondeados */
+  background-color: #4caf50; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 15px; /* Relleno interno */
+  text-align: center; /* Alineación del texto */
+  text-decoration: none; /* Sin decoración de texto */
+  display: inline-block; /* Visualizado como un bloque */
+  font-size: 16px; /* Tamaño de fuente */
+  margin: 4px 2px; /* Margen exterior */
+  cursor: pointer; /* Cursor apuntador */
+  border-radius: 5px; /* Bordes redondeados */
 }
 
 /*
@@ -120,18 +120,18 @@ header {
    interno de 20px.
 */
 main {
-    padding: 20px; /* Espaciado interno */
+  padding: 20px; /* Espaciado interno */
 }
 
 /*
    Estilos para el pie de página, que tiene un fondo oscuro (#333) con texto blanco y se alinea al centro.
 */
 footer {
-    padding: 10px; /* Espaciado interno */
-    background-color: #333; /* Color de fondo */
-    color: white; /* Color del texto */
-    text-align: center; /* Alineación del texto */
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+  padding: 10px; /* Espaciado interno */
+  background-color: #333; /* Color de fondo */
+  color: white; /* Color del texto */
+  text-align: center; /* Alineación del texto */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

@@ -16,7 +16,7 @@ if ($logueado) {
     $bd = new BD();
     $idUsuario = $_SESSION['idUsuario'];
 
-    echo var_dump($idUsuario);
+    //echo var_dump($idUsuario);
     $tipoPreferencias = $bd->getAllTipoPreferencias();
 
 //echo var_dump($tipoPreferencias);
@@ -43,7 +43,7 @@ if ($logueado) {
         $tipoPreferenciasFormateado[] = $tipoPreferenciaFormateado;
 
     }
-    echo var_dump($idUsuario);
+    //echo var_dump($idUsuario);
     echo $twig->render('actualizarPreferencias.html', ['tiposPreferencias' => $tipoPreferenciasFormateado, 'idUsuario' => $idUsuario]);
 
 }

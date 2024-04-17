@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Clase base para representar una actividad.
  */
@@ -7,10 +8,9 @@ class Actividad
     private $idActividad;
     private $nombreActividad;
     private $descripcion;
-    private $tipoActividad;
     private $duracion;
     private $galeriaFotos = [];
-    private $subTipoActividad;
+    private $categorias = [];
 
     /**
      * Constructor de la clase Actividad.
@@ -21,15 +21,14 @@ class Actividad
      * @param string $subTipoActividad SubTipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $duracion)
     {
         $this->idActividad = $idActividad;
         $this->nombreActividad = $nombreActividad;
         $this->descripcion = $descripcion;
-        $this->tipoActividad = $tipoActividad;
         $this->duracion = $duracion;
+        $this->categorias = [];
         $this->galeriaFotos = [];
-        $this->subTipoActividad = $subTipoActividad;
     }
 
     /**
@@ -63,26 +62,6 @@ class Actividad
     }
 
     /**
-     * Obtiene el tipo de la actividad.
-     *
-     * @return string Tipo de la actividad.
-     */
-    public function getTipoActividad()
-    {
-        return $this->tipoActividad;
-    }
-
-    /**
-     * Obtiene el tipo de la actividad.
-     *
-     * @return string Tipo de la actividad.
-     */
-    public function getSubTipoActividad()
-    {
-        return $this->subTipoActividad;
-    }
-
-    /**
      * Obtiene la duración de la actividad en minutos.
      *
      * @return int Duración de la actividad en minutos.
@@ -100,6 +79,16 @@ class Actividad
     public function getGaleriaFotos()
     {
         return $this->galeriaFotos;
+    }
+
+    /**
+     * Obtiene las categorias asociadas a la actividad.
+     *
+     * @return array Categorias asociada a la actividad.
+     */
+    public function getCategorias()
+    {
+        return $this->categorias;
     }
 
     /**
@@ -123,26 +112,6 @@ class Actividad
     }
 
     /**
-     * Establece el tipo de la actividad.
-     *
-     * @param string $tipoActividad Tipo de la actividad.
-     */
-    public function setTipoActividad($tipoActividad)
-    {
-        $this->tipoActividad = $tipoActividad;
-    }
-
-    /**
-     * Establece el subtipo de la actividad.
-     *
-     * @param string $subTipoActividad Tipo de la actividad.
-     */
-    public function setSubTipoActividad($subTipoActividad)
-    {
-        $this->subTipoActividad = $subTipoActividad;
-    }
-
-    /**
      * Establece la duración de la actividad en minutos.
      *
      * @param int $duracion Duración de la actividad en minutos.
@@ -161,6 +130,16 @@ class Actividad
     {
         $this->galeriaFotos[] = $imagen;
     }
+
+    /**
+     * Añade una categorías a la actividad.
+     *
+     * @param string $categoría a añadir.
+     */
+    public function aniadirCategoría($categoría)
+    {
+        $this->categorias[] = $categoría;
+    }
 }
 
 /**
@@ -173,12 +152,11 @@ class ActividadSimple extends Actividad
      *
      * @param string $nombreActividad Nombre de la actividad.
      * @param string $descripcion Descripción de la actividad.
-     * @param string $tipoActividad Tipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $duracion)
     {
-        parent::__construct($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion);
+        parent::__construct($idActividad, $nombreActividad, $descripcion, $duracion);
     }
 }
 

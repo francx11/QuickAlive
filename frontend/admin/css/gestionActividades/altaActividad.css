@@ -1,97 +1,163 @@
 /* Estilos generales para el cuerpo de la página */
 body {
-    font-family: Arial, sans-serif; /* Define la fuente para el texto */
-    background-color: #f4f4f4; /* Color de fondo del cuerpo */
-    margin: 0; /* Elimina el margen exterior */
-    padding: 0; /* Elimina el relleno interior */
+  font-family: Arial, sans-serif; /* Define la fuente para el texto */
+  background-color: #f4f4f4; /* Color de fondo del cuerpo */
+  margin: 0; /* Elimina el margen exterior */
+  padding: 0; /* Elimina el relleno interior */
 }
 
 /* Contenedor principal */
 .container {
-    max-width: 600px; /* Ancho máximo del contenedor */
-    margin: 50px auto; /* Margen superior e inferior de 50px, centrado horizontalmente */
-    background-color: #fff; /* Color de fondo del contenedor */
-    padding: 20px; /* Relleno interno del contenedor */
-    border-radius: 8px; /* Borde redondeado */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  max-width: 600px; /* Ancho máximo del contenedor */
+  margin: 50px auto; /* Margen superior e inferior de 50px, centrado horizontalmente */
+  background-color: #fff; /* Color de fondo del contenedor */
+  padding: 20px; /* Relleno interno del contenedor */
+  border-radius: 8px; /* Borde redondeado */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
 /* Estilos para el encabezado */
 header {
-    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
-    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos */
-    align-items: center; /* Alinea verticalmente los elementos al centro */
-    padding: 10px; /* Añade relleno alrededor del encabezado */
-    background-color: #333; /* Color de fondo oscuro para el encabezado */
-    color: white; /* Color del texto en el encabezado */
+  display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
+  justify-content: space-between; /* Distribuye el espacio disponible entre los elementos */
+  align-items: center; /* Alinea verticalmente los elementos al centro */
+  padding: 10px; /* Añade relleno alrededor del encabezado */
+  background-color: #333; /* Color de fondo oscuro para el encabezado */
+  color: white; /* Color del texto en el encabezado */
 }
 
 /* Estilos para la marca o logo */
 .brand {
-    flex: 1; /* La marca ocupa el espacio restante */
-    text-align: center; /* Alinea el texto al centro */
+  flex: 1; /* La marca ocupa el espacio restante */
+  text-align: center; /* Alinea el texto al centro */
+}
+
+/* Estilos para el icono de flecha de retroceso */
+.fa-arrow-left {
+  margin-right: 10px; /* Margen derecho para separar el icono del texto */
+  color: #ffffff; /* Cambia el color del icono a blanco */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Agrega una sombra al texto para hacerlo más visible */
+}
+
+/* Estilos para el texto "Volver" */
+a {
+  color: #ffffff; /* Cambia el color del texto a blanco */
+  text-decoration: none; /* Quita la decoración de subrayado del enlace */
+}
+
+a:hover {
+  text-decoration: underline; /* Agrega subrayado al pasar el mouse sobre el enlace */
 }
 
 /* Estilos para los botones de inicio de sesión */
 .loginButton,
 .logoutButton {
-    background-color: #4CAF50; /* Color de fondo para los botones */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 15px; /* Relleno interno */
-    text-align: center; /* Alineación del texto al centro */
-    text-decoration: none; /* Sin decoración de texto */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 16px; /* Tamaño de la fuente */
-    margin: 4px 2px; /* Márgenes */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    border-radius: 5px; /* Borde redondeado */
+  background-color: #4caf50; /* Color de fondo para los botones */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 15px; /* Relleno interno */
+  text-align: center; /* Alineación del texto al centro */
+  text-decoration: none; /* Sin decoración de texto */
+  display: inline-block; /* Mostrar como bloque en línea */
+  font-size: 16px; /* Tamaño de la fuente */
+  margin: 4px 2px; /* Márgenes */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  border-radius: 5px; /* Borde redondeado */
 }
 
 /* Estilos para los formularios */
 form {
-    margin-top: 20px; /* Margen superior */
+  margin-top: 20px; /* Margen superior */
 }
 
 /* Estilos para las etiquetas de los campos */
 label {
-    display: block; /* Muestra las etiquetas en una línea separada */
-    margin-bottom: 5px; /* Espacio debajo de las etiquetas */
-    font-weight: bold; /* Texto en negrita */
-    color: #333; /* Color del texto */
+  display: block; /* Muestra las etiquetas en una línea separada */
+  margin-bottom: 5px; /* Espacio debajo de las etiquetas */
+  font-weight: bold; /* Texto en negrita */
+  color: #333; /* Color del texto */
 }
 
 /* Estilos para los campos de entrada de texto y número, y para las áreas de texto */
 input[type="text"],
 input[type="number"],
 textarea {
-    width: 100%; /* Ancho completo */
-    padding: 10px; /* Relleno interno */
-    margin-bottom: 20px; /* Espacio inferior */
-    border: 1px solid #ccc; /* Borde sólido */
-    border-radius: 5px; /* Borde redondeado */
-    box-sizing: border-box; /* El ancho incluye el borde y el relleno */
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 20px; /* Espacio inferior */
+  border: 1px solid #ccc; /* Borde sólido */
+  border-radius: 5px; /* Borde redondeado */
+  box-sizing: border-box; /* El ancho incluye el borde y el relleno */
 }
 
 /* Estilos para el campo de carga de archivos */
 input[type="file"] {
-    margin-bottom: 20px; /* Espacio inferior */
+  margin-bottom: 20px; /* Espacio inferior */
 }
 
 /* Estilos para el botón de enviar */
 input[type="submit"] {
-    background-color: #007bff; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 12px 20px; /* Relleno interno */
-    border-radius: 5px; /* Borde redondeado */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    font-size: 16px; /* Tamaño de la fuente */
-    transition: background-color 0.3s ease; /* Transición suave */
+  background-color: #007bff; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 12px 20px; /* Relleno interno */
+  border-radius: 5px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  font-size: 16px; /* Tamaño de la fuente */
+  transition: background-color 0.3s ease; /* Transición suave */
 }
 
 /* Estilos para el botón de enviar al pasar el cursor */
 input[type="submit"]:hover {
-    background-color: #0056b3; /* Cambio de color de fondo */
+  background-color: #0056b3; /* Cambio de color de fondo */
 }
 
+.tipo-preferencia {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.tipo-preferencia h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.tipo-preferencia h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.tipo-preferencia ul {
+  padding: 0;
+  margin: 0;
+}
+
+.tipo-preferencia li {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tipo-preferencia li:hover {
+  background-color: #ddd;
+}
+
+.tipo-preferencia .seleccionada {
+  background-color: #007bff;
+  color: #fff;
+}
+
+#submitBtn {
+  background-color: #4caf50; /* Color de fondo verde */
+  border: none; /* Sin borde */
+  color: white; /* Color del texto blanco */
+  padding: 15px 32px; /* Espacio alrededor del texto */
+  text-align: center; /* Alinear el texto al centro */
+  text-decoration: none; /* Sin subrayado */
+  display: inline-block; /* Mostrar como un bloque */
+  font-size: 16px; /* Tamaño de fuente */
+  margin: 4px 2px; /* Margen exterior */
+  cursor: pointer; /* Cambiar el cursor al pasar sobre él */
+  border-radius: 8px; /* Bordes redondeados */
+}

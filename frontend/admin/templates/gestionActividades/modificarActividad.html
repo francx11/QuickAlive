@@ -1,102 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="/quickalive/frontend/admin/css/gestionActividades/modificarActividad.css"
-			rel="stylesheet"
-			type="text/css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-		/>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="/quickalive/frontend/admin/css/gestionActividades/modificarActividad.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-		<title>Modificar Actividad</title>
-	</head>
-	<body>
-		<header>
-			<a href="../gestionActividades/gestionActividades.php"
-				><i class="fas fa-arrow-left"></i> Volver</a
-			>
-			<div class="brand">
-				<h2>Modificar Actividad</h2>
-			</div>
+    <title>Modificar Actividad</title>
+  </head>
+  <body>
+    <header>
+      <a href="../gestionActividades/gestionActividades.php"
+        ><i class="fas fa-arrow-left"></i> Volver</a
+      >
+      <div class="brand">
+        <h2>Modificar Actividad</h2>
+      </div>
 
-			{% if logueado %}
-			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
-				><button class="logoutButton">Cerrar Sesión</button></a
-			>
-			{% else %}
-			<a href="./backend/api/sesiones/login.php"
-				><button class="loginButton">Iniciar Sesión</button></a
-			>
-			{% endif %}
-		</header>
+      {% if logueado %}
+      <a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
+        ><button class="logoutButton">Cerrar Sesión</button></a
+      >
+      {% else %}
+      <a href="./backend/api/sesiones/login.php"
+        ><button class="loginButton">Iniciar Sesión</button></a
+      >
+      {% endif %}
+    </header>
 
-		<main>
-			<form
-				id="modificarActividadForm"
-				action="modificarActividad.php?id={{idActividad}}"
-				method="post"
-				enctype="multipart/form-data"
-			>
-				<div>
-					<label for="nombreActividad">Nombre Actividad:</label>
-					<input type="text" id="nombreActividad" name="nombreActividad" />
-				</div>
-				<div>
-					<label for="descripcion">Descripción:</label>
-					<input type="text" id="descripcion" name="descripcion" />
-				</div>
-				<div>
-					<label for="tipoActividad">Tipo de Actividad:</label>
-					<input type="text" id="tipoActividad" name="tipoActividad" />
-				</div>
+    <main>
+      <form
+        id="modificarActividadForm"
+        action="modificarActividad.php?id={{idActividad}}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label for="nombreActividad">Nombre Actividad:</label>
+          <input type="text" id="nombreActividad" name="nombreActividad" />
+        </div>
+        <div>
+          <label for="descripcion">Descripción:</label>
+          <input type="text" id="descripcion" name="descripcion" />
+        </div>
+        <div>
+          <label for="duracion">Duración:</label>
+          <input type="number" id="duracion" name="duracion" />
+        </div>
 
-				<div>
-					<label for="tipoActividad">SubTipo de Actividad:</label>
-					<input type="text" id="subtipoActividad" name="subtipoActividad" />
-				</div>
+        <div class="galeria">
+          Galería de imágenes Actual: {% for imagen in imagenes %}
+          <div class="imagen">
+            <img src="{{ imagen.url }}" alt="Imagen de la galería" />
+            <button
+              type="button"
+              class="eliminar-imagen"
+              data-id="{{ imagen.numImagen }}"
+            >
+              &#128465;
+            </button>
+          </div>
 
-				<div>
-					<label for="duracion">Duración:</label>
-					<input type="number" id="duracion" name="duracion" />
-				</div>
+          {% endfor %}
+        </div>
 
-				<div class="galeria">
-					Galería de imágenes Actual: {% for imagen in imagenes %}
-					<div class="imagen">
-						<img src="{{ imagen.url }}" alt="Imagen de la galería" />
-						<button
-							type="button"
-							class="eliminar-imagen"
-							data-id="{{ imagen.numImagen }}"
-						>
-							&#128465;
-						</button>
-					</div>
+        <label for="imagenes"
+          >Imágenes (selecciona varias manteniendo Ctrl/Cmd):</label
+        ><br />
+        <input
+          type="file"
+          id="imagenes"
+          name="imagenes[]"
+          multiple
+          accept="image/*"
+        /><br /><br />
 
-					{% endfor %}
-				</div>
+        <button type="submit">Modificar Actividad</button>
+      </form>
+    </main>
+  </body>
 
-				<label for="imagenes"
-					>Imágenes (selecciona varias manteniendo Ctrl/Cmd):</label
-				><br />
-				<input
-					type="file"
-					id="imagenes"
-					name="imagenes[]"
-					multiple
-					accept="image/*"
-				/><br /><br />
-
-				<button type="submit">Modificar Actividad</button>
-			</form>
-		</main>
-	</body>
-
-	<script src="/quickalive/frontend/admin/js/eliminarFotoGaleria.js"></script>
+  <script src="/quickalive/frontend/admin/js/eliminarFotoGaleria.js"></script>
 </html>

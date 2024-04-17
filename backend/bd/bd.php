@@ -153,12 +153,12 @@ class BD
         return true; // Éxito al insertar el token de recuperación
     }
 
-/**
- * Obtiene un usuario de la base de datos por su ID.
- *
- * @param int $idUsuario ID del usuario a buscar.
- * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
- */
+    /**
+     * Obtiene un usuario de la base de datos por su ID.
+     *
+     * @param int $idUsuario ID del usuario a buscar.
+     * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
+     */
     public function getUsuarioPorId($idUsuario)
     {
         $query = "SELECT idUsuario, nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE idUsuario = ?";
@@ -194,12 +194,12 @@ class BD
         }
     }
 
-/**
- * Obtiene un usuario de la base de datos por su correo electrónico.
- *
- * @param string $correo Correo electrónico del usuario a buscar.
- * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
- */
+    /**
+     * Obtiene un usuario de la base de datos por su correo electrónico.
+     *
+     * @param string $correo Correo electrónico del usuario a buscar.
+     * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
+     */
     public function getUsuarioPorCorreo($correo)
     {
         $query = "SELECT idUsuario, nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE correo = ?";
@@ -235,12 +235,12 @@ class BD
         }
     }
 
-/**
- * Obtiene un usuario de la base de datos por su nombre de usuario (nickName).
- *
- * @param string $nickName Nombre de usuario (nickName) del usuario a buscar.
- * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
- */
+    /**
+     * Obtiene un usuario de la base de datos por su nombre de usuario (nickName).
+     *
+     * @param string $nickName Nombre de usuario (nickName) del usuario a buscar.
+     * @return Usuario|null Objeto Usuario si se encontró, o null si no se encontró.
+     */
     public function getUsuario($nickName)
     {
         $query = "SELECT idUsuario, nickName, telefono, correo, password, nombre, apellidos, edad, rol FROM usuario WHERE nickName = ?";
@@ -276,19 +276,19 @@ class BD
         }
     }
 
-/**
- * Inserta un nuevo usuario en la base de datos.
- *
- * @param string $nickName Nombre de usuario del nuevo usuario.
- * @param string $telefono Número de teléfono del nuevo usuario.
- * @param string $correo Correo electrónico del nuevo usuario.
- * @param string $password Contraseña del nuevo usuario (ya debe estar hasheada).
- * @param string $nombre Nombre del nuevo usuario.
- * @param string $apellidos Apellidos del nuevo usuario.
- * @param int $edad Edad del nuevo usuario.
- * @param string $rol Rol del nuevo usuario.
- * @return bool true si la inserción fue exitosa, false si falló.
- */
+    /**
+     * Inserta un nuevo usuario en la base de datos.
+     *
+     * @param string $nickName Nombre de usuario del nuevo usuario.
+     * @param string $telefono Número de teléfono del nuevo usuario.
+     * @param string $correo Correo electrónico del nuevo usuario.
+     * @param string $password Contraseña del nuevo usuario (ya debe estar hasheada).
+     * @param string $nombre Nombre del nuevo usuario.
+     * @param string $apellidos Apellidos del nuevo usuario.
+     * @param int $edad Edad del nuevo usuario.
+     * @param string $rol Rol del nuevo usuario.
+     * @return bool true si la inserción fue exitosa, false si falló.
+     */
     public function insertarUsuario($nickName, $telefono, $correo, $password, $nombre, $apellidos, $edad, $rol)
     {
         // Hash de la contraseña
@@ -342,13 +342,13 @@ class BD
         }
     }
 
-/**
- * Modifica la contraseña de un usuario en la base de datos.
- *
- * @param string $correo Correo electrónico del usuario.
- * @param string $nuevaContraseña Nueva contraseña (ya debe estar hasheada).
- * @return bool true si la modificación fue exitosa, false si falló.
- */
+    /**
+     * Modifica la contraseña de un usuario en la base de datos.
+     *
+     * @param string $correo Correo electrónico del usuario.
+     * @param string $nuevaContraseña Nueva contraseña (ya debe estar hasheada).
+     * @return bool true si la modificación fue exitosa, false si falló.
+     */
     public function modificarContraseñaUsuario($correo, $nuevaContraseña)
     {
         // Hash de la nueva contraseña
@@ -368,12 +368,12 @@ class BD
         }
     }
 
-/**
- * Elimina un usuario de la base de datos.
- *
- * @param int $id ID del usuario a eliminar.
- * @return bool true si la eliminación fue exitosa, false si falló.
- */
+    /**
+     * Elimina un usuario de la base de datos.
+     *
+     * @param int $id ID del usuario a eliminar.
+     * @return bool true si la eliminación fue exitosa, false si falló.
+     */
     public function eliminarUsuario($id)
     {
         $query = "DELETE FROM usuario WHERE idUsuario = ?";
@@ -390,12 +390,12 @@ class BD
         }
     }
 
-/**
- * Obtiene el rol de un usuario por su nombre de usuario (nickName).
- *
- * @param string $nickName Nombre de usuario del usuario.
- * @return string Rol del usuario.
- */
+    /**
+     * Obtiene el rol de un usuario por su nombre de usuario (nickName).
+     *
+     * @param string $nickName Nombre de usuario del usuario.
+     * @return string Rol del usuario.
+     */
     public function getRol($nickName)
     {
         $usuario = $this->getUsuario($nickName);
@@ -403,12 +403,12 @@ class BD
 
         return $rol;
     }
-/**
- * Obtiene el id de un usuario por su nombre de usuario (nickName).
- *
- * @param string $nickName Nombre de usuario del usuario.
- * @return string Id del usuario.
- */
+    /**
+     * Obtiene el id de un usuario por su nombre de usuario (nickName).
+     *
+     * @param string $nickName Nombre de usuario del usuario.
+     * @return string Id del usuario.
+     */
     public function getIdUsuario($nickName)
     {
         $usuario = $this->getUsuario($nickName);
@@ -417,13 +417,13 @@ class BD
         return $rol;
     }
 
-/**
- * Verifica las credenciales de inicio de sesión de un usuario.
- *
- * @param string $nickName Nombre de usuario del usuario.
- * @param string $password Contraseña proporcionada por el usuario.
- * @return bool true si las credenciales son válidas, false si no lo son.
- */
+    /**
+     * Verifica las credenciales de inicio de sesión de un usuario.
+     *
+     * @param string $nickName Nombre de usuario del usuario.
+     * @param string $password Contraseña proporcionada por el usuario.
+     * @return bool true si las credenciales son válidas, false si no lo son.
+     */
     public function checkLogin($nickName, $password)
     {
         $usuario = $this->getUsuario($nickName);
@@ -441,12 +441,12 @@ class BD
         return false;
     }
 
-/**
- * Busca usuarios cuyo nombre de usuario (nickName) coincide parcialmente con el nombre proporcionado.
- *
- * @param string $nickName Parte del nombre de usuario a buscar.
- * @return array Arreglo de usuarios que coinciden con el nombre de usuario proporcionado.
- */
+    /**
+     * Busca usuarios cuyo nombre de usuario (nickName) coincide parcialmente con el nombre proporcionado.
+     *
+     * @param string $nickName Parte del nombre de usuario a buscar.
+     * @return array Arreglo de usuarios que coinciden con el nombre de usuario proporcionado.
+     */
     public function buscarCoincidenciasUsuario($nickName)
     {
         $sql = "SELECT * FROM usuario WHERE nickName LIKE CONCAT('%', ? , '%')";
@@ -475,22 +475,20 @@ class BD
         return $usuarios;
     }
 
-/**
- * Inserta una nueva actividad simple en la base de datos.
- *
- * @param string $nombreActividad Nombre de la actividad.
- * @param string $descripcion Descripción de la actividad.
- * @param string $tipoActividad Tipo de actividad.
- * @param string $subTipoActividad SubTipo de actividad.
- * @param int $duracion Duración de la actividad.
- * @return int|bool ID de la actividad insertada si la inserción fue exitosa, false si falló.
- */
-    public function insertarActividadSimple($nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
+    /**
+     * Inserta una nueva actividad simple en la base de datos.
+     *
+     * @param string $nombreActividad Nombre de la actividad.
+     * @param string $descripcion Descripción de la actividad.
+     * @param int $duracion Duración de la actividad.
+     * @return int|bool ID de la actividad insertada si la inserción fue exitosa, false si falló.
+     */
+    public function insertarActividadSimple($nombreActividad, $descripcion, $duracion)
     {
         // Primero, insertar los datos comunes en la tabla Actividad
-        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, tipoActividad,  duracion, subTipoActividad) VALUES (?, ?, ?, ?, ?)";
+        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, duracion) VALUES (?, ?, ?)";
         $stmtActividad = $this->mysqli->prepare($queryActividad);
-        $stmtActividad->bind_param('sssis', $nombreActividad, $descripcion, $tipoActividad, $duracion, $subTipoActividad);
+        $stmtActividad->bind_param('ssi', $nombreActividad, $descripcion, $duracion);
 
         try {
             $stmtActividad->execute();
@@ -515,17 +513,46 @@ class BD
         }
     }
 
-/**
- * Modifica los datos de una actividad existente en la base de datos.
- *
- * @param int $idActividad ID de la actividad a modificar.
- * @param string $nombreActividad Nuevo nombre de la actividad.
- * @param string $descripcion Nueva descripción de la actividad.
- * @param string $tipoActividad Nuevo tipo de actividad.
- * @param string $subTipoActividad Nuevo subtipo de actividad.
- * @param int $duracion Nueva duración de la actividad.
- * @return bool true si la modificación fue exitosa, false si falló.
- */
+    /**
+     * Inserta las categorías de una actividad.
+     *
+     * @param string $idActividad Nombre de la actividad.
+     * @param array $categorias Array de categorías con sus IDs de tipo de preferencia.
+     * @return bool true si la inserción fue exitosa, false si falló.
+     */
+    public function insertarActividadConCategorias($idActividad, $categorias)
+    {
+        // Insertar las categorías de la actividad en la tabla Actividad_TipoPreferencia
+        $queryInsertCategoria = "INSERT INTO Actividad_TipoPreferencia (idActividad, idTipoPreferencia) VALUES (?, ?)";
+        $stmtInsertCategoria = $this->mysqli->prepare($queryInsertCategoria);
+
+        foreach ($categorias as $categoria) {
+            $idTipoPreferencia = $categoria["idTipoPreferencia"];
+            $stmtInsertCategoria->bind_param('ii', $idActividad, $idTipoPreferencia);
+
+            try {
+                $stmtInsertCategoria->execute();
+            } catch (PDOException $e) {
+                echo "Error al insertar categoría de actividad: " . $e->getMessage();
+                return false; // Fallo al insertar la categoría de actividad
+            }
+        }
+
+        return true; // Éxito al insertar la actividad junto con sus categorías
+    }
+
+
+    /**
+     * Modifica los datos de una actividad existente en la base de datos.
+     *
+     * @param int $idActividad ID de la actividad a modificar.
+     * @param string $nombreActividad Nuevo nombre de la actividad.
+     * @param string $descripcion Nueva descripción de la actividad.
+     * @param string $tipoActividad Nuevo tipo de actividad.
+     * @param string $subTipoActividad Nuevo subtipo de actividad.
+     * @param int $duracion Nueva duración de la actividad.
+     * @return bool true si la modificación fue exitosa, false si falló.
+     */
     public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
     {
         $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, subTipoActividad = ?, duracion = ? WHERE idActividad = ?";
@@ -541,13 +568,13 @@ class BD
         }
     }
 
-/**
- * Elimina todas las fotos de la galería asociadas a una actividad específica.
- *
- * @param int $idActividad El ID de la actividad de la cual se eliminarán las fotos de la galería.
- *
- * @return bool Retorna true si se eliminan las fotos de la galería exitosamente, o false en caso de error.
- */
+    /**
+     * Elimina todas las fotos de la galería asociadas a una actividad específica.
+     *
+     * @param int $idActividad El ID de la actividad de la cual se eliminarán las fotos de la galería.
+     *
+     * @return bool Retorna true si se eliminan las fotos de la galería exitosamente, o false en caso de error.
+     */
     private function eliminarFotosGaleria($idActividad)
     {
         // Construir la consulta SQL para eliminar las fotos de la galería asociadas a la actividad
@@ -577,12 +604,12 @@ class BD
         }
     }
 
-/**
- * Elimina una actividad de la base de datos.
- *
- * @param int $idActividad ID de la actividad a eliminar.
- * @return bool true si la eliminación fue exitosa, false si falló.
- */
+    /**
+     * Elimina una actividad de la base de datos.
+     *
+     * @param int $idActividad ID de la actividad a eliminar.
+     * @return bool true si la eliminación fue exitosa, false si falló.
+     */
     public function eliminarActividad($idActividad)
     {
         // Eliminar todas las fotos de la galería asociadas a esta actividad
@@ -605,12 +632,12 @@ class BD
         }
     }
 
-/**
- * Elimina una foto de la galería de fotos.
- *
- * @param int $numImagen Número de la imagen a eliminar.
- * @return bool true si la eliminación fue exitosa, false si falló.
- */
+    /**
+     * Elimina una foto de la galería de fotos.
+     *
+     * @param int $numImagen Número de la imagen a eliminar.
+     * @return bool true si la eliminación fue exitosa, false si falló.
+     */
     public function eliminarFotoGaleria($numImagen)
     {
         // Eliminar todas las fotos de la galería asociadas a la actividad
@@ -627,13 +654,13 @@ class BD
         }
     }
 
-/**
- * Agrega una foto a la galería de una actividad.
- *
- * @param int $idActividad ID de la actividad a la que se agrega la foto.
- * @param string $foto URL de la foto a agregar.
- * @return int Retorna el ID de la foto agregada si la adición fue exitosa, de lo contrario, retorna -1.
- */
+    /**
+     * Agrega una foto a la galería de una actividad.
+     *
+     * @param int $idActividad ID de la actividad a la que se agrega la foto.
+     * @param string $foto URL de la foto a agregar.
+     * @return int Retorna el ID de la foto agregada si la adición fue exitosa, de lo contrario, retorna -1.
+     */
     public function agregarFotoGaleria($idActividad, $foto)
     {
         // Insertar una foto en la galería asociada a la actividad
@@ -654,12 +681,12 @@ class BD
         }
     }
 
-/**
- * Busca actividades cuyo nombre coincide parcialmente con el nombre proporcionado.
- *
- * @param string $nombreActividad Parte del nombre de la actividad a buscar.
- * @return array Arreglo de actividades que coinciden con el nombre proporcionado.
- */
+    /**
+     * Busca actividades cuyo nombre coincide parcialmente con el nombre proporcionado.
+     *
+     * @param string $nombreActividad Parte del nombre de la actividad a buscar.
+     * @return array Arreglo de actividades que coinciden con el nombre proporcionado.
+     */
     public function buscarCoincidenciasActividad($nombreActividad)
     {
         $sql = "SELECT * FROM actividad WHERE nombreActividad LIKE CONCAT('%', ? , '%')";
@@ -678,8 +705,6 @@ class BD
                 'idActividad' => $row['idActividad'],
                 'nombreActividad' => $row['nombreActividad'],
                 'descripcion' => $row['descripcion'],
-                'tipoActividad' => $row['tipoActividad'],
-                'subTipoActividad' => $row['subTipoActividad'],
                 'duracion' => $row['duracion'],
             );
 
@@ -689,15 +714,15 @@ class BD
         return $actividades;
     }
 
-/**
- * Obtiene los detalles de una actividad por su ID.
- *
- * @param int $idActividad ID de la actividad.
- * @return ActividadSimple|null Objeto de la clase ActividadSimple si se encontró la actividad, null si no.
- */
+    /**
+     * Obtiene los detalles de una actividad por su ID.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return ActividadSimple|null Objeto de la clase ActividadSimple si se encontró la actividad, null si no.
+     */
     public function getActividad($idActividad)
     {
-        $query = "SELECT idActividad, nombreActividad, descripcion, tipoActividad, subTipoActividad, duracion FROM Actividad WHERE idActividad = ?";
+        $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM Actividad WHERE idActividad = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('i', $idActividad);
@@ -716,8 +741,6 @@ class BD
                 $fila['idActividad'],
                 $fila['nombreActividad'],
                 $fila['descripcion'],
-                $fila['tipoActividad'],
-                $fila['subTipoActividad'],
                 $fila['duracion'],
             );
 
@@ -744,12 +767,12 @@ class BD
         }
     }
 
-/**
- * Obtiene la galería de fotos asociada a una actividad por su ID.
- *
- * @param int $idActividad ID de la actividad.
- * @return array Arreglo de objetos Imagen que representan la galería de fotos de la actividad.
- */
+    /**
+     * Obtiene la galería de fotos asociada a una actividad por su ID.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return array Arreglo de objetos Imagen que representan la galería de fotos de la actividad.
+     */
     public function getGaleriaActividad($idActividad)
     {
         $sql = "SELECT * FROM galeriafotos WHERE idActividad = ?";
@@ -776,12 +799,12 @@ class BD
         return $galeria;
     }
 
-/**
- * Inserta un nuevo tipo de preferencia en la base de datos y crea la tabla correspondiente para sus preferencias hijas.
- *
- * @param string $tipoPreferencia Nombre del tipo de preferencia a insertar.
- * @return int|bool ID del tipo de preferencia insertado si la inserción fue exitosa, false si falló.
- */
+    /**
+     * Inserta un nuevo tipo de preferencia en la base de datos y crea la tabla correspondiente para sus preferencias hijas.
+     *
+     * @param string $tipoPreferencia Nombre del tipo de preferencia a insertar.
+     * @return int|bool ID del tipo de preferencia insertado si la inserción fue exitosa, false si falló.
+     */
     public function insertarTipoDePreferencia($tipoPreferencia)
     {
         // Insertar la preferencia en la tabla padre de tipoPreferencias
@@ -829,14 +852,14 @@ class BD
         }
     }
 
-/**
- * Inserta una preferencia específica en la tabla correspondiente al tipo de preferencia.
- *
- * @param int $idTipoPreferencia ID del tipo de preferencia al que pertenece la preferencia.
- * @param string $tipoPreferencia Nombre del tipo de preferencia.
- * @param string $nombrePreferencia Nombre de la preferencia específica a insertar.
- * @return int Número distinto de -1 si la inserción fue exitosa, -1 si falló.
- */
+    /**
+     * Inserta una preferencia específica en la tabla correspondiente al tipo de preferencia.
+     *
+     * @param int $idTipoPreferencia ID del tipo de preferencia al que pertenece la preferencia.
+     * @param string $tipoPreferencia Nombre del tipo de preferencia.
+     * @param string $nombrePreferencia Nombre de la preferencia específica a insertar.
+     * @return int Número distinto de -1 si la inserción fue exitosa, -1 si falló.
+     */
     public function insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia)
     {
         // Construir el nombre de la tabla a partir del tipo de preferencia
@@ -860,12 +883,12 @@ class BD
         }
     }
 
-/**
- * Elimina un tipo de preferencia de la base de datos, incluida su tabla hija.
- *
- * @param int $idTipoPreferencia ID del tipo de preferencia a eliminar.
- * @return bool true si la eliminación fue exitosa, false si falló.
- */
+    /**
+     * Elimina un tipo de preferencia de la base de datos, incluida su tabla hija.
+     *
+     * @param int $idTipoPreferencia ID del tipo de preferencia a eliminar.
+     * @return bool true si la eliminación fue exitosa, false si falló.
+     */
     public function eliminarTipoPreferencia($idTipoPreferencia)
     {
         // Obtener el tipo de preferencia para construir el nombre de la tabla hija
@@ -900,13 +923,13 @@ class BD
         }
     }
 
-/**
- * Elimina una preferencia específica de la base de datos.
- *
- * @param int $idPreferencia ID de la preferencia a eliminar.
- * @param string $tipoPreferencia Tipo de preferencia a la que pertenece la preferencia específica.
- * @return bool true si la eliminación fue exitosa, false si falló.
- */
+    /**
+     * Elimina una preferencia específica de la base de datos.
+     *
+     * @param int $idPreferencia ID de la preferencia a eliminar.
+     * @param string $tipoPreferencia Tipo de preferencia a la que pertenece la preferencia específica.
+     * @return bool true si la eliminación fue exitosa, false si falló.
+     */
     public function eliminarPreferencia($idPreferencia, $tipoPreferencia)
     {
         // Construir el nombre de la tabla de preferencia hija
@@ -927,12 +950,12 @@ class BD
         }
     }
 
-/**
- * Busca coincidencias de tipos de preferencias en la base de datos.
- *
- * @param string $tipoPreferencia Tipo de preferencia a buscar.
- * @return array Arreglo de tipos de preferencias encontrados.
- */
+    /**
+     * Busca coincidencias de tipos de preferencias en la base de datos.
+     *
+     * @param string $tipoPreferencia Tipo de preferencia a buscar.
+     * @return array Arreglo de tipos de preferencias encontrados.
+     */
     public function buscarCoincidenciasTipoPreferencias($tipoPreferencia)
     {
         // Preparar la consulta SQL para buscar coincidencias de preferencias padre
@@ -965,13 +988,13 @@ class BD
         return $preferencias;
     }
 
-/**
- * Obtiene las preferencias específicas asociadas a un tipo de preferencia.
- *
- * @param int $idTipoPreferencia ID del tipo de preferencia.
- * @param string $tipoPreferencia Tipo de preferencia.
- * @return array|bool Arreglo de preferencias encontradas si la consulta fue exitosa, false si falló.
- */
+    /**
+     * Obtiene las preferencias específicas asociadas a un tipo de preferencia.
+     *
+     * @param int $idTipoPreferencia ID del tipo de preferencia.
+     * @param string $tipoPreferencia Tipo de preferencia.
+     * @return array|bool Arreglo de preferencias encontradas si la consulta fue exitosa, false si falló.
+     */
     public function obtenerPreferencias($idTipoPreferencia, $tipoPreferencia)
     {
         // Inicializar el array de preferencias hijas
@@ -1202,5 +1225,4 @@ class BD
             $this->insertarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia);
         }
     }
-
 }

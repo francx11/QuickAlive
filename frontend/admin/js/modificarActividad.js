@@ -2,9 +2,15 @@ $(document).ready(function() {
     // Evento submit para el formulario
     $('form').submit(function(event) {
         event.preventDefault(); // Evitar el envío del formulario por defecto
+        
+        // Obtener el idActividad del formulario
+        var idActividad = $("#idActividad").val();
 
         // Crear un nuevo objeto FormData
         var formData = new FormData();
+
+        // Agregar el idActividad al formData
+        formData.append('idActividad', idActividad);
 
         // Agregar los campos de nombre, descripción y duración al formData
         formData.append('nombre', $("#nombre").val());
@@ -33,9 +39,11 @@ $(document).ready(function() {
             formData.append("imagenes[]", imagenes[i]);
         }
 
+        console.log(formData);
+
         // Realizar la solicitud AJAX para enviar los datos del formulario
         $.ajax({
-            url: "http://localhost/quickalive/backend/admin/gestionActividades/altaActividad.php",
+            url: "http://localhost/quickalive/backend/admin/gestionActividades/modificarActividad.php",
             type: "POST",
             data: formData,
             processData: false,
@@ -43,8 +51,10 @@ $(document).ready(function() {
             success: function(response) {
                 // Manejar la respuesta del servidor si es necesario
                 console.log("Datos del formulario y preferencias guardadas exitosamente");
+
+                console.log(formData);
                 // Redirigir a otra página después de guardar los datos
-                window.location.href = 'gestionActividades.php';
+                window.location.href = 'renderModificarActividad.php?id=' + idActividad;
             },
             error: function(xhr, status, error) {
                 // Manejar errores de la solicitud AJAX si es necesario
@@ -53,3 +63,4 @@ $(document).ready(function() {
         });
     });
 });
+

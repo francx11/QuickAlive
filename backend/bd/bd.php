@@ -548,16 +548,14 @@ class BD
      * @param int $idActividad ID de la actividad a modificar.
      * @param string $nombreActividad Nuevo nombre de la actividad.
      * @param string $descripcion Nueva descripción de la actividad.
-     * @param string $tipoActividad Nuevo tipo de actividad.
-     * @param string $subTipoActividad Nuevo subtipo de actividad.
      * @param int $duracion Nueva duración de la actividad.
      * @return bool true si la modificación fue exitosa, false si falló.
      */
-    public function modificarActividad($idActividad, $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion)
+    public function modificarActividad($idActividad, $nombreActividad, $descripcion, $duracion)
     {
-        $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, tipoActividad = ?, subTipoActividad = ?, duracion = ? WHERE idActividad = ?";
+        $query = "UPDATE Actividad SET nombreActividad = ?, descripcion = ?, duracion = ? WHERE idActividad = ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('ssssii', $nombreActividad, $descripcion, $tipoActividad, $subTipoActividad, $duracion, $idActividad);
+        $stmt->bind_param('ssii', $nombreActividad, $descripcion, $duracion, $idActividad);
 
         try {
             $stmt->execute();
@@ -567,6 +565,53 @@ class BD
             return false; // Fallo al modificar la actividad
         }
     }
+
+    /**
+     * Elimina todas las filas de la tabla Actividad_tipoPreferencia asociadas a una actividad.
+     *
+     * @param int $idActividad El ID de la actividad cuyas filas se desean eliminar de la tabla Actividad_tipoPreferencia.
+     * @return bool Devuelve true si las filas fueron eliminadas correctamente o no existían filas asociadas a la actividad, false en caso de error.
+     */
+    public function eliminarFilasActividadTipoPreferencia($idActividad)
+    {
+        // Consulta SQL para eliminar las filas de la tabla Actividad_tipoPreferencia
+        $query = "DELETE FROM Actividad_tipoPreferencia WHERE idActividad = ?";
+
+        // Preparar la consulta
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        // Ejecutar la consulta y verificar si se ejecuta correctamente
+        if ($stmt->execute()) {
+            return true; // Se ejecutó la consulta sin errores
+        } else {
+            return false; // Ocurrió un error al ejecutar la consulta de eliminación
+        }
+    }
+
+    /**
+     * Modifica las preferencias asociadas a una actividad.
+     *
+     * @param int $idActividad El ID de la actividad a modificar.
+     * @param array $categorias Las nuevas categorías asociadas a la actividad.
+     * @return bool Devuelve true si la modificación se realizó correctamente, false en caso contrario.
+     */
+    public function modificarTipoPreferencias($idActividad, $categorias)
+    {
+        // Primero, eliminar todas las filas de la tabla Actividad_tipoPreferencia asociadas a la actividad
+        if ($this->eliminarFilasActividadTipoPreferencia($idActividad)) {
+            // Luego, insertar las nuevas preferencias asociadas a la actividad
+            if ($this->insertarActividadConCategorias($idActividad, $categorias)) {
+                return true; // La modificación se realizó correctamente
+            } else {
+                return false; // Ocurrió un error al insertar las nuevas preferencias
+            }
+        } else {
+            return false; // Ocurrió un error al eliminar las preferencias existentes
+        }
+    }
+
+
 
     /**
      * Elimina todas las fotos de la galería asociadas a una actividad específica.
@@ -1035,6 +1080,51 @@ class BD
             return false;
         }
     }
+
+    /**
+     * Obtiene las filas de la tabla Actividad_tipopreferencia basadas en el ID de la actividad.
+     *
+     * @param int $idActividad El ID de la actividad cuyas filas se desean obtener de la tabla Actividad_tipopreferencia.
+     * @return array|false Devuelve un array con los datos de las filas si se encuentran, o false si hay un error al ejecutar la consulta.
+     */
+    public function getCategoriasActividad($idActividad)
+    {
+        // Consulta SQL para obtener las filas de la tabla Actividad_tipopreferencia
+        $query = "SELECT idActividad, idTipoPreferencia FROM Actividad_tipoPreferencia WHERE idActividad = ?";
+
+        // Preparar la consulta
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            // Obtener el resultado de la consulta
+            $result = $stmt->get_result();
+
+            // Crear un array para almacenar los datos de las filas
+            $actividadTipoPreferenciaData = array();
+
+            // Verificar si se encontraron filas
+            if ($result->num_rows > 0) {
+                // Iterar sobre las filas del resultado
+                while ($row = $result->fetch_assoc()) {
+                    // Agregar cada fila al array de datos
+                    $actividadTipoPreferenciaData[] = array(
+                        'idActividad' => $row['idActividad'],
+                        'idTipoPreferencia' => $row['idTipoPreferencia'],
+                        // Agregar otros campos según la estructura de tu tabla Actividad_tipoPreferencia
+                    );
+                }
+            }
+
+            // Devolver los datos de las filas
+            return $actividadTipoPreferenciaData;
+        } else {
+            // Si hay un error al ejecutar la consulta, devolver false
+            return false;
+        }
+    }
+
 
     /**
      * Obtiene una fila de la tabla tipoPreferencias basada en el tipo de preferencia.

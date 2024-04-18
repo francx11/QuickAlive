@@ -58,7 +58,7 @@ $(document).ready(function() {
 
             // Agregar enlaces a los botones de editar y eliminar con los parámetros de la actividad
             editarBtn.click(function() {
-                window.location.href = 'http://localhost/quickalive/backend/admin/gestionActividades/modificarActividad.php?id=' + actividad.idActividad;
+                window.location.href = 'http://localhost/quickalive/backend/admin/gestionActividades/renderModificarActividad.php?id=' + actividad.idActividad;
             });
 
             eliminarBtn.click(function() {

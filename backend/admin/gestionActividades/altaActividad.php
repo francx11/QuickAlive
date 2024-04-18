@@ -41,7 +41,7 @@ if ($registradoRoot) {
             $categorias = json_decode($categoriasJSON, true);
 
 
-            echo var_dump($categorias);
+            //echo var_dump($categorias);
 
             // Insertar la actividad simple en la base de datos
             $idActividad = $bd->insertarActividadSimple($nombreActividad, $descripcion, $duracion);

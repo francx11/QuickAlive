@@ -13,10 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Iterar sobre las preferencias seleccionadas y agregarlas a la base de datos
     foreach ($preferencias as $preferencia) {
-        $nombrePreferencia = $preferencia["nombrePreferencia"];
+        $nombreTipoPreferencia = $preferencia["nombreTipoPreferencia"];
         $idTipoPreferencia = $preferencia["idTipoPreferencia"];
 
-        if ($bd->insertarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia)) {
+        if ($bd->insertarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia, $idTipoPreferencia)) {
             // Después de guardar las preferencias exitosamente
             //header("Location: ../pantallaInicial.php");
             echo 'Preferencia insertada correctamente';
@@ -28,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     exit();
-
 } else {
     // Responder con un mensaje de error si no se recibió una solicitud POST válida
     http_response_code(400);

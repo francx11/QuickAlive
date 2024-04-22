@@ -861,7 +861,7 @@ class BD
             $stmtPreferenciaPadre->execute();
             $idPreferenciaPadre = $stmtPreferenciaPadre->insert_id; // Obtener el ID de la preferencia insertada
             // Crear la tabla de preferencias hijas correspondiente
-            $this->crearTablaPreferencias($tipoPreferencia);
+            //$this->crearTablaPreferencias($tipoPreferencia);
         } catch (PDOException $e) {
             echo "Error al insertar preferencia padre: " . $e->getMessage();
             return false; // Fallo al insertar la preferencia padre
@@ -1127,42 +1127,49 @@ class BD
 
 
     /**
-     * Obtiene una fila de la tabla tipoPreferencias basada en el tipo de preferencia.
+     * Obtiene todas las preferencias personales de un usuario a partir de su idUsuario.
      *
-     * @param string $tipoPreferencia El tipo de preferencia a buscar.
-     * @return array|null|false Devuelve un array con los datos del tipo de preferencia si se encuentra,
-     *                          null si no se encuentra, o false si hay un error al ejecutar la consulta.
+     * @param int $idUsuario El ID del usuario cuyas preferencias se desean obtener.
+     * @return array|null|false Devuelve un array con los datos de las preferencias personales si se encuentran,
+     *                          null si no se encuentran, o false si hay un error al ejecutar la consulta.
      */
-    public function getTipoPreferencia($tipoPreferencia)
+    public function getPreferenciasUsuario($idUsuario)
     {
-        // Consulta SQL para obtener el tipo de preferencia
-        $query = "SELECT idTipoPreferencia, tipoPreferencia FROM tipoPreferencias WHERE tipoPreferencia = ?";
+        // Consulta SQL para obtener las preferencias personales del usuario
+        $query = "SELECT idUsuario, idTipoPreferencia, nombreTipoPreferencia FROM usuarioPreferencias WHERE idUsuario = ?";
 
         // Preparar la consulta
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('s', $tipoPreferencia);
+        $stmt->bind_param('i', $idUsuario);
 
         // Ejecutar la consulta
         if ($stmt->execute()) {
             // Obtener el resultado de la consulta
             $result = $stmt->get_result();
 
-            // Verificar si se encontró el tipo de preferencia
+            // Verificar si se encontraron preferencias personales
             if ($result->num_rows > 0) {
-                // Obtener la fila del resultado
-                $row = $result->fetch_assoc();
+                // Crear un array para almacenar todas las preferencias personales del usuario
+                $preferenciasUsuario = array();
 
-                // Crear un array con los datos del tipo de preferencia
-                $tipoPreferenciaData = array(
-                    'idTipoPreferencia' => $row['idTipoPreferencia'],
-                    'tipoPreferencia' => $row['tipoPreferencia'],
-                    // Agregar otros campos según la estructura de tu tabla tipoPreferencias
-                );
+                // Iterar sobre cada fila del resultado
+                while ($row = $result->fetch_assoc()) {
+                    // Crear un array con los datos de la preferencia personal
+                    $preferenciaUsuarioData = array(
+                        'idUsuario' => $row['idUsuario'],
+                        'idTipoPreferencia' => $row['idTipoPreferencia'],
+                        'nombreTipoPreferencia' => $row['nombreTipoPreferencia'],
+                        // Agregar otros campos según la estructura de tu tabla usuarioPreferencias
+                    );
 
-                // Devolver los datos del tipo de preferencia
-                return $tipoPreferenciaData;
+                    // Agregar la preferencia personal al array de preferencias del usuario
+                    $preferenciasUsuario[] = $preferenciaUsuarioData;
+                }
+
+                // Devolver las preferencias personales del usuario
+                return $preferenciasUsuario;
             } else {
-                // Si no se encuentra el tipo de preferencia, devolver null
+                // Si no se encuentran preferencias personales, devolver null
                 return null;
             }
         } else {
@@ -1215,16 +1222,16 @@ class BD
      * Inserta una preferencia personal para un usuario en la tabla UsuarioPreferencias.
      *
      * @param int $idUsuario ID del usuario al que se asociará la preferencia personal.
-     * @param int $nombrePreferencia NOMBRE de la preferencia personal.
+     * @param int $nombreTipoPreferencia NOMBRE de la preferencia personal.
      * @param int $idTipoPreferencia ID del tipo de preferencia.
      * @return bool Devuelve true si la inserción fue exitosa
      * */
-    public function insertarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia)
+    public function insertarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia, $idTipoPreferencia)
     {
         // Insertar la relación en la tabla UsuarioPreferencias
-        $queryUsuarioPreferencias = "INSERT INTO UsuarioPreferencias (idUsuario, nombrePreferencia, idTipoPreferencia) VALUES (?, ?, ?)";
+        $queryUsuarioPreferencias = "INSERT INTO UsuarioPreferencias (idUsuario, nombreTipoPreferencia, idTipoPreferencia) VALUES (?, ?, ?)";
         $stmtUsuarioPreferencias = $this->mysqli->prepare($queryUsuarioPreferencias);
-        $stmtUsuarioPreferencias->bind_param('isi', $idUsuario, $nombrePreferencia, $idTipoPreferencia);
+        $stmtUsuarioPreferencias->bind_param('isi', $idUsuario, $nombreTipoPreferencia, $idTipoPreferencia);
 
         try {
             $stmtUsuarioPreferencias->execute(); // Ejecutar la consulta de inserción en UsuarioPreferencias
@@ -1240,18 +1247,18 @@ class BD
      * Elimina una preferencia personal de un usuario de la base de datos.
      *
      * @param int $idUsuario El ID del usuario cuya preferencia personal se desea eliminar.
-     * @param string $nombrePreferencia El nombre de la preferencia personal que se desea eliminar.
+     * @param string $nombreTipoPreferencia El nombre de la preferencia personal que se desea eliminar.
      * @param int $idTipoPreferencia El ID del tipo de preferencia asociado a la preferencia personal.
      * @return bool Devuelve true si la preferencia personal fue eliminada correctamente, false en caso contrario.
      */
-    public function eliminarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia)
+    public function eliminarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia, $idTipoPreferencia)
     {
         // Consulta SQL para eliminar la preferencia personal de la tabla UsuarioPreferencias
-        $query = "DELETE FROM UsuarioPreferencias WHERE idUsuario = ? AND nombrePreferencia = ? AND idTipoPreferencia = ?";
+        $query = "DELETE FROM UsuarioPreferencias WHERE idUsuario = ? AND nombreTipoPreferencia = ? AND idTipoPreferencia = ?";
 
         // Preparar la consulta
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('isi', $idUsuario, $nombrePreferencia, $idTipoPreferencia);
+        $stmt->bind_param('isi', $idUsuario, $nombreTipoPreferencia, $idTipoPreferencia);
 
         // Ejecutar la consulta y verificar si se ejecuta correctamente
         if ($stmt->execute()) {
@@ -1310,9 +1317,105 @@ class BD
 
         // Insertar las nuevas preferencias personales del usuario
         foreach ($preferencias as $preferencia) {
-            $nombrePreferencia = $preferencia["nombrePreferencia"];
+            $nombreTipoPreferencia = $preferencia["nombreTipoPreferencia"];
             $idTipoPreferencia = $preferencia["idTipoPreferencia"];
-            $this->insertarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia);
+            $this->insertarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia, $idTipoPreferencia);
+        }
+    }
+
+
+
+    /**
+     * Función para recomendar actividades personalizadas para un usuario.
+     *
+     * Esta función recomienda actividades personalizadas para un usuario basadas en sus preferencias personales.
+     *
+     * @param int $idUsuario El ID del usuario para el cual se recomendarán las actividades.
+     * @return array Un array de actividades recomendadas para el usuario.
+     */
+    function recomendarActividadesPersonalizadas($idUsuario)
+    {
+        // Obtener las preferencias personales del usuario
+        $preferenciasUsuario = $this->getPreferenciasUsuario($idUsuario);
+
+        //echo var_dump($preferenciasUsuario);
+
+        // Recomendar actividades personalizadas para el usuario basadas en sus preferencias
+        $actividadesRecomendadas = $this->recomendarActividades($preferenciasUsuario);
+
+        //echo var_dump($actividadesRecomendadas);
+
+        // Devolver las actividades recomendadas
+        return $actividadesRecomendadas;
+    }
+
+    /**
+     * Función para recomendar actividades personalizadas basadas en las preferencias del usuario.
+     *
+     * Esta función recomienda actividades personalizadas basadas en las preferencias del usuario.
+     *
+     * @param array $preferenciasUsuario Un array que contiene las preferencias personales del usuario.
+     * @return array Un array de actividades recomendadas basadas en las preferencias del usuario.
+     */
+    function recomendarActividades($preferenciasUsuario)
+    {
+        // Consulta SQL para obtener todas las filas de la tabla actividad_tipoPreferencia
+        $query = "SELECT idActividad, idTipoPreferencia FROM actividad_tipoPreferencia";
+        $stmt = $this->mysqli->prepare($query);
+
+        // Verificar si la preparación de la consulta fue exitosa
+        if ($stmt) {
+            // Ejecutar la consulta
+            $stmt->execute();
+
+            // Obtener el resultado de la consulta
+            $result = $stmt->get_result();
+
+            // Crear un array asociativo para almacenar la puntuación de cada actividad
+            $puntuacionActividades = [];
+
+            // Inicializar la puntuación de todas las actividades en 0
+            while ($row = $result->fetch_assoc()) {
+                $idActividad = $row['idActividad'];
+                $puntuacionActividades[$idActividad] = 0;
+            }
+
+            // Reiniciar el puntero del resultado para recorrerlo nuevamente
+            $result->data_seek(0);
+
+            // Calcular la puntuación de cada actividad
+            while ($row = $result->fetch_assoc()) {
+                $idTipoPreferencia = $row['idTipoPreferencia'];
+                foreach ($preferenciasUsuario as $preferenciaUsuario) {
+                    if ($preferenciaUsuario['idTipoPreferencia'] == $idTipoPreferencia) {
+                        $puntuacionActividades[$row['idActividad']]++;
+                    }
+                }
+            }
+
+            // Ordenar las actividades según su puntuación
+            arsort($puntuacionActividades);
+
+            // Obtener las actividades recomendadas basadas en la puntuación
+            $actividadesRecomendadas = [];
+            foreach ($puntuacionActividades as $idActividad => $puntuacion) {
+                // Consultar la información de la actividad
+                $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad WHERE idActividad = ?";
+                $stmt = $this->mysqli->prepare($query);
+                $stmt->bind_param('i', $idActividad);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $actividad = $result->fetch_assoc();
+
+                // Agregar la actividad a la lista de recomendaciones
+                $actividadesRecomendadas[] = $actividad;
+            }
+
+            // Devolver las actividades recomendadas
+            return $actividadesRecomendadas;
+        } else {
+            // Si la preparación de la consulta falla, devolver un array vacío
+            return [];
         }
     }
 }

@@ -15,13 +15,15 @@ $(document).ready(function() {
         var preferenciasSeleccionadas = [];
 
         
+        // Recorrer todos los checkboxes de preferencias marcados
+        $("input[name='preferencias[]']:checked").each(function() {
+        // Obtener el nombreTipo y el idTipoPreferencia de cada checkbox
+        var nombreTipoPreferencia = $(this).data("nombre");
+        var idTipoPreferencia = $(this).val();
 
-        // Recorrer todas las preferencias y agregar las seleccionadas al array
-        $(".preferencia.seleccionada").each(function() {
-            var nombrePreferencia = $(this).data("nombre-preferencia");
-            var idTipoPreferencia = $(this).data("tipo-preferencia");
-            preferenciasSeleccionadas.push({
-            nombrePreferencia: nombrePreferencia,
+        // Agregar los datos al array de preferenciasSeleccionadas
+        preferenciasSeleccionadas.push({
+            nombreTipoPreferencia: nombreTipoPreferencia,
             idTipoPreferencia: idTipoPreferencia
         });
         });

@@ -16,14 +16,17 @@ $(document).ready(function() {
 
         
 
-        // Recorrer todas las preferencias y agregar las seleccionadas al array
-        $(".preferencia.seleccionada").each(function() {
-            var nombrePreferencia = $(this).data("nombre-preferencia");
-            var idTipoPreferencia = $(this).data("tipo-preferencia");
+        // Recorrer todos los checkboxes de tipo de preferencia marcados
+        $(".tipo-checkbox:checked").each(function() {
+            // Obtener el nombreTipo y el idTipoPreferencia de cada checkbox
+            var nombreTipoPreferencia = $(this).data("nombre");
+            var idTipoPreferencia = $(this).val();
+            
+            // Agregar los datos al array de preferenciasSeleccionadas
             preferenciasSeleccionadas.push({
-            nombrePreferencia: nombrePreferencia,
-            idTipoPreferencia: idTipoPreferencia
-        });
+                nombreTipoPreferencia: nombreTipoPreferencia,
+                idTipoPreferencia: idTipoPreferencia
+            });
         });
 
         console.log(preferenciasSeleccionadas);

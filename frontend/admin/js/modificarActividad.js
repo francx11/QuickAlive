@@ -54,7 +54,7 @@ $(document).ready(function() {
 
                 console.log(formData);
                 // Redirigir a otra página después de guardar los datos
-                window.location.href = 'renderModificarActividad.php?id=' + idActividad;
+                window.location.href = 'gestionActividades.php';
             },
             error: function(xhr, status, error) {
                 // Manejar errores de la solicitud AJAX si es necesario

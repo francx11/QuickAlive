@@ -1,70 +1,104 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
 }
 
 header {
-    background-color: #007BFF;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
 }
 
 h1 {
-    margin: 0;
+  margin: 0;
 }
 
 .event-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .event-card h3 {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .event-card p {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .event-card a {
-    text-decoration: none;
-    color: blue;
+  text-decoration: none;
+  color: blue;
 }
 
 /* Estilo para el botón de eliminar cuenta */
 .eliminarCuentaBoton {
-    background-color: #ff0000; /* Color de fondo rojo */
-    color: #ffffff; /* Color del texto blanco */
-    padding: 10px 20px; /* Espaciado interior */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambiar cursor al pasar el ratón */
-    text-decoration: none; /* Sin subrayado */
-    display: inline-block; /* Mostrar como bloque en línea */
-  }
-  
-  .eliminarCuentaBoton:hover {
-    background-color: #cc0000; /* Cambiar color de fondo al pasar el ratón */
-  }
-  
-  /* Estilo para el botón de actualizar preferencias */
-  .actualizarPreferenciasBoton {
-    background-color: #007bff; /* Color de fondo azul */
-    color: #ffffff; /* Color del texto blanco */
-    padding: 10px 20px; /* Espaciado interior */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambiar cursor al pasar el ratón */
-    text-decoration: none; /* Sin subrayado */
-    display: inline-block; /* Mostrar como bloque en línea */
-  }
-  
-  .actualizarPreferenciasBoton:hover {
-    background-color: #0056b3; /* Cambiar color de fondo al pasar el ratón */
-  }
-  
+  background-color: #ff0000; /* Color de fondo rojo */
+  color: #ffffff; /* Color del texto blanco */
+  padding: 10px 20px; /* Espaciado interior */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar el ratón */
+  text-decoration: none; /* Sin subrayado */
+  display: inline-block; /* Mostrar como bloque en línea */
+}
+
+.eliminarCuentaBoton:hover {
+  background-color: #cc0000; /* Cambiar color de fondo al pasar el ratón */
+}
+
+/* Estilo para el botón de actualizar preferencias */
+.actualizarPreferenciasBoton {
+  background-color: #007bff; /* Color de fondo azul */
+  color: #ffffff; /* Color del texto blanco */
+  padding: 10px 20px; /* Espaciado interior */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar el ratón */
+  text-decoration: none; /* Sin subrayado */
+  display: inline-block; /* Mostrar como bloque en línea */
+}
+
+.actualizarPreferenciasBoton:hover {
+  background-color: #0056b3; /* Cambiar color de fondo al pasar el ratón */
+}
+
+.event-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+.event-card h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.event-card p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.event-card a {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.event-card a:hover {
+  background-color: #0056b3;
+}

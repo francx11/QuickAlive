@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Registro de Preferencias</title>
-		<link
-			rel="stylesheet"
-			href="/quickalive/frontend/user/css/registroPreferencias.css"
-		/>
-	</head>
-	<body>
-		<header>
-			<h1>Registro de Preferencias</h1>
-		</header>
-		<div class="tipo-preferencia">
-			<h2>Indica tus preferencias</h2>
-			{% for tipoPreferencia in tiposPreferencias %}
-			<h3>{{ tipoPreferencia.tipoPreferencia }}</h3>
-			<ul>
-				{% for preferencia in tipoPreferencia.preferencias %}
-				<li
-					class="preferencia"
-					data-id="{{ preferencia.idPreferencia }}"
-					data-tipo-preferencia="{{ preferencia.idTipoPreferencia }}"
-					data-nombre-preferencia="{{ preferencia.nombrePreferencia }}"
-				>
-					{{ preferencia.nombrePreferencia }}
-				</li>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Preferencias</title>
+    <link
+      rel="stylesheet"
+      href="/quickalive/frontend/user/css/registroPreferencias.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Registro de Preferencias</h1>
+    </header>
 
-				{% endfor %}
-			</ul>
-			{% endfor %}
-		</div>
-		<button id="guardarPreferencias">Guardar Preferencias</button>
+    <div class="tipo-preferencia">
+      <h2>Indica tus preferencias personales</h2>
+      {% for tipoPreferencia in tiposPreferencias %}
+      <input
+        type="checkbox"
+        class="tipo-checkbox"
+        name="tipoPreferencia[]"
+        value="{{ tipoPreferencia.idTipoPreferencia }}"
+        data-nombre="{{ tipoPreferencia.tipoPreferencia }}"
+      />
+      <label for="tipoPreferencia">{{ tipoPreferencia.tipoPreferencia }}</label
+      ><br />
+      {% endfor %}
+    </div>
 
-		<div id="usuario" data-id-usuario="{{ idUsuario }}"></div>
+    <button id="guardarPreferencias">Guardar Preferencias</button>
 
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="/quickalive/frontend/user/js/registroPreferencias.js"></script>
-	</body>
+    <div id="usuario" data-id-usuario="{{ idUsuario }}"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/quickalive/frontend/user/js/registroPreferencias.js"></script>
+  </body>
 </html>

@@ -52,7 +52,8 @@ if ($registradoRoot) {
                 // Subir las imágenes asociadas a la actividad al servidor y registrar las rutas en la base de datos
                 if (!empty($_FILES['imagenes']['name'][0])) {
                     $numImagenes = count($_FILES['imagenes']['name']);
-                    $directorioDestino = "imgs/";
+                    $directorioDestino = "../../imgs/";
+
 
                     for ($i = 0; $i < $numImagenes; $i++) {
                         $nombreImagen = $_FILES['imagenes']['name'][$i];

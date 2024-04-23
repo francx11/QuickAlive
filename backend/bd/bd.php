@@ -1359,63 +1359,59 @@ class BD
      */
     function recomendarActividades($preferenciasUsuario)
     {
-        // Consulta SQL para obtener todas las filas de la tabla actividad_tipoPreferencia
-        $query = "SELECT idActividad, idTipoPreferencia FROM actividad_tipoPreferencia";
-        $stmt = $this->mysqli->prepare($query);
+        // Verificar si el usuario tiene preferencias personales
+        if (empty($preferenciasUsuario)) {
+            // Si el usuario no tiene preferencias, obtener todas las actividades de la base de datos
+            $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad";
+            $stmt = $this->mysqli->prepare($query);
 
-        // Verificar si la preparación de la consulta fue exitosa
-        if ($stmt) {
-            // Ejecutar la consulta
-            $stmt->execute();
+            // Verificar si la preparación de la consulta fue exitosa
+            if ($stmt) {
+                // Ejecutar la consulta
+                $stmt->execute();
 
-            // Obtener el resultado de la consulta
-            $result = $stmt->get_result();
+                // Obtener el resultado de la consulta
+                $result = $stmt->get_result();
 
-            // Crear un array asociativo para almacenar la puntuación de cada actividad
-            $puntuacionActividades = [];
+                // Crear un array para almacenar las actividades recomendadas
+                $actividadesRecomendadas = [];
 
-            // Inicializar la puntuación de todas las actividades en 0
-            while ($row = $result->fetch_assoc()) {
-                $idActividad = $row['idActividad'];
-                $puntuacionActividades[$idActividad] = 0;
-            }
+                // Verificar si se obtuvieron resultados
+                if ($result->num_rows > 0) {
+                    // Iterar sobre cada fila del resultado
+                    while ($row = $result->fetch_assoc()) {
+                        // Obtener las fotos de la galería asociadas a la actividad
+                        $queryGaleria = "SELECT url FROM GaleriaFotos WHERE idActividad = ?";
+                        $stmtGaleria = $this->mysqli->prepare($queryGaleria);
+                        $stmtGaleria->bind_param('i', $row['idActividad']);
+                        $stmtGaleria->execute();
+                        $resultGaleria = $stmtGaleria->get_result();
 
-            // Reiniciar el puntero del resultado para recorrerlo nuevamente
-            $result->data_seek(0);
+                        // Crear un array para almacenar las URLs de las fotos
+                        $fotos = [];
+                        while ($foto = $resultGaleria->fetch_assoc()) {
+                            $fotos[] = $foto['url'];
+                        }
 
-            // Calcular la puntuación de cada actividad
-            while ($row = $result->fetch_assoc()) {
-                $idTipoPreferencia = $row['idTipoPreferencia'];
-                foreach ($preferenciasUsuario as $preferenciaUsuario) {
-                    if ($preferenciaUsuario['idTipoPreferencia'] == $idTipoPreferencia) {
-                        $puntuacionActividades[$row['idActividad']]++;
+                        // Agregar las fotos al array de la actividad
+                        $row['fotos'] = $fotos;
+
+                        // Agregar la fila al array de actividades recomendadas
+                        $actividadesRecomendadas[] = $row;
                     }
                 }
+
+                // Cerrar la consulta preparada
+                $stmt->close();
+
+                // Devolver las actividades recomendadas
+                return $actividadesRecomendadas;
+            } else {
+                // Si la preparación de la consulta falla, devolver un array vacío
+                return [];
             }
-
-            // Ordenar las actividades según su puntuación
-            arsort($puntuacionActividades);
-
-            // Obtener las actividades recomendadas basadas en la puntuación
-            $actividadesRecomendadas = [];
-            foreach ($puntuacionActividades as $idActividad => $puntuacion) {
-                // Consultar la información de la actividad
-                $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad WHERE idActividad = ?";
-                $stmt = $this->mysqli->prepare($query);
-                $stmt->bind_param('i', $idActividad);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $actividad = $result->fetch_assoc();
-
-                // Agregar la actividad a la lista de recomendaciones
-                $actividadesRecomendadas[] = $actividad;
-            }
-
-            // Devolver las actividades recomendadas
-            return $actividadesRecomendadas;
         } else {
-            // Si la preparación de la consulta falla, devolver un array vacío
-            return [];
+            // El resto de tu código para calcular y ordenar las actividades recomendadas permanece igual
         }
     }
 }

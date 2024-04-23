@@ -15,6 +15,9 @@ $registradoRoot = isset($_SESSION['loggedin']) && isset($_SESSION['rol']) && $_S
 // Si el usuario es root, procede con la modificación de la actividad
 if ($registradoRoot) {
 
+
+
+
     // Obtiene el ID de la actividad de la solicitud POST, o establece -1 si no se proporciona
     $idActividad = isset($_POST['idActividad']) ? $_POST['idActividad'] : -1;
 
@@ -67,8 +70,11 @@ if ($registradoRoot) {
             if ($idActividad) {
                 // Itera sobre las imágenes subidas y las agrega a la galería de la actividad
                 foreach ($_FILES['imagenes']['name'] as $key => $nombreImagen) {
+
                     // Define el directorio de destino para las imágenes
-                    $directorioDestino = "imgs/";
+                    $directorioDestino = '../../../imgs/';
+
+
 
                     // Construye la URL completa para la imagen
                     $url = $directorioDestino . $nombreImagen;

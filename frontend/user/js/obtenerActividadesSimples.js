@@ -5,7 +5,6 @@ $(document).ready(function() {
         type: 'GET',
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             // Verificar si se obtuvieron actividades
             if (response && response.length > 0) {
                 // Limpiar el contenido actual del contenedor de eventos
@@ -17,6 +16,14 @@ $(document).ready(function() {
                     actividadHTML += '<h3>' + actividad.nombreActividad + '</h3>';
                     actividadHTML += '<p>' + actividad.descripcion + '</p>';
                     actividadHTML += '<p>Duración: ' + actividad.duracion + ' minutos</p>';
+
+                    // Verificar si hay fotos asociadas a la actividad
+                    if (actividad.fotos && actividad.fotos.length > 0) {
+                        console.log(actividad.fotos[0]);
+                        // Agregar la primera imagen encontrada
+                        //actividadHTML += '<img src="' + actividad.fotos[0] + '" alt="Imagen de la actividad">';
+                    }
+
                     actividadHTML += '</div>';
 
                     $('#events-container').append(actividadHTML);

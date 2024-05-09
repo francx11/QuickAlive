@@ -52,14 +52,13 @@ if ($registradoRoot) {
                 // Subir las imágenes asociadas a la actividad al servidor y registrar las rutas en la base de datos
                 if (!empty($_FILES['imagenes']['name'][0])) {
                     $numImagenes = count($_FILES['imagenes']['name']);
-                    $directorioDestino = "../../imgs/";
-
+                    $directorioDestino = "../../../imgs/" . $nombreImagen;
 
                     for ($i = 0; $i < $numImagenes; $i++) {
                         $nombreImagen = $_FILES['imagenes']['name'][$i];
-                        $url = $directorioDestino . $nombreImagen;
+                        $url = "/quickalive/imgs/" . $nombreImagen;
 
-                        if (move_uploaded_file($_FILES['imagenes']['tmp_name'][$i], $url)) {
+                        if (move_uploaded_file($_FILES['imagenes']['tmp_name'][$i], $directorioDestino)) {
                             if ($bd->agregarFotoGaleria($idActividad, $url) != -1) {
                                 echo 'Imagen insertada con éxito';
                             } else {

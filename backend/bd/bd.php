@@ -1136,7 +1136,7 @@ class BD
     public function getPreferenciasUsuario($idUsuario)
     {
         // Consulta SQL para obtener las preferencias personales del usuario
-        $query = "SELECT idUsuario, idTipoPreferencia, nombreTipoPreferencia FROM usuarioPreferencias WHERE idUsuario = ?";
+        $query = "SELECT idUsuario, idTipoPreferencia, nombreTipoPreferencia, pInteres FROM usuarioPreferencias WHERE idUsuario = ?";
 
         // Preparar la consulta
         $stmt = $this->mysqli->prepare($query);
@@ -1159,6 +1159,7 @@ class BD
                         'idUsuario' => $row['idUsuario'],
                         'idTipoPreferencia' => $row['idTipoPreferencia'],
                         'nombreTipoPreferencia' => $row['nombreTipoPreferencia'],
+                        'pInteres' => $row['pInteres']
                         // Agregar otros campos según la estructura de tu tabla usuarioPreferencias
                     );
 
@@ -1359,8 +1360,19 @@ class BD
      */
     function recomendarActividades($preferenciasUsuario)
     {
+
+        // Si el usuario tiene todas sus preferencias personales a 0 entonces no tiene preferencias 
+        $sumaPuntosInteres = 0;
+        // Recorrer el array de preferencias y sumar los puntos de interés
+        foreach ($preferenciasUsuario as $preferencia) {
+            $sumaPuntosInteres += $preferencia['pInteres'];
+        }
+
+        // Verificar si la suma es igual a cero
+        $sinPreferencias = ($sumaPuntosInteres == 0);
+
         // Verificar si el usuario tiene preferencias personales
-        if (empty($preferenciasUsuario)) {
+        if (empty($preferenciasUsuario) or $sinPreferencias) {
             // Si el usuario no tiene preferencias, obtener todas las actividades de la base de datos
             $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad";
             $stmt = $this->mysqli->prepare($query);
@@ -1411,7 +1423,127 @@ class BD
                 return [];
             }
         } else {
-            // El resto de tu código para calcular y ordenar las actividades recomendadas permanece igual
+            // Consulta SQL para obtener todas las filas de la tabla actividad_tipoPreferencia
+            $query = "SELECT idActividad, idTipoPreferencia FROM actividad_tipoPreferencia";
+            $stmt = $this->mysqli->prepare($query);
+
+            // Verificar si la preparación de la consulta fue exitosa
+            if ($stmt) {
+                // Ejecutar la consulta
+                $stmt->execute();
+
+                // Obtener el resultado de la consulta
+                $result = $stmt->get_result();
+
+                // Crear un array asociativo para almacenar las puntuaciones de las actividades
+                $puntuacionActividades = [];
+
+                // Inicializar la puntuación de todas las actividades en 0
+                while ($row = $result->fetch_assoc()) {
+                    $idActividad = $row['idActividad'];
+                    $puntuacionActividades[$idActividad] = 0;
+                }
+
+                // Reiniciar el puntero del resultado para recorrerlo nuevamente
+                $result->data_seek(0);
+
+                // Calcular la puntuación de cada actividad
+                while ($row = $result->fetch_assoc()) {
+                    $idActividad = $row['idActividad'];
+                    foreach ($preferenciasUsuario as $preferenciaUsuario) {
+                        if ($preferenciaUsuario['idTipoPreferencia'] == $row['idTipoPreferencia']) {
+
+                            $nuevaPuntuacion = $preferenciaUsuario['pInteres'];
+                            $puntuacionActividades[$idActividad] = $nuevaPuntuacion;
+                        }
+                    }
+                }
+
+                // Ordenar las actividades según su puntuación de forma descendente
+                arsort($puntuacionActividades);
+
+                // Obtener las actividades recomendadas basadas en la puntuación
+                $actividadesRecomendadas = [];
+
+                foreach ($puntuacionActividades as $idActividad => $puntuacion) {
+
+                    if ($puntuacion > 0) {
+                        // Si la actividad tiene al menos una coincidencia de preferencia, consultar su información
+                        $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad WHERE idActividad = ?";
+                        $stmt = $this->mysqli->prepare($query);
+                        $stmt->bind_param('i', $idActividad);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $actividad = $result->fetch_assoc();
+
+                        // Obtener las fotos de la galería asociadas a la actividad
+                        $queryGaleria = "SELECT url FROM GaleriaFotos WHERE idActividad = ?";
+                        $stmtGaleria = $this->mysqli->prepare($queryGaleria);
+                        $stmtGaleria->bind_param('i', $idActividad);
+                        $stmtGaleria->execute();
+                        $resultGaleria = $stmtGaleria->get_result();
+
+                        // Crear un array para almacenar las URLs de las fotos
+                        $fotos = [];
+                        while ($foto = $resultGaleria->fetch_assoc()) {
+                            $fotos[] = $foto['url'];
+                        }
+
+                        // Agregar las fotos al array de la actividad
+                        $actividad['fotos'] = $fotos;
+
+                        // Agregar la actividad a la lista de recomendaciones
+                        $actividadesRecomendadas[] = $actividad;
+                    }
+                }
+
+                // Devolver las actividades recomendadas
+                return $actividadesRecomendadas;
+            } else {
+                // Si la preparación de la consulta falla, devolver un array vacío
+                return [];
+            }
+        }
+    }
+
+    /**
+     * Actualiza los puntos de interés de las preferencias del usuario
+     * basado en la aceptación o rechazo de una actividad.
+     *
+     * @param array $preferenciasActividades Un array de preferencias asociadas a la actividad.
+     * @param array $preferenciasPersonales Un array de preferencias personales del usuario.
+     * @param string $estado El estado de la actividad ("aceptada" o "rechazada").
+     * @return void
+     */
+    function actualizarPuntosInteres($preferenciasActividades, $preferenciasPersonales, $estado)
+    {
+
+        // Verificar si el estado es "aceptada" o "rechazada"
+        if ($estado === "aceptada") {
+            $puntos = 1; // Si es aceptada, sumar un punto
+        } elseif ($estado === "rechazada") {
+            $puntos = -1; // Si es rechazada, restar un punto
+        } else {
+            // Estado no válido, no hacer nada
+            return;
+        }
+
+        // Preparar y ejecutar consultas de actualización para las preferencias del usuario que coincidan con las preferencias de la actividad
+        foreach ($preferenciasActividades as $preferenciaActividad) {
+            $idTipoPreferencia = $preferenciaActividad['idTipoPreferencia'];
+
+            // Buscar la preferencia del usuario asociada a la preferencia de la actividad
+            foreach ($preferenciasPersonales as $preferenciaPersonal) {
+                if ($preferenciaPersonal['idTipoPreferencia'] === $idTipoPreferencia) {
+                    $pInteresActualizado = $preferenciaPersonal['pInteres'] + $puntos;
+
+                    // Consulta de actualización
+                    $query = "UPDATE usuariopreferencias SET pInteres = ? WHERE idTipoPreferencia = ?";
+                    $stmt = $this->mysqli->prepare($query);
+                    $stmt->bind_param('ii', $pInteresActualizado, $idTipoPreferencia);
+                    $stmt->execute();
+                }
+            }
         }
     }
 }

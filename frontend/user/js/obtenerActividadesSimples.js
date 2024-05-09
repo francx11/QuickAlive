@@ -7,36 +7,100 @@ $(document).ready(function() {
         success: function(response) {
             // Verificar si se obtuvieron actividades
             if (response && response.length > 0) {
-                // Limpiar el contenido actual del contenedor de eventos
-                $('#events-container').empty();
+                console.log(response);
 
-                // Recorrer las actividades y mostrarlas en el contenedor de eventos
-                response.forEach(function(actividad) {
-                    var actividadHTML = '<div class="actividad">';
-                    actividadHTML += '<h3>' + actividad.nombreActividad + '</h3>';
-                    actividadHTML += '<p>' + actividad.descripcion + '</p>';
-                    actividadHTML += '<p>Duración: ' + actividad.duracion + ' minutos</p>';
+            // Limpiar el contenido actual del contenedor de eventos
+            $('#events-simple').empty();
 
-                    // Verificar si hay fotos asociadas a la actividad
-                    if (actividad.fotos && actividad.fotos.length > 0) {
-                        console.log(actividad.fotos[0]);
-                        // Agregar la primera imagen encontrada
-                        //actividadHTML += '<img src="' + actividad.fotos[0] + '" alt="Imagen de la actividad">';
-                    }
 
-                    actividadHTML += '</div>';
+            // Recorrer las actividades y mostrarlas en el contenedor de eventos
+            response.forEach(function(actividad) {
 
-                    $('#events-container').append(actividadHTML);
+                var actividadHTML = '<div class="actividad">';
+                actividadHTML += '<h3>' + actividad.nombreActividad + '</h3>';
+                actividadHTML += '<p>Duración: ' + actividad.duracion + ' minutos</p>';
+
+                // Verificar si hay fotos asociadas a la actividad
+                if (actividad.fotos && actividad.fotos.length > 0) {
+                    // Agregar la primera imagen encontrada
+                    actividadHTML += '<img src="' + actividad.fotos[0] + '" alt="Imagen de la actividad">';
+                }
+
+                // Agregar botones de aceptación, rechazo e información
+                actividadHTML += '<button class="btn-aceptar" data-id="' + actividad.idActividad + '">Aceptar</button>';
+                actividadHTML += '<button class="btn-rechazar" data-id="' + actividad.idActividad + '">Rechazar</button>';
+                actividadHTML += '<button class="btn-info" data-descripcion="' + actividad.descripcion + '">Información</button>';
+                actividadHTML += '</div>';
+
+                $('#events-simple').append(actividadHTML);
+            });
+
+            // Escuchar eventos de clic en los botones de aceptación, rechazo e información
+            $('#events-simple').on('click', '.btn-aceptar', function() {
+                var idActividad = $(this).data('id');
+                // Ejecutar PHP con estado "aceptada"
+                $.get('/quickalive/backend/user/gestionRecomendaciones/controladorInteresActividad.php', { estado: 'aceptada', idActividad: idActividad }, function(response) {
+                    // Manejar la respuesta del servidor
+                    console.log('Respuesta del servidor:', response);
+                    // Si necesitas realizar alguna acción adicional basada en la respuesta, puedes hacerlo aquí
                 });
+
+                $(this).closest('.actividad').remove();
+            });
+
+            $('#events-simple').on('click', '.btn-rechazar', function() {
+                var idActividad = $(this).data('id');
+                // Ejecutar PHP con estado "rechazada"
+                $.get('/quickalive/backend/user/gestionRecomendaciones/controladorInteresActividad.php', { estado: 'rechazada', idActividad: idActividad }, function(response) {
+                    // Manejar la respuesta del servidor
+                    console.log('Respuesta del servidor:', response);
+                    // Si necesitas realizar alguna acción adicional basada en la respuesta, puedes hacerlo aquí
+                });
+                $(this).closest('.actividad').remove();
+            });            
+
+          
+
+            // Función para cerrar el iframe
+            function cerrarIframe() {
+                var iframe = document.querySelector("iframe");
+                iframe.parentNode.removeChild(iframe);
+            }
+
+            $('#events-simple').on('click', '.btn-info', function() {
+                // Crear un elemento iframe
+                var iframe = document.createElement("iframe");
+                
+                // Establecer atributos del iframe
+                iframe.frameBorder = 0;
+                iframe.width = "100%";
+                iframe.height = "300px";
+                iframe.style.position = "absolute";
+                iframe.style.top = "0";
+                iframe.style.left = "0";
+                
+                // Obtener la descripción de la actividad
+                var descripcion = $(this).data('descripcion');
+                
+                // Establecer el contenido del iframe con la descripción y el botón de cierre
+                iframe.srcdoc = '<div style="padding: 20px; background-color: white;">' + descripcion + '</div><button onclick="cerrarIframe()">Cerrar</button>';
+                
+                // Agregar el iframe al contenedor de eventos
+                document.getElementById("events-simple").appendChild(iframe);
+            });
+
             } else {
                 // No se encontraron actividades recomendadas
-                $('#events-container').html('<p>No se encontraron actividades recomendadas.</p>');
+                $('#events-simple').html('<p>No se encontraron actividades recomendadas.</p>');
             }
         },
         error: function(xhr, status, error) {
             // Manejar errores de la solicitud AJAX
             console.error('Error en la solicitud AJAX:', error);
-            $('#events-container').html('<p>Error al cargar las actividades recomendadas.</p>');
+            $('#events-simple').html('<p>Error al cargar las actividades recomendadas.</p>');
         }
     });
 });
+
+
+

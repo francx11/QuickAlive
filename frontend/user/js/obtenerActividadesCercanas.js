@@ -24,7 +24,7 @@ if (navigator.geolocation) {
             success: function(json) {
                 console.log(json._embedded.events);
                 // Muestra los eventos en tarjetas HTML
-                var eventsContainer = document.getElementById('events-container');
+                var eventsContainer = document.getElementById('events-geo');
                 for (let event of json._embedded.events) {
                     var eventCard = document.createElement('div');
                     eventCard.classList.add('event-card');

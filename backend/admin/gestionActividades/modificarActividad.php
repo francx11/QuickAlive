@@ -72,15 +72,13 @@ if ($registradoRoot) {
                 foreach ($_FILES['imagenes']['name'] as $key => $nombreImagen) {
 
                     // Define el directorio de destino para las imágenes
-                    $directorioDestino = '../../../imgs/';
-
-
+                    $directorioDestino = '../../../imgs/' . $nombreImagen;
 
                     // Construye la URL completa para la imagen
-                    $url = $directorioDestino . $nombreImagen;
+                    $url = "/quickalive/imgs/" . $nombreImagen;
 
                     // Mueve la imagen al directorio de destino
-                    if (move_uploaded_file($_FILES['imagenes']['tmp_name'][$key], $url)) {
+                    if (move_uploaded_file($_FILES['imagenes']['tmp_name'][$key], $directorioDestino)) {
                         echo "La imagen $nombreImagen se ha subido correctamente. Ruta: $url<br>";
 
                         // Agrega la imagen a la galería de la actividad en la base de datos

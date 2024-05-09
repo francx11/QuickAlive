@@ -1,8 +1,6 @@
 <?php
 // Incluir el archivo que contiene la lógica para la conexión a la base de datos
 
-use SebastianBergmann\Environment\Console;
-
 require_once '../../bd/bd.php';
 
 // Iniciar la sesión si no está iniciada

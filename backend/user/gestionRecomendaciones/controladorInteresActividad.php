@@ -19,6 +19,13 @@ if ($logueado) {
         // Crear una instancia de la clase BD para interactuar con la base de datos
         $bd = new BD();
 
+
+        if ($estado === "aceptada") {
+            $bd->realizarActividad($idUsuario, $idActividad);
+        } else if ($estado === "rechazada") {
+            $bd->rechazarActividad($idUsuario, $idActividad);
+        }
+
         // Obtener las categorías de la actividad
         $categoriasActividad = $bd->getCategoriasActividad($idActividad);
 

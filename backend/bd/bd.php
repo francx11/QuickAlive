@@ -1336,8 +1336,11 @@ class BD
      */
     function recomendarActividadesPersonalizadas($idUsuario)
     {
+        //echo $idUsuario;
         // Obtener las preferencias personales del usuario
         $preferenciasUsuario = $this->getPreferenciasUsuario($idUsuario);
+
+        //echo var_dump($preferenciasUsuario);
 
         //echo var_dump($preferenciasUsuario);
 
@@ -1361,18 +1364,21 @@ class BD
     function recomendarActividades($preferenciasUsuario)
     {
 
-        // Si el usuario tiene todas sus preferencias personales a 0 entonces no tiene preferencias 
-        $sumaPuntosInteres = 0;
-        // Recorrer el array de preferencias y sumar los puntos de interés
-        foreach ($preferenciasUsuario as $preferencia) {
-            $sumaPuntosInteres += $preferencia['pInteres'];
+        // TODO: quitar si se implementa que si pInteres = 0 entonces delete esa preferencia
+        if (is_null($preferenciasUsuario) == false) {
+            // Si el usuario tiene todas sus preferencias personales a 0 entonces no tiene preferencias 
+            $sumaPuntosInteres = 0;
+            // Recorrer el array de preferencias y sumar los puntos de interés
+            foreach ($preferenciasUsuario as $preferencia) {
+                $sumaPuntosInteres += $preferencia['pInteres'];
+            }
+
+            // Verificar si la suma es igual a cero
+            $sinPreferencias = ($sumaPuntosInteres == 0);
         }
 
-        // Verificar si la suma es igual a cero
-        $sinPreferencias = ($sumaPuntosInteres == 0);
-
         // Verificar si el usuario tiene preferencias personales
-        if (empty($preferenciasUsuario) or $sinPreferencias) {
+        if (is_null($preferenciasUsuario) or $sinPreferencias) {
             // Si el usuario no tiene preferencias, obtener todas las actividades de la base de datos
             $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad";
             $stmt = $this->mysqli->prepare($query);
@@ -1441,20 +1447,28 @@ class BD
                 // Inicializar la puntuación de todas las actividades en 0
                 while ($row = $result->fetch_assoc()) {
                     $idActividad = $row['idActividad'];
-                    $puntuacionActividades[$idActividad] = 0;
+
+                    // Si la actividad esta en realiza directamente ni se puntua igual que si esta rechazada
+                    if ($this->verificarActividadEnRealiza($idActividad) === false and $this->verificarActividadNoEnRechazadas($idActividad) === true)
+                        $puntuacionActividades[$idActividad] = 0;
                 }
 
                 // Reiniciar el puntero del resultado para recorrerlo nuevamente
                 $result->data_seek(0);
 
+
+
                 // Calcular la puntuación de cada actividad
                 while ($row = $result->fetch_assoc()) {
                     $idActividad = $row['idActividad'];
-                    foreach ($preferenciasUsuario as $preferenciaUsuario) {
-                        if ($preferenciaUsuario['idTipoPreferencia'] == $row['idTipoPreferencia']) {
+                    //Si la actividad no esta en realiza se coge y si no esta rechazada
+                    if ($this->verificarActividadEnRealiza($idActividad) === false and $this->verificarActividadNoEnRechazadas($idActividad) === true) {
+                        foreach ($preferenciasUsuario as $preferenciaUsuario) {
+                            if ($preferenciaUsuario['idTipoPreferencia'] == $row['idTipoPreferencia']) {
 
-                            $nuevaPuntuacion = $preferenciaUsuario['pInteres'];
-                            $puntuacionActividades[$idActividad] = $nuevaPuntuacion;
+                                $nuevaPuntuacion = $preferenciaUsuario['pInteres'];
+                                $puntuacionActividades[$idActividad] += $nuevaPuntuacion;
+                            }
                         }
                     }
                 }
@@ -1462,13 +1476,17 @@ class BD
                 // Ordenar las actividades según su puntuación de forma descendente
                 arsort($puntuacionActividades);
 
+                //echo var_dump($puntuacionActividades);
+
+
                 // Obtener las actividades recomendadas basadas en la puntuación
                 $actividadesRecomendadas = [];
 
                 foreach ($puntuacionActividades as $idActividad => $puntuacion) {
 
-                    if ($puntuacion > 0) {
-                        // Si la actividad tiene al menos una coincidencia de preferencia, consultar su información
+                    if ($puntuacion >= 0) {
+
+
                         $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad WHERE idActividad = ?";
                         $stmt = $this->mysqli->prepare($query);
                         $stmt->bind_param('i', $idActividad);
@@ -1537,13 +1555,203 @@ class BD
                 if ($preferenciaPersonal['idTipoPreferencia'] === $idTipoPreferencia) {
                     $pInteresActualizado = $preferenciaPersonal['pInteres'] + $puntos;
 
-                    // Consulta de actualización
-                    $query = "UPDATE usuariopreferencias SET pInteres = ? WHERE idTipoPreferencia = ?";
-                    $stmt = $this->mysqli->prepare($query);
-                    $stmt->bind_param('ii', $pInteresActualizado, $idTipoPreferencia);
-                    $stmt->execute();
+                    // Si el interes por esta preferencia llega a 0 se elimina de las preferencias del usuario
+                    if ($pInteresActualizado === 0) {
+                        $this->eliminarPreferenciaPersonal($preferenciaPersonal['idUsuario'], $preferenciaPersonal['nombreTipoPreferencia'], $preferenciaPersonal['idTipoPreferencia']);
+                    } else {
+                        // Consulta de actualización
+                        $query = "UPDATE usuariopreferencias SET pInteres = ? WHERE idTipoPreferencia = ?";
+                        $stmt = $this->mysqli->prepare($query);
+                        $stmt->bind_param('ii', $pInteresActualizado, $idTipoPreferencia);
+                        $stmt->execute();
+                    }
                 }
             }
+        }
+    }
+
+    /**
+     * Inserta una nueva realización de actividad en la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la inserción fue exitosa, false si falló.
+     */
+    public function realizarActividad($idUsuario, $idActividad)
+    {
+        $query = "INSERT INTO realiza (idUsuario, idActividad) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('ii', $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al insertar la realización de la actividad
+        } catch (PDOException $e) {
+            echo "Error al realizar la actividad: " . $e->getMessage();
+            return false; // Fallo al realizar la actividad
+        }
+    }
+
+    /**
+     * Elimina una realización de actividad de la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la eliminación fue exitosa, false si falló.
+     */
+    public function eliminarRealizacionActividad($idUsuario, $idActividad)
+    {
+        $query = "DELETE FROM realiza WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('ii', $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al eliminar la realización de la actividad
+        } catch (PDOException $e) {
+            echo "Error al eliminar la realización de la actividad: " . $e->getMessage();
+            return false; // Fallo al eliminar la realización de la actividad
+        }
+    }
+
+    /**
+     * Modifica la fecha de realización de una actividad en la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @param string $nuevaFechaHoraRealizacion Nueva fecha y hora de realización de la actividad.
+     * @return bool True si la modificación fue exitosa, false si falló.
+     */
+    public function modificarFechaRealizacion($idUsuario, $idActividad, $nuevaFechaHoraRealizacion)
+    {
+        $query = "UPDATE realiza SET fechaHoraRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('sii', $nuevaFechaHoraRealizacion, $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al modificar la fecha de realización de la actividad
+        } catch (PDOException $e) {
+            echo "Error al modificar la fecha de realización de la actividad: " . $e->getMessage();
+            return false; // Fallo al modificar la fecha de realización de la actividad
+        }
+    }
+
+    /**
+     * Marca una actividad como completada en la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la modificación fue exitosa, false si falló.
+     */
+    public function completarActividad($idUsuario, $idActividad)
+    {
+        $completada = 1; // Valor para marcar la actividad como completada
+
+        $query = "UPDATE realiza SET completada = ? WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('iii', $completada, $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al marcar la actividad como completada
+        } catch (PDOException $e) {
+            echo "Error al completar la actividad: " . $e->getMessage();
+            return false; // Fallo al completar la actividad
+        }
+    }
+
+    /**
+     * Obtiene el historial de actividades completadas de un usuario.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @return array|bool Array de resultados si la consulta fue exitosa, false si falló.
+     */
+    public function obtenerHistorialActividades($idUsuario)
+    {
+        $query = "SELECT * FROM realiza WHERE idUsuario = ? AND completada = 1";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $actividades = $result->fetch_all(MYSQLI_ASSOC);
+            return $actividades; // Devuelve el historial de actividades completadas
+        } catch (PDOException $e) {
+            echo "Error al obtener el historial de actividades: " . $e->getMessage();
+            return false; // Fallo al obtener el historial de actividades
+        }
+    }
+
+    /**
+     * Comprueba si una actividad está en la tabla realiza.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la actividad está en la tabla realiza, false si no lo está.
+     */
+    public function verificarActividadEnRealiza($idActividad)
+    {
+        $query = "SELECT COUNT(*) as count FROM realiza WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $count = $row['count'];
+
+            return ($count > 0); // Devuelve true si la actividad está en la tabla realiza
+        } catch (PDOException $e) {
+            echo "Error al verificar la actividad en realiza: " . $e->getMessage();
+            return false; // Fallo al verificar la actividad en realiza
+        }
+    }
+    /**
+     * Inserta una nueva actividad rechazada en la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la inserción fue exitosa, false si falló.
+     */
+    public function rechazarActividad($idUsuario, $idActividad)
+    {
+        $query = "INSERT INTO rechazadas (idUsuario, idActividad) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('ii', $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al insertar la actividad rechazada
+        } catch (PDOException $e) {
+            echo "Error al rechazar la actividad: " . $e->getMessage();
+            return false; // Fallo al rechazar la actividad
+        }
+    }
+
+    /**
+     * Comprueba si una actividad no está en la tabla rechazadas.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la actividad no está en la tabla rechazadas, false si está.
+     */
+    public function verificarActividadNoEnRechazadas($idActividad)
+    {
+        $query = "SELECT COUNT(*) as count FROM rechazadas WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $count = $row['count'];
+
+            return ($count == 0); // Devuelve true si la actividad no está en la tabla rechazadas
+        } catch (PDOException $e) {
+            echo "Error al verificar la actividad en rechazadas: " . $e->getMessage();
+            return false; // Fallo al verificar la actividad en rechazadas
         }
     }
 }

@@ -19,21 +19,49 @@ if ($logueado) {
         // Crear una instancia de la clase BD para interactuar con la base de datos
         $bd = new BD();
 
-
-        if ($estado === "aceptada") {
-            $bd->realizarActividad($idUsuario, $idActividad);
-        } else if ($estado === "rechazada") {
-            $bd->rechazarActividad($idUsuario, $idActividad);
-        }
-
         // Obtener las categorías de la actividad
         $categoriasActividad = $bd->getCategoriasActividad($idActividad);
 
         // Obtener las preferencias del usuario
         $preferenciasUsuario = $bd->getPreferenciasUsuario($idUsuario);
 
-        // Llamar a la función para actualizar los puntos de interés
-        $bd->actualizarPuntosInteres($categoriasActividad, $preferenciasUsuario, $estado);
+        if (!empty($preferenciasUsuario)) {
+            // Llamar a la función para actualizar los puntos de interés
+            $bd->actualizarPuntosInteres($categoriasActividad, $preferenciasUsuario, $estado);
+        }
+
+
+        if ($estado === "aceptada") {
+            $bd->realizarActividad($idUsuario, $idActividad);
+
+            // Verificar si las preferencias del usuario están vacías
+            if (empty($preferenciasUsuario)) {
+                // Obtener los idTipoPreferencia de las categorías de la actividad
+                $idTipoPreferenciasActividad = array_column($categoriasActividad, 'idTipoPreferencia');
+
+                // Insertar las preferencias de la actividad para el usuario
+                foreach ($idTipoPreferenciasActividad as $idTipoPreferencia) {
+                    $nombreTipoPreferencia = $bd->obtenerNombreTipoPreferencia($idTipoPreferencia);
+                    $bd->insertarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia, $idTipoPreferencia);
+                }
+            } else {
+                // Obtener los idTipoPreferencia del usuario
+                $idTipoPreferenciasUsuario = array_column($preferenciasUsuario, 'idTipoPreferencia');
+
+                // Comparar los idTipoPreferencia de las categorías de la actividad con los del usuario
+                $idTipoPreferenciasFaltantes = array_diff(array_column($categoriasActividad, 'idTipoPreferencia'), $idTipoPreferenciasUsuario);
+
+                // Insertar las preferencias faltantes para el usuario
+                foreach ($idTipoPreferenciasFaltantes as $idTipoPreferencia) {
+                    $nombreTipoPreferencia = $bd->obtenerNombreTipoPreferencia($idTipoPreferencia);
+                    $bd->insertarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia, $idTipoPreferencia);
+                }
+            }
+        } else if ($estado === "rechazada") {
+            $bd->rechazarActividad($idUsuario, $idActividad);
+        }
+
+
 
         // Ejemplo de respuesta
         $response = array(

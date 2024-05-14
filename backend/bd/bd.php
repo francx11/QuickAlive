@@ -871,29 +871,25 @@ class BD
     }
 
     /**
-     * Función privada para crear la tabla de preferencias hijas correspondiente a un tipo de preferencia.
+     * Obtiene el nombre del tipo de preferencia a partir de su ID.
      *
-     * @param string $tipoPreferencia Nombre del tipo de preferencia para el cual se creará la tabla.
-     * @return void
+     * @param int $idTipoPreferencia ID del tipo de preferencia.
+     * @return string|bool Nombre del tipo de preferencia si la consulta fue exitosa, false si falló.
      */
-    private function crearTablaPreferencias($tipoPreferencia)
+    public function obtenerNombreTipoPreferencia($idTipoPreferencia)
     {
-        // Construir el nombre de la tabla
-        $tabla = "Preferencias" . ucfirst($tipoPreferencia);
+        $query = "SELECT tipoPreferencia FROM tipoPreferencias WHERE idTipoPreferencia = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idTipoPreferencia);
 
-        // Consulta para crear la tabla con el campo idPreferencia autoincremental y clave primaria
-        $queryCrearTabla = "CREATE TABLE $tabla (
-        idPreferencia INT AUTO_INCREMENT PRIMARY KEY,
-        nombrePreferencia VARCHAR(255),
-        idTipoPreferencia INT,
-        FOREIGN KEY (idTipoPreferencia) REFERENCES tipoPreferencias(idTipoPreferencia) ON DELETE CASCADE
-    )";
-
-        // Ejecutar la consulta para crear la tabla
         try {
-            $this->mysqli->query($queryCrearTabla);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return $row['tipoPreferencia']; // Devuelve el nombre del tipo de preferencia
         } catch (PDOException $e) {
-            echo "Error al crear la tabla de preferencias hijas: " . $e->getMessage();
+            echo "Error al obtener el nombre del tipo de preferencia: " . $e->getMessage();
+            return false; // Fallo al obtener el nombre del tipo de preferencia
         }
     }
 
@@ -1752,6 +1748,34 @@ class BD
         } catch (PDOException $e) {
             echo "Error al verificar la actividad en rechazadas: " . $e->getMessage();
             return false; // Fallo al verificar la actividad en rechazadas
+        }
+    }
+
+    /**
+     * Obtiene los idTipoPreferencia que no están presentes en usuariopreferenciaspersonales para un usuario dado.
+     *
+     * @param array $preferenciasUsuario Array de idTipoPreferencia del usuario.
+     * @return array Array de idTipoPreferencia faltantes.
+     */
+    public function getIdTipoPreferenciasFaltantes($preferenciasUsuario)
+    {
+        $query = "SELECT idTipoPreferencia FROM tipoPreferencias WHERE idTipoPreferencia NOT IN (SELECT idTipoPreferencia FROM usuariopreferencias WHERE idUsuario = ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+
+        $idUsuario = $preferenciasUsuario[0]['idUsuario']; // Supongamos que el ID de usuario está en la primera fila del array
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $idTipoPreferenciasFaltantes = [];
+            while ($row = $result->fetch_assoc()) {
+                $idTipoPreferenciasFaltantes[] = $row['idTipoPreferencia'];
+            }
+            return $idTipoPreferenciasFaltantes;
+        } catch (PDOException $e) {
+            echo "Error al obtener idTipoPreferencias faltantes: " . $e->getMessage();
+            return [];
         }
     }
 }

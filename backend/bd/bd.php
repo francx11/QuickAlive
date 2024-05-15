@@ -1620,7 +1620,7 @@ class BD
      */
     public function modificarFechaRealizacion($idUsuario, $idActividad, $nuevaFechaHoraRealizacion)
     {
-        $query = "UPDATE realiza SET fechaHoraRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
+        $query = "UPDATE realiza SET fechaRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('sii', $nuevaFechaHoraRealizacion, $idUsuario, $idActividad);
 
@@ -1634,7 +1634,38 @@ class BD
     }
 
     /**
-     * Marca una actividad como completada en la base de datos.
+     * Obtiene todas las actividades pendientes por realizar para un usuario.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @return array|bool Un array con las actividades pendientes o false si falló.
+     */
+    public function obtenerActividadesArealizar($idUsuario)
+    {
+        $actividadesPendientes = array();
+
+        $query = "SELECT idActividad, fechaRealizacion, completada FROM realiza WHERE idUsuario = ? AND completada = 0";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                $actividadesPendientes[] = $row;
+            }
+
+            return $actividadesPendientes;
+        } catch (PDOException $e) {
+            echo "Error al obtener las actividades pendientes: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+
+    /**
+     * Marca una actividad como completada en la base de datos y registra la fecha de realización.
      *
      * @param int $idUsuario ID del usuario.
      * @param int $idActividad ID de la actividad.
@@ -1643,19 +1674,46 @@ class BD
     public function completarActividad($idUsuario, $idActividad)
     {
         $completada = 1; // Valor para marcar la actividad como completada
+        $fechaRealizacion = date('Y-m-d H:i:s'); // Obtener la fecha y hora actual
 
-        $query = "UPDATE realiza SET completada = ? WHERE idUsuario = ? AND idActividad = ?";
+        $query = "UPDATE realiza SET completada = ?, fechaRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('iii', $completada, $idUsuario, $idActividad);
+        $stmt->bind_param('isii', $completada, $fechaRealizacion, $idUsuario, $idActividad);
 
         try {
             $stmt->execute();
-            return true; // Éxito al marcar la actividad como completada
+            return true; // Éxito al marcar la actividad como completada y registrar la fecha de realización
         } catch (PDOException $e) {
             echo "Error al completar la actividad: " . $e->getMessage();
             return false; // Fallo al completar la actividad
         }
     }
+
+    /**
+     * Desmarca una actividad como completada en la base de datos y establece la fecha de realización a NULL.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la modificación fue exitosa, false si falló.
+     */
+    public function descompletarActividad($idUsuario, $idActividad)
+    {
+        $completada = 0; // Valor para marcar la actividad como no completada
+
+        $query = "UPDATE realiza SET completada = ?, fechaRealizacion = NULL WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('iii', $completada, $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al desmarcar la actividad como completada y establecer la fecha de realización a NULL
+        } catch (PDOException $e) {
+            echo "Error al desmarcar la actividad como completada: " . $e->getMessage();
+            return false; // Fallo al desmarcar la actividad
+        }
+    }
+
+
 
     /**
      * Obtiene el historial de actividades completadas de un usuario.

@@ -12,9 +12,7 @@ if (navigator.geolocation) {
         var radius = 50;
 
         // Construye la URL de la API
-        //var url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + API_KEY + '&geoPoint=' + latitude + ',' + longitude + '&radius=' + radius;
         var url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + API_KEY + '&keyword=Granada';
-
 
         $.ajax({
             type:"GET",
@@ -36,6 +34,14 @@ if (navigator.geolocation) {
                     var eventDate = document.createElement('p');
                     eventDate.textContent = 'Fecha del evento: ' + event.dates.start.localDate;
                     eventCard.appendChild(eventDate);
+
+                    // Verifica si hay imágenes disponibles
+                    if (event.images && event.images.length > 0) {
+                        var eventImage = document.createElement('img');
+                        eventImage.src = event.images[0].url;
+                        eventImage.alt = 'Imagen del evento';
+                        eventCard.appendChild(eventImage);
+                    }
 
                     var eventUrl = document.createElement('a');
                     eventUrl.href = event.url;

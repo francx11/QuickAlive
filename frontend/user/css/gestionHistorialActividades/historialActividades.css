@@ -1,0 +1,49 @@
+/* Estilos para el contenedor principal */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilos para la lista de actividades */
+.actividades-lista {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Estilos para cada elemento de actividad */
+.actividad-item {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+/* Estilos para la información de la actividad */
+.actividad-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actividad-info .actividad-nombre {
+  font-weight: bold;
+}
+
+.actividad-info .actividad-fecha,
+.actividad-info .actividad-duracion {
+  color: #666;
+}
+
+/* Estilos para el botón "Volver a realizar" */
+.volver-a-realizar {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.volver-a-realizar:hover {
+  background-color: #0056b3;
+}

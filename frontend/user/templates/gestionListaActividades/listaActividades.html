@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Actividades</title>
+    <link
+      rel="stylesheet"
+      href="/quickalive/frontend/user/css/gestionListaActividades/listaActividades.css"
+    />
+    <!-- Font Awesome para los iconos -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lista de Actividades Pendientes</h1>
+      <ul class="actividades-lista">
+        {% for actividad in listaActividades %}
+        <li class="actividad-item">
+          <div class="actividad-info">
+            <span class="actividad-nombre"
+              >{{ actividad.nombreActividad }}</span
+            >
+            <span class="actividad-fecha"
+              >Fecha: {{ actividad.fechaRealizacion }}</span
+            >
+            <span class="actividad-duracion"
+              >Duración: {{ actividad.duracion }} minutos</span
+            >
+          </div>
+          <!-- Formulario para editar la fecha de realización -->
+          <form
+            action="../../../../../QuickAlive/backend/user/gestionListaActividades/modificarFechaRealizacion.php"
+            method="post"
+          >
+            <input
+              type="hidden"
+              name="idActividad"
+              value="{{ actividad.idActividad }}"
+            />
+            <input type="datetime-local" name="nuevaFecha" required />
+            <button type="submit" class="editar-fecha">
+              <i class="fas fa-edit"></i> Editar fecha
+            </button>
+          </form>
+          <!-- Botón para marcar como completada -->
+          <form
+            action="../../../../../QuickAlive/backend/user/gestionListaActividades/marcarComoCompletada.php"
+            method="post"
+          >
+            <input
+              type="hidden"
+              name="idActividad"
+              value="{{ actividad.idActividad }}"
+            />
+            <button type="submit" class="marcar-completada">
+              <i class="fas fa-check"></i> Marcar como completada
+            </button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

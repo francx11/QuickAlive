@@ -1,0 +1,57 @@
+/* Estilos para la lista de actividades */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.actividades-lista {
+  list-style: none;
+  padding: 0;
+}
+
+.actividad-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.actividad-info {
+  margin-bottom: 10px;
+}
+
+.actividad-nombre {
+  font-weight: bold;
+}
+
+.actividad-fecha,
+.actividad-duracion {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Estilos para los botones */
+button {
+  cursor: pointer;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos específicos para los botones de editar fecha y marcar como completada */
+.editar-fecha {
+  margin-right: 10px;
+}
+
+.marcar-completada {
+  background-color: #28a745;
+}
+
+.marcar-completada:hover {
+  background-color: #218838;
+}

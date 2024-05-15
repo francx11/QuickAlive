@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historial de Actividades</title>
+    <!-- Enlace a tu archivo CSS -->
+    <link
+      rel="stylesheet"
+      href="/quickalive/frontend/user/css/gestionHistorialActividades/historialActividades.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Historial de Actividades Realizadas</h1>
+      <ul class="actividades-lista">
+        {% for actividad in listaActividades %}
+        <li class="actividad-item">
+          <div class="actividad-info">
+            <span class="actividad-nombre"
+              >{{ actividad.nombreActividad }}</span
+            >
+            <span class="actividad-fecha"
+              >Fecha: {{ actividad.fechaRealizacion }}</span
+            >
+            <span class="actividad-duracion"
+              >Duración: {{ actividad.duracion }} minutos</span
+            >
+          </div>
+          <!-- Formulario para volver a realizar la actividad -->
+          <form
+            action="../../../../../QuickAlive/backend/user/gestionHistorialActividades/volverArealizarActividad.php"
+            method="post"
+          >
+            <input
+              type="hidden"
+              name="idActividad"
+              value="{{ actividad.idActividad }}"
+            />
+            <input type="hidden" name="estado" value="aceptada" />
+            <button type="submit" class="volver-a-realizar">
+              Volver a realizar
+            </button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

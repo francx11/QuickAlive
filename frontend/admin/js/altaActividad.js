@@ -44,7 +44,7 @@ $(document).ready(function() {
                 // Manejar la respuesta del servidor si es necesario
                 console.log("Datos del formulario y preferencias guardadas exitosamente");
                 // Redirigir a otra página después de guardar los datos
-                window.location.href = 'renderAltaActividad.php';
+                window.location.href = 'gestionActividades.php';
             },
             error: function(xhr, status, error) {
                 // Manejar errores de la solicitud AJAX si es necesario

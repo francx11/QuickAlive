@@ -412,9 +412,9 @@ class BD
     public function getIdUsuario($nickName)
     {
         $usuario = $this->getUsuario($nickName);
-        $rol = $usuario->getIdUsuario();
+        $id = $usuario->getIdUsuario();
 
-        return $rol;
+        return $id;
     }
 
     /**
@@ -485,8 +485,8 @@ class BD
      */
     public function insertarActividadSimple($nombreActividad, $descripcion, $duracion)
     {
-        // Primero, insertar los datos comunes en la tabla Actividad
-        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, duracion) VALUES (?, ?, ?)";
+        // Primero, insertar los datos comunes en la tabla Actividad, incluyendo tipoActividad
+        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, duracion, tipoActividad) VALUES (?, ?, ?, 'simple')";
         $stmtActividad = $this->mysqli->prepare($queryActividad);
         $stmtActividad->bind_param('ssi', $nombreActividad, $descripcion, $duracion);
 
@@ -512,6 +512,37 @@ class BD
             return false; // Fallo al insertar la actividad simple
         }
     }
+
+
+    public function insertarActividadGeolocalizable($nombreActividad, $descripcion, $duracion, $urlImagen, $idApi, $fechaLimite)
+    {
+        // Primero, insertar los datos comunes en la tabla Actividad, incluyendo tipoActividad
+        $queryActividad = "INSERT INTO Actividad (nombreActividad, descripcion, duracion, tipoActividad) VALUES (?, ?, ?, 'geolocalizable')";
+        $stmtActividad = $this->mysqli->prepare($queryActividad);
+        $stmtActividad->bind_param('ssi', $nombreActividad, $descripcion, $duracion);
+
+        try {
+            $stmtActividad->execute();
+            $idActividad = $stmtActividad->insert_id; // Obtener el ID de la actividad insertada
+        } catch (PDOException $e) {
+            echo "Error al insertar actividad: " . $e->getMessage();
+            return false; // Fallo al insertar la actividad
+        }
+
+        // Ahora, insertar los datos específicos de ActividadGeolocalizable en su tabla correspondiente
+        $queryActividadGeolocalizable = "INSERT INTO ActividadGeolocalizable (idActividad, urlRemota, idApi, fechaLimite) VALUES (?, ?, ?, ?)";
+        $stmtActividadGeolocalizable = $this->mysqli->prepare($queryActividadGeolocalizable);
+        $stmtActividadGeolocalizable->bind_param('isss', $idActividad, $urlImagen, $idApi, $fechaLimite);
+
+        try {
+            $stmtActividadGeolocalizable->execute();
+            return $idActividad; // Éxito al insertar la actividad geolocalizable
+        } catch (PDOException $e) {
+            echo "Error al insertar actividad geolocalizable: " . $e->getMessage();
+            return false; // Fallo al insertar la actividad geolocalizable
+        }
+    }
+
 
     /**
      * Inserta las categorías de una actividad.
@@ -734,7 +765,7 @@ class BD
      */
     public function buscarCoincidenciasActividad($nombreActividad)
     {
-        $sql = "SELECT * FROM actividad WHERE nombreActividad LIKE CONCAT('%', ? , '%')";
+        $sql = "SELECT * FROM actividad WHERE nombreActividad LIKE CONCAT('%', ? , '%') AND tipoActividad = 'simple'";
 
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("s", $nombreActividad);
@@ -767,7 +798,7 @@ class BD
      */
     public function getActividad($idActividad)
     {
-        $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM Actividad WHERE idActividad = ?";
+        $query = "SELECT idActividad, nombreActividad, descripcion, duracion, tipoActividad FROM Actividad WHERE idActividad = ?";
 
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('i', $idActividad);
@@ -787,6 +818,7 @@ class BD
                 $fila['nombreActividad'],
                 $fila['descripcion'],
                 $fila['duracion'],
+                $fila['tipoActividad']
             );
 
             // Obtener la galería de fotos asociada a la actividad simple
@@ -809,6 +841,59 @@ class BD
             return $actividadSimpleEncontrada;
         } else {
             return null; // No se encontró una actividad simple con el ID dado
+        }
+    }
+
+    /**
+     * Obtiene los detalles de una actividad geolocalizable por su ID.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return ActividadGeolocalizable|null Objeto de la clase ActividadGeolocalizable si se encontró la actividad, null si no.
+     */
+    public function getActividadGeolocalizable($idActividad)
+    {
+        // Primero, obtener los detalles generales de la actividad desde la tabla Actividad
+        $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM Actividad WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        // Verificar si se encontró la actividad
+        if ($resultado->num_rows > 0) {
+            $fila = $resultado->fetch_assoc();
+
+            // Ahora, obtener los detalles específicos de la actividad geolocalizable
+            $queryGeolocalizable = "SELECT urlRemota, idApi, fechaLimite FROM ActividadGeolocalizable WHERE idActividad = ?";
+            $stmtGeolocalizable = $this->mysqli->prepare($queryGeolocalizable);
+            $stmtGeolocalizable->bind_param('i', $idActividad);
+            $stmtGeolocalizable->execute();
+
+            $resultadoGeolocalizable = $stmtGeolocalizable->get_result();
+
+            // Verificar si se encontraron los detalles específicos
+            if ($resultadoGeolocalizable->num_rows > 0) {
+                $filaGeolocalizable = $resultadoGeolocalizable->fetch_assoc();
+
+                // Crear una instancia de ActividadGeolocalizable con todos los detalles
+                $actividadGeolocalizableEncontrada = new ActividadGeolocalizable(
+                    $fila['idActividad'],
+                    $fila['nombreActividad'],
+                    $fila['descripcion'],
+                    $fila['duracion'],
+                    $fila['tipoActividad'],
+                    $filaGeolocalizable['urlRemota'],
+                    $filaGeolocalizable['idApi'],
+                    $filaGeolocalizable['fechaLimite']
+                );
+
+                return $actividadGeolocalizableEncontrada;
+            } else {
+                return null; // No se encontraron detalles específicos de la actividad geolocalizable
+            }
+        } else {
+            return null; // No se encontró una actividad con el ID dado
         }
     }
 
@@ -842,6 +927,324 @@ class BD
         }
 
         return $galeria;
+    }
+
+    /**
+     * Inserta una nueva realización de actividad en la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la inserción fue exitosa, false si falló.
+     */
+    public function realizarActividad($idUsuario, $idActividad)
+    {
+        $query = "INSERT INTO realiza (idUsuario, idActividad) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('ii', $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al insertar la realización de la actividad
+        } catch (PDOException $e) {
+            echo "Error al realizar la actividad: " . $e->getMessage();
+            return false; // Fallo al realizar la actividad
+        }
+    }
+
+    /**
+     * Elimina una realización de actividad de la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la eliminación fue exitosa, false si falló.
+     */
+    public function eliminarRealizacionActividad($idUsuario, $idActividad)
+    {
+        $query = "DELETE FROM realiza WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('ii', $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al eliminar la realización de la actividad
+        } catch (PDOException $e) {
+            echo "Error al eliminar la realización de la actividad: " . $e->getMessage();
+            return false; // Fallo al eliminar la realización de la actividad
+        }
+    }
+
+    /**
+     * Modifica la fecha de realización de una actividad en la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @param string $nuevaFechaHoraRealizacion Nueva fecha y hora de realización de la actividad.
+     * @return bool True si la modificación fue exitosa, false si falló.
+     */
+    public function modificarFechaRealizacion($idUsuario, $idActividad, $nuevaFechaHoraRealizacion)
+    {
+        $query = "UPDATE realiza SET fechaRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('sii', $nuevaFechaHoraRealizacion, $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al modificar la fecha de realización de la actividad
+        } catch (PDOException $e) {
+            echo "Error al modificar la fecha de realización de la actividad: " . $e->getMessage();
+            return false; // Fallo al modificar la fecha de realización de la actividad
+        }
+    }
+
+    /**
+     * Obtiene todas las actividades pendientes por realizar para un usuario.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @return array|bool Un array con las actividades pendientes o false si falló.
+     */
+    public function obtenerActividadesArealizar($idUsuario)
+    {
+        $actividadesPendientes = array();
+
+        $query = "SELECT idActividad, fechaRealizacion, completada FROM realiza WHERE idUsuario = ? AND completada = 0";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                $actividadesPendientes[] = $row;
+            }
+
+            return $actividadesPendientes;
+        } catch (PDOException $e) {
+            echo "Error al obtener las actividades pendientes: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    /**
+     * Obtiene todas las actividades geolocalizables que no están en las tablas realiza y rechazadas.
+     *
+     * @return array Arreglo asociativo de {idActividad, idApi} para cada id de la tabla actividad que esté en la tabla ActividadGeolocalizable.
+     */
+    public function obtenerActividadesGeolocalizables()
+    {
+        $query = "SELECT idActividad FROM actividad";
+        $stmt = $this->mysqli->prepare($query);
+
+        $actividades = array();
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                $idActividad = $row['idActividad'];
+
+                // Verificar si la actividad está en la tabla de realizadas o de rechazadas
+                if ($this->verificarActividadEnRealiza($idActividad) === true and $this->verificarActividadNoEnRechazadas($idActividad) === false) {
+
+                    // Obtener el idApi asociado a esta actividad
+                    $idApi = $this->obtenerIdApi($idActividad);
+
+                    // Agregar al arreglo de actividades
+                    $actividades[] = array(
+                        'idActividad' => $idActividad,
+                        'idApi' => $idApi
+                    );
+                }
+            }
+        } catch (PDOException $e) {
+            echo "Error al obtener actividades geolocalizables: " . $e->getMessage();
+        }
+
+        return $actividades;
+    }
+
+    /**
+     * Verifica si una actividad está en la tabla ActividadGeolocalizable.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return bool true si la actividad está en la tabla ActividadGeolocalizable, false de lo contrario.
+     */
+    private function verificarActividadEnGeolocalizable($idActividad)
+    {
+        $query = "SELECT COUNT(*) AS count FROM ActividadGeolocalizable WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['count'] > 0;
+    }
+
+    /**
+     * Obtiene el idApi asociado a una actividad en la tabla ActividadGeolocalizable.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return string|null ID de la actividad en la API externa si está en la tabla ActividadGeolocalizable, null de lo contrario.
+     */
+    private function obtenerIdApi($idActividad)
+    {
+        $query = "SELECT idApi FROM ActividadGeolocalizable WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['idApi'];
+        }
+        return null;
+    }
+
+
+    /**
+     * Marca una actividad como completada en la base de datos y registra la fecha de realización.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la modificación fue exitosa, false si falló.
+     */
+    public function completarActividad($idUsuario, $idActividad)
+    {
+        $completada = 1; // Valor para marcar la actividad como completada
+        $fechaRealizacion = date('Y-m-d H:i:s'); // Obtener la fecha y hora actual
+
+        $query = "UPDATE realiza SET completada = ?, fechaRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('isii', $completada, $fechaRealizacion, $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al marcar la actividad como completada y registrar la fecha de realización
+        } catch (PDOException $e) {
+            echo "Error al completar la actividad: " . $e->getMessage();
+            return false; // Fallo al completar la actividad
+        }
+    }
+
+    /**
+     * Desmarca una actividad como completada en la base de datos y establece la fecha de realización a NULL.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la modificación fue exitosa, false si falló.
+     */
+    public function descompletarActividad($idUsuario, $idActividad)
+    {
+        $completada = 0; // Valor para marcar la actividad como no completada
+
+        $query = "UPDATE realiza SET completada = ?, fechaRealizacion = NULL WHERE idUsuario = ? AND idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('iii', $completada, $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al desmarcar la actividad como completada y establecer la fecha de realización a NULL
+        } catch (PDOException $e) {
+            echo "Error al desmarcar la actividad como completada: " . $e->getMessage();
+            return false; // Fallo al desmarcar la actividad
+        }
+    }
+
+
+
+    /**
+     * Obtiene el historial de actividades completadas de un usuario.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @return array|bool Array de resultados si la consulta fue exitosa, false si falló.
+     */
+    public function obtenerHistorialActividades($idUsuario)
+    {
+        $query = "SELECT * FROM realiza WHERE idUsuario = ? AND completada = 1";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $actividades = $result->fetch_all(MYSQLI_ASSOC);
+            return $actividades; // Devuelve el historial de actividades completadas
+        } catch (PDOException $e) {
+            echo "Error al obtener el historial de actividades: " . $e->getMessage();
+            return false; // Fallo al obtener el historial de actividades
+        }
+    }
+
+    /**
+     * Comprueba si una actividad está en la tabla realiza.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la actividad está en la tabla realiza, false si no lo está.
+     */
+    public function verificarActividadEnRealiza($idActividad)
+    {
+        $query = "SELECT COUNT(*) as count FROM realiza WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $count = $row['count'];
+
+            return ($count > 0); // Devuelve true si la actividad está en la tabla realiza
+        } catch (PDOException $e) {
+            echo "Error al verificar la actividad en realiza: " . $e->getMessage();
+            return false; // Fallo al verificar la actividad en realiza
+        }
+    }
+    /**
+     * Inserta una nueva actividad rechazada en la base de datos.
+     *
+     * @param int $idUsuario ID del usuario.
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la inserción fue exitosa, false si falló.
+     */
+    public function rechazarActividad($idUsuario, $idActividad)
+    {
+        $query = "INSERT INTO rechazadas (idUsuario, idActividad) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('ii', $idUsuario, $idActividad);
+
+        try {
+            $stmt->execute();
+            return true; // Éxito al insertar la actividad rechazada
+        } catch (PDOException $e) {
+            echo "Error al rechazar la actividad: " . $e->getMessage();
+            return false; // Fallo al rechazar la actividad
+        }
+    }
+
+    /**
+     * Comprueba si una actividad no está en la tabla rechazadas.
+     *
+     * @param int $idActividad ID de la actividad.
+     * @return bool True si la actividad no está en la tabla rechazadas, false si está.
+     */
+    public function verificarActividadNoEnRechazadas($idActividad)
+    {
+        $query = "SELECT COUNT(*) as count FROM rechazadas WHERE idActividad = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idActividad);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $count = $row['count'];
+
+            return ($count == 0); // Devuelve true si la actividad no está en la tabla rechazadas
+        } catch (PDOException $e) {
+            echo "Error al verificar la actividad en rechazadas: " . $e->getMessage();
+            return false; // Fallo al verificar la actividad en rechazadas
+        }
     }
 
     /**
@@ -1566,248 +1969,7 @@ class BD
         }
     }
 
-    /**
-     * Inserta una nueva realización de actividad en la base de datos.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @param int $idActividad ID de la actividad.
-     * @return bool True si la inserción fue exitosa, false si falló.
-     */
-    public function realizarActividad($idUsuario, $idActividad)
-    {
-        $query = "INSERT INTO realiza (idUsuario, idActividad) VALUES (?, ?)";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('ii', $idUsuario, $idActividad);
 
-        try {
-            $stmt->execute();
-            return true; // Éxito al insertar la realización de la actividad
-        } catch (PDOException $e) {
-            echo "Error al realizar la actividad: " . $e->getMessage();
-            return false; // Fallo al realizar la actividad
-        }
-    }
-
-    /**
-     * Elimina una realización de actividad de la base de datos.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @param int $idActividad ID de la actividad.
-     * @return bool True si la eliminación fue exitosa, false si falló.
-     */
-    public function eliminarRealizacionActividad($idUsuario, $idActividad)
-    {
-        $query = "DELETE FROM realiza WHERE idUsuario = ? AND idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('ii', $idUsuario, $idActividad);
-
-        try {
-            $stmt->execute();
-            return true; // Éxito al eliminar la realización de la actividad
-        } catch (PDOException $e) {
-            echo "Error al eliminar la realización de la actividad: " . $e->getMessage();
-            return false; // Fallo al eliminar la realización de la actividad
-        }
-    }
-
-    /**
-     * Modifica la fecha de realización de una actividad en la base de datos.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @param int $idActividad ID de la actividad.
-     * @param string $nuevaFechaHoraRealizacion Nueva fecha y hora de realización de la actividad.
-     * @return bool True si la modificación fue exitosa, false si falló.
-     */
-    public function modificarFechaRealizacion($idUsuario, $idActividad, $nuevaFechaHoraRealizacion)
-    {
-        $query = "UPDATE realiza SET fechaRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('sii', $nuevaFechaHoraRealizacion, $idUsuario, $idActividad);
-
-        try {
-            $stmt->execute();
-            return true; // Éxito al modificar la fecha de realización de la actividad
-        } catch (PDOException $e) {
-            echo "Error al modificar la fecha de realización de la actividad: " . $e->getMessage();
-            return false; // Fallo al modificar la fecha de realización de la actividad
-        }
-    }
-
-    /**
-     * Obtiene todas las actividades pendientes por realizar para un usuario.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @return array|bool Un array con las actividades pendientes o false si falló.
-     */
-    public function obtenerActividadesArealizar($idUsuario)
-    {
-        $actividadesPendientes = array();
-
-        $query = "SELECT idActividad, fechaRealizacion, completada FROM realiza WHERE idUsuario = ? AND completada = 0";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('i', $idUsuario);
-
-        try {
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            while ($row = $result->fetch_assoc()) {
-                $actividadesPendientes[] = $row;
-            }
-
-            return $actividadesPendientes;
-        } catch (PDOException $e) {
-            echo "Error al obtener las actividades pendientes: " . $e->getMessage();
-            return false;
-        }
-    }
-
-
-
-    /**
-     * Marca una actividad como completada en la base de datos y registra la fecha de realización.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @param int $idActividad ID de la actividad.
-     * @return bool True si la modificación fue exitosa, false si falló.
-     */
-    public function completarActividad($idUsuario, $idActividad)
-    {
-        $completada = 1; // Valor para marcar la actividad como completada
-        $fechaRealizacion = date('Y-m-d H:i:s'); // Obtener la fecha y hora actual
-
-        $query = "UPDATE realiza SET completada = ?, fechaRealizacion = ? WHERE idUsuario = ? AND idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('isii', $completada, $fechaRealizacion, $idUsuario, $idActividad);
-
-        try {
-            $stmt->execute();
-            return true; // Éxito al marcar la actividad como completada y registrar la fecha de realización
-        } catch (PDOException $e) {
-            echo "Error al completar la actividad: " . $e->getMessage();
-            return false; // Fallo al completar la actividad
-        }
-    }
-
-    /**
-     * Desmarca una actividad como completada en la base de datos y establece la fecha de realización a NULL.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @param int $idActividad ID de la actividad.
-     * @return bool True si la modificación fue exitosa, false si falló.
-     */
-    public function descompletarActividad($idUsuario, $idActividad)
-    {
-        $completada = 0; // Valor para marcar la actividad como no completada
-
-        $query = "UPDATE realiza SET completada = ?, fechaRealizacion = NULL WHERE idUsuario = ? AND idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('iii', $completada, $idUsuario, $idActividad);
-
-        try {
-            $stmt->execute();
-            return true; // Éxito al desmarcar la actividad como completada y establecer la fecha de realización a NULL
-        } catch (PDOException $e) {
-            echo "Error al desmarcar la actividad como completada: " . $e->getMessage();
-            return false; // Fallo al desmarcar la actividad
-        }
-    }
-
-
-
-    /**
-     * Obtiene el historial de actividades completadas de un usuario.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @return array|bool Array de resultados si la consulta fue exitosa, false si falló.
-     */
-    public function obtenerHistorialActividades($idUsuario)
-    {
-        $query = "SELECT * FROM realiza WHERE idUsuario = ? AND completada = 1";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('i', $idUsuario);
-
-        try {
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $actividades = $result->fetch_all(MYSQLI_ASSOC);
-            return $actividades; // Devuelve el historial de actividades completadas
-        } catch (PDOException $e) {
-            echo "Error al obtener el historial de actividades: " . $e->getMessage();
-            return false; // Fallo al obtener el historial de actividades
-        }
-    }
-
-    /**
-     * Comprueba si una actividad está en la tabla realiza.
-     *
-     * @param int $idActividad ID de la actividad.
-     * @return bool True si la actividad está en la tabla realiza, false si no lo está.
-     */
-    public function verificarActividadEnRealiza($idActividad)
-    {
-        $query = "SELECT COUNT(*) as count FROM realiza WHERE idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('i', $idActividad);
-
-        try {
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $count = $row['count'];
-
-            return ($count > 0); // Devuelve true si la actividad está en la tabla realiza
-        } catch (PDOException $e) {
-            echo "Error al verificar la actividad en realiza: " . $e->getMessage();
-            return false; // Fallo al verificar la actividad en realiza
-        }
-    }
-    /**
-     * Inserta una nueva actividad rechazada en la base de datos.
-     *
-     * @param int $idUsuario ID del usuario.
-     * @param int $idActividad ID de la actividad.
-     * @return bool True si la inserción fue exitosa, false si falló.
-     */
-    public function rechazarActividad($idUsuario, $idActividad)
-    {
-        $query = "INSERT INTO rechazadas (idUsuario, idActividad) VALUES (?, ?)";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('ii', $idUsuario, $idActividad);
-
-        try {
-            $stmt->execute();
-            return true; // Éxito al insertar la actividad rechazada
-        } catch (PDOException $e) {
-            echo "Error al rechazar la actividad: " . $e->getMessage();
-            return false; // Fallo al rechazar la actividad
-        }
-    }
-
-    /**
-     * Comprueba si una actividad no está en la tabla rechazadas.
-     *
-     * @param int $idActividad ID de la actividad.
-     * @return bool True si la actividad no está en la tabla rechazadas, false si está.
-     */
-    public function verificarActividadNoEnRechazadas($idActividad)
-    {
-        $query = "SELECT COUNT(*) as count FROM rechazadas WHERE idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('i', $idActividad);
-
-        try {
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $count = $row['count'];
-
-            return ($count == 0); // Devuelve true si la actividad no está en la tabla rechazadas
-        } catch (PDOException $e) {
-            echo "Error al verificar la actividad en rechazadas: " . $e->getMessage();
-            return false; // Fallo al verificar la actividad en rechazadas
-        }
-    }
 
     /**
      * Obtiene los idTipoPreferencia que no están presentes en usuariopreferenciaspersonales para un usuario dado.

@@ -9,6 +9,7 @@ class Actividad
     private $nombreActividad;
     private $descripcion;
     private $duracion;
+    private $tipoActividad;
     private $galeriaFotos = [];
     private $categorias = [];
 
@@ -21,12 +22,13 @@ class Actividad
      * @param string $subTipoActividad SubTipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($idActividad, $nombreActividad, $descripcion, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $duracion, $tipoActividad)
     {
         $this->idActividad = $idActividad;
         $this->nombreActividad = $nombreActividad;
         $this->descripcion = $descripcion;
         $this->duracion = $duracion;
+        $this->tipoActividad = $tipoActividad;
         $this->categorias = [];
         $this->galeriaFotos = [];
     }
@@ -69,6 +71,16 @@ class Actividad
     public function getDuracion()
     {
         return $this->duracion;
+    }
+
+    /**
+     * Obtiene el tipo de actividad de una actividad.
+     *
+     * @return string tipo de actividad.
+     */
+    public function getTipoActividad()
+    {
+        return $this->tipoActividad;
     }
 
     /**
@@ -122,6 +134,17 @@ class Actividad
     }
 
     /**
+     * Establece el tipo de una actividads
+     *
+     * @return array Galería de fotos asociada a la actividad.
+     */
+    public function setTipoActividad($tipoActividad)
+    {
+        $this->tipoActividad = $tipoActividad;
+    }
+
+
+    /**
      * Añade una foto a la galería de fotos asociada a la actividad.
      *
      * @param string $imagen URL de la imagen a añadir.
@@ -154,77 +177,108 @@ class ActividadSimple extends Actividad
      * @param string $descripcion Descripción de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
      */
-    public function __construct($idActividad, $nombreActividad, $descripcion, $duracion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $duracion, $tipoActividad)
     {
-        parent::__construct($idActividad, $nombreActividad, $descripcion, $duracion);
+        parent::__construct($idActividad, $nombreActividad, $descripcion, $duracion, $tipoActividad);
     }
 }
-
 /**
  * Clase para representar una actividad geolocalizable, que hereda de la clase Actividad.
  */
 class ActividadGeolocalizable extends Actividad
 {
-    private $ubicacion;
-    private $fechaRealizacion;
+    /**
+     * @var string URL de la imagen remota.
+     */
+    private $urlRemota;
+
+    /**
+     * @var string ID de la actividad en la API externa.
+     */
+    private $idApi;
+
+    /**
+     * @var string Fecha límite para realizar la actividad.
+     */
+    private $fechaLimite;
 
     /**
      * Constructor de la clase ActividadGeolocalizable.
      *
+     * @param int $idActividad ID de la actividad.
      * @param string $nombreActividad Nombre de la actividad.
      * @param string $descripcion Descripción de la actividad.
-     * @param string $tipoActividad Tipo de la actividad.
      * @param int $duracion Duración de la actividad en minutos.
-     * @param bool $completada Estado de la actividad (completada o no).
-     * @param array $galeriaFotos Galería de fotos asociadas a la actividad.
-     * @param string $ubicacion Ubicación geográfica de la actividad.
-     * @param string $fechaRealizacion Fecha de realización de la actividad.
+     * @param string $urlRemota URL de la imagen remota.
+     * @param string $idApi ID de la actividad en la API externa.
+     * @param string $fechaLimite Fecha límite para realizar la actividad (formato 'YYYY-MM-DD').
      */
-    public function __construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos, $ubicacion, $fechaRealizacion)
+    public function __construct($idActividad, $nombreActividad, $descripcion, $duracion, $tipoActividad, $urlRemota, $idApi, $fechaLimite)
     {
-        parent::__construct($nombreActividad, $descripcion, $tipoActividad, $duracion, $completada, $galeriaFotos);
-        $this->ubicacion = $ubicacion;
-        $this->fechaRealizacion = $fechaRealizacion;
+        parent::__construct($idActividad, $nombreActividad, $descripcion, $duracion, $tipoActividad);
+        $this->urlRemota = $urlRemota;
+        $this->idApi = $idApi;
+        $this->fechaLimite = $fechaLimite;
     }
 
     /**
-     * Obtiene la ubicación geográfica de la actividad.
+     * Obtiene la URL de la imagen remota.
      *
-     * @return string Ubicación geográfica de la actividad.
+     * @return string URL de la imagen remota.
      */
-    public function getUbicacion()
+    public function getUrlRemota()
     {
-        return $this->ubicacion;
+        return $this->urlRemota;
     }
 
     /**
-     * Obtiene la fecha de realización de la actividad.
+     * Establece la URL de la imagen remota.
      *
-     * @return string Fecha de realización de la actividad.
+     * @param string $urlRemota URL de la imagen remota.
      */
-    public function getFechaRealizacion()
+    public function setUrlRemota($urlRemota)
     {
-        return $this->fechaRealizacion;
+        $this->urlRemota = $urlRemota;
     }
 
     /**
-     * Establece la ubicación geográfica de la actividad.
+     * Obtiene el ID de la actividad en la API externa.
      *
-     * @param string $ubicacion Ubicación geográfica de la actividad.
+     * @return string ID de la actividad en la API externa.
      */
-    public function setUbicacion($ubicacion)
+    public function getIdApi()
     {
-        $this->ubicacion = $ubicacion;
+        return $this->idApi;
     }
 
     /**
-     * Establece la fecha de realización de la actividad.
+     * Establece el ID de la actividad en la API externa.
      *
-     * @param string $fechaRealizacion Fecha de realización de la actividad.
+     * @param string $idApi ID de la actividad en la API externa.
      */
-    public function setFechaRealizacion($fechaRealizacion)
+    public function setIdApi($idApi)
     {
-        $this->fechaRealizacion = $fechaRealizacion;
+        $this->idApi = $idApi;
+    }
+
+    /**
+     * Obtiene la fecha límite para realizar la actividad.
+     *
+     * @return string Fecha límite para realizar la actividad.
+     */
+    public function getFechaLimite()
+    {
+        return $this->fechaLimite;
+    }
+
+    /**
+     * Establece la fecha límite para realizar la actividad.
+     *
+     * @param string $fechaLimite Fecha límite para realizar la actividad (formato 'YYYY-MM-DD').
+     */
+    public function setFechaLimite($fechaLimite)
+    {
+        $this->fechaLimite = $fechaLimite;
     }
 }
 

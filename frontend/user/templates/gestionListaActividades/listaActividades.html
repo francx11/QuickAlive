@@ -27,11 +27,15 @@
             <span class="actividad-fecha"
               >Fecha: {{ actividad.fechaRealizacion }}</span
             >
+
+            {% if actividad.tipoActividad != "geolocalizable" %}
             <span class="actividad-duracion"
               >Duración: {{ actividad.duracion }} minutos</span
             >
+            {% endif %}
           </div>
           <!-- Formulario para editar la fecha de realización -->
+          {% if actividad.tipoActividad != "geolocalizable" %}
           <form
             action="../../../../../QuickAlive/backend/user/gestionListaActividades/modificarFechaRealizacion.php"
             method="post"
@@ -46,6 +50,8 @@
               <i class="fas fa-edit"></i> Editar fecha
             </button>
           </form>
+
+          {% endif %}
           <!-- Botón para marcar como completada -->
           <form
             action="../../../../../QuickAlive/backend/user/gestionListaActividades/marcarComoCompletada.php"

@@ -30,6 +30,7 @@ if ($logueado) {
                 'nombreActividad' => $actividadCompleta->getNombreActividad(), // Ejemplo de cómo obtener el nombre de la actividad
                 'descripcion' => $actividadCompleta->getDescripcion(), // Ejemplo de cómo obtener la descripción de la actividad
                 'duracion' => $actividadCompleta->getDuracion(), // Ejemplo de cómo obtener la duración de la actividad
+                'tipoActividad' => $actividadCompleta->getTipoActividad(),
                 'fechaRealizacion' => $actividadRealizada['fechaRealizacion'],
                 'completada' => $actividadRealizada['completada']
             ];

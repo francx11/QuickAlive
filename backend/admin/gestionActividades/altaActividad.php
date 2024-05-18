@@ -24,9 +24,7 @@ if ($registradoRoot) {
 
     // Si se ha enviado una solicitud POST
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        echo 'Post';
-        //echo var_dump($_POST['preferencias']);
-        //echo var_dump($_FILES['imagenes']);
+        echo var_dump($_FILES['imagenes']);
 
         // Verificar si se han enviado los datos del formulario
         if (isset($_POST['nombre'], $_POST['descripcion'], $_POST['duracion'], $_POST['preferencias'], $_FILES['imagenes'])) {
@@ -48,17 +46,22 @@ if ($registradoRoot) {
 
             if ($idActividad) {
                 $insercionCategorias = $bd->insertarActividadConCategorias($idActividad, $categorias);
-
                 // Subir las imágenes asociadas a la actividad al servidor y registrar las rutas en la base de datos
                 if (!empty($_FILES['imagenes']['name'][0])) {
-                    $numImagenes = count($_FILES['imagenes']['name']);
-                    $directorioDestino = "../../../imgs/" . $nombreImagen;
+                    // Itera sobre las imágenes subidas y las agrega a la galería de la actividad
+                    foreach ($_FILES['imagenes']['name'] as $key => $nombreImagen) {
 
-                    for ($i = 0; $i < $numImagenes; $i++) {
-                        $nombreImagen = $_FILES['imagenes']['name'][$i];
+                        // Define el directorio de destino para las imágenes
+                        $directorioDestino = '../../../imgs/' . $nombreImagen;
+
+                        // Construye la URL completa para la imagen
                         $url = "/quickalive/imgs/" . $nombreImagen;
 
-                        if (move_uploaded_file($_FILES['imagenes']['tmp_name'][$i], $directorioDestino)) {
+                        // Mueve la imagen al directorio de destino
+                        if (move_uploaded_file($_FILES['imagenes']['tmp_name'][$key], $directorioDestino)) {
+                            echo "La imagen $nombreImagen se ha subido correctamente. Ruta: $url<br>";
+
+                            // Agrega la imagen a la galería de la actividad en la base de datos
                             if ($bd->agregarFotoGaleria($idActividad, $url) != -1) {
                                 echo 'Imagen insertada con éxito';
                             } else {
@@ -66,13 +69,13 @@ if ($registradoRoot) {
                             }
                         }
                     }
-
-
                     //echo "Actividad creada exitosamente.";
                     //header("Location: renderAltaActividad.php");
                 } else {
-                    echo "Error al crear la actividad.";
+                    echo "No se ha seleccionado ninguna imagen";
                 }
+            } else {
+                echo 'Id de actividad erróneo';
             }
         }
     }

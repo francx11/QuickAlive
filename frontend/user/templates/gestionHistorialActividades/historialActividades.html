@@ -28,6 +28,7 @@
             >
           </div>
           <!-- Formulario para volver a realizar la actividad -->
+          {% if actividad.tipoActividad != "geolocalizable" %}
           <form
             action="../../../../../QuickAlive/backend/user/gestionHistorialActividades/volverArealizarActividad.php"
             method="post"
@@ -41,6 +42,7 @@
             <button type="submit" class="volver-a-realizar">
               Volver a realizar
             </button>
+            {% endif %}
           </form>
         </li>
         {% endfor %}

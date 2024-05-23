@@ -1032,7 +1032,7 @@ class BD
      */
     public function obtenerActividadesGeolocalizables()
     {
-        $query = "SELECT idActividad FROM actividad";
+        $query = "SELECT idActividad FROM actividad WHERE tipoActividad = 'geolocalizable'";
         $stmt = $this->mysqli->prepare($query);
 
         $actividades = array();
@@ -1045,7 +1045,7 @@ class BD
                 $idActividad = $row['idActividad'];
 
                 // Verificar si la actividad está en la tabla de realizadas o de rechazadas
-                if ($this->verificarActividadEnRealiza($idActividad) === true and $this->verificarActividadNoEnRechazadas($idActividad) === false) {
+                if ($this->verificarActividadEnRealiza($idActividad) === true or $this->verificarActividadNoEnRechazadas($idActividad) === false) {
 
                     // Obtener el idApi asociado a esta actividad
                     $idApi = $this->obtenerIdApi($idActividad);
@@ -1062,23 +1062,6 @@ class BD
         }
 
         return $actividades;
-    }
-
-    /**
-     * Verifica si una actividad está en la tabla ActividadGeolocalizable.
-     *
-     * @param int $idActividad ID de la actividad.
-     * @return bool true si la actividad está en la tabla ActividadGeolocalizable, false de lo contrario.
-     */
-    private function verificarActividadEnGeolocalizable($idActividad)
-    {
-        $query = "SELECT COUNT(*) AS count FROM ActividadGeolocalizable WHERE idActividad = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('i', $idActividad);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        return $row['count'] > 0;
     }
 
     /**
@@ -1297,37 +1280,6 @@ class BD
     }
 
     /**
-     * Inserta una preferencia específica en la tabla correspondiente al tipo de preferencia.
-     *
-     * @param int $idTipoPreferencia ID del tipo de preferencia al que pertenece la preferencia.
-     * @param string $tipoPreferencia Nombre del tipo de preferencia.
-     * @param string $nombrePreferencia Nombre de la preferencia específica a insertar.
-     * @return int Número distinto de -1 si la inserción fue exitosa, -1 si falló.
-     */
-    public function insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia)
-    {
-        // Construir el nombre de la tabla a partir del tipo de preferencia
-        $tabla = "Preferencias" . ucfirst($tipoPreferencia);
-
-        // Preparar la consulta SQL para insertar la preferencia específica en la tabla correspondiente
-        $query = "INSERT INTO $tabla (idTipoPreferencia, nombrePreferencia) VALUES (?, ?)";
-
-        // Preparar la consulta
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param('is', $idTipoPreferencia, $nombrePreferencia);
-
-        try {
-            // Ejecutar la consulta
-            $stmt->execute();
-            $idPreferencia = $stmt->insert_id; // Obtener el ID de la preferencia específica insertada
-            return $idPreferencia;
-        } catch (PDOException $e) {
-            echo "Error al insertar preferencia específica: " . $e->getMessage();
-            return -1; // Fallo al insertar la preferencia específica
-        }
-    }
-
-    /**
      * Elimina un tipo de preferencia de la base de datos, incluida su tabla hija.
      *
      * @param int $idTipoPreferencia ID del tipo de preferencia a eliminar.
@@ -1344,9 +1296,6 @@ class BD
         $stmtTipoPreferencia->fetch();
         $stmtTipoPreferencia->close();
 
-        // Construir el nombre de la tabla hija
-        $nombreTablaHija = "Preferencias" . $tipoPreferencia;
-
         // Eliminar la preferencia padre
         $queryEliminarPadre = "DELETE FROM TipoPreferencias WHERE idTipoPreferencia = ?";
         $stmtEliminarPadre = $this->mysqli->prepare($queryEliminarPadre);
@@ -1356,41 +1305,11 @@ class BD
         try {
             $stmtEliminarPadre->execute();
 
-            // Eliminar la tabla hija
-            $queryEliminarTablaHija = "DROP TABLE IF EXISTS $nombreTablaHija";
-            $this->mysqli->query($queryEliminarTablaHija);
 
             return true; // Éxito al eliminar la preferencia padre y su tabla hija
         } catch (PDOException $e) {
             echo "Error al eliminar la preferencia padre: " . $e->getMessage();
             return false; // Fallo al eliminar la preferencia padre
-        }
-    }
-
-    /**
-     * Elimina una preferencia específica de la base de datos.
-     *
-     * @param int $idPreferencia ID de la preferencia a eliminar.
-     * @param string $tipoPreferencia Tipo de preferencia a la que pertenece la preferencia específica.
-     * @return bool true si la eliminación fue exitosa, false si falló.
-     */
-    public function eliminarPreferencia($idPreferencia, $tipoPreferencia)
-    {
-        // Construir el nombre de la tabla de preferencia hija
-        $tablaPreferencia = "Preferencias" . ucfirst($tipoPreferencia);
-
-        // Preparar la sentencia para eliminar la fila de la preferencia hija
-        $queryEliminarHija = "DELETE FROM $tablaPreferencia WHERE idPreferencia = ?";
-        $stmtEliminarHija = $this->mysqli->prepare($queryEliminarHija);
-        $stmtEliminarHija->bind_param('i', $idPreferencia);
-
-        // Ejecutar la eliminación de la fila de la preferencia hija
-        try {
-            $stmtEliminarHija->execute();
-            return true; // Éxito al eliminar la preferencia hija
-        } catch (PDOException $e) {
-            echo "Error al eliminar la preferencia hija: " . $e->getMessage();
-            return false; // Fallo al eliminar la preferencia hija
         }
     }
 
@@ -1430,54 +1349,6 @@ class BD
 
         // Devolver el array de preferencias encontradas
         return $preferencias;
-    }
-
-    /**
-     * Obtiene las preferencias específicas asociadas a un tipo de preferencia.
-     *
-     * @param int $idTipoPreferencia ID del tipo de preferencia.
-     * @param string $tipoPreferencia Tipo de preferencia.
-     * @return array|bool Arreglo de preferencias encontradas si la consulta fue exitosa, false si falló.
-     */
-    public function obtenerPreferencias($idTipoPreferencia, $tipoPreferencia)
-    {
-        // Inicializar el array de preferencias hijas
-        $preferencias = array();
-
-        // Construir el nombre de la tabla a partir del tipo de preferencia
-        $tabla = "Preferencias" . ucfirst($tipoPreferencia);
-
-        // Definir la consulta SQL genérica y el campo según el tipo de preferencia hija
-        $sql = "SELECT idPreferencia, nombrePreferencia FROM $tabla WHERE idTipoPreferencia = ?";
-        $campoId = 'idPreferencia';
-        $campoNombre = 'nombrePreferencia';
-
-        // Preparar la sentencia SQL
-        $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("i", $idTipoPreferencia);
-
-        // Ejecutar la consulta
-        if ($stmt->execute()) {
-            // Obtener el resultado de la consulta
-            $result = $stmt->get_result();
-
-            // Recorrer el resultado y guardar las preferencias hijas en el array
-            while ($row = $result->fetch_assoc()) {
-                $preferencia = array(
-                    'idPreferencia' => $row[$campoId],
-                    'nombrePreferencia' => $row[$campoNombre],
-                    'idTipoPreferencia' => $idTipoPreferencia,
-                    // Agregar otros campos según la estructura de tu tabla de preferencias hijas
-                );
-                $preferencias[] = $preferencia;
-            }
-
-            // Devolver el array de preferencias hijas
-            return $preferencias;
-        } else {
-            // Si hay un error al ejecutar la consulta, devolver false
-            return false;
-        }
     }
 
     /**

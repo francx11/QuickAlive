@@ -34,16 +34,21 @@ if (navigator.geolocation) {
                     success: function(response) {
                         var actividades = response; // Array asociativo {idActividad, idApi}
 
+                        
+
                         // Obtener solo los idApi de las actividades geolocalizables
                         var idsApiGeolocalizable = [];
                         for (var i = 0; i < actividades.length; i++) {
                             idsApiGeolocalizable.push(actividades[i].idApi);
                         }
 
+                        console.log(idsApiGeolocalizable)
+
                         // Filtrar eventos cuyo idApi no coincida con los idsApiGeolocalizable obtenidos
                         var filteredEvents = [];
                         for (var j = 0; j < events.length; j++) {
                             var event = events[j];
+                            // Si no esta en las actividades geolocalizables entonces está disponible
                             if (!idsApiGeolocalizable.includes(event.id)) {
                                 filteredEvents.push(event);
                             }

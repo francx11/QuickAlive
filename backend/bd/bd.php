@@ -1634,7 +1634,7 @@ class BD
     function recomendarActividades($preferenciasUsuario)
     {
 
-        // TODO: quitar si se implementa que si pInteres = 0 entonces delete esa preferencia
+
         if (is_null($preferenciasUsuario) == false) {
             // Si el usuario tiene todas sus preferencias personales a 0 entonces no tiene preferencias 
             $sumaPuntosInteres = 0;

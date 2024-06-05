@@ -1,8 +1,3 @@
-// Reemplaza esto con tu clave de API
-var API_KEY = 'NkrEHNAyfONrhnoxMOYGYfoVzMjBN7Ep';
-
-
-
 // Verifica si el navegador soporta la geolocalización
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -13,11 +8,10 @@ if (navigator.geolocation) {
         // Define el radio en km
         var radius = 50;
 
-        // Construye la URL de la API
-        //var url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + API_KEY + '&geoPoint=' + latitude + ',' + longitude + '&radius=' + radius;
-        var url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + API_KEY + '&keyword=Granada';
-
-        // Obtener eventos de la API de TicketMaster
+        // Construye la URL para tu servidor PHP
+        var url = 'http://localhost/quickalive/backend/api/variablesEntorno/variablesTicketMaster.php?latitude=' + latitude + '&longitude=' + longitude + '&radius=' + radius;
+        //var url = 'http://localhost/quickalive/backend/api/variablesEntorno/variablesTicketMaster.php'
+        // Obtener eventos desde tu servidor PHP
         $.ajax({
             type: "GET",
             url: url,
@@ -34,21 +28,19 @@ if (navigator.geolocation) {
                     success: function(response) {
                         var actividades = response; // Array asociativo {idActividad, idApi}
 
-                        
-
                         // Obtener solo los idApi de las actividades geolocalizables
                         var idsApiGeolocalizable = [];
                         for (var i = 0; i < actividades.length; i++) {
                             idsApiGeolocalizable.push(actividades[i].idApi);
                         }
 
-                        console.log(idsApiGeolocalizable)
+                        console.log(idsApiGeolocalizable);
 
                         // Filtrar eventos cuyo idApi no coincida con los idsApiGeolocalizable obtenidos
                         var filteredEvents = [];
                         for (var j = 0; j < events.length; j++) {
                             var event = events[j];
-                            // Si no esta en las actividades geolocalizables entonces está disponible
+                            // Si no está en las actividades geolocalizables entonces está disponible
                             if (!idsApiGeolocalizable.includes(event.id)) {
                                 filteredEvents.push(event);
                             }
@@ -72,19 +64,19 @@ if (navigator.geolocation) {
         function mostrarActividades(actividades) {
             var eventsContainer = document.getElementById('events-geo');
             eventsContainer.innerHTML = ''; // Limpiar contenedor
-        
+
             actividades.forEach(function(actividad) {
                 var eventCard = document.createElement('div');
                 eventCard.classList.add('event-card');
-        
+
                 var eventName = document.createElement('h3');
                 eventName.textContent = actividad.name;
                 eventCard.appendChild(eventName);
-        
+
                 var eventDescription = document.createElement('p');
                 var fecha;
-                eventDescription.textContent = 'Fecha del evento: ' +  actividad.dates.start.dateTime;
-                fecha =  actividad.dates.start.localDate;
+                eventDescription.textContent = 'Fecha del evento: ' + actividad.dates.start.dateTime;
+                fecha = actividad.dates.start.localDate;
 
                 console.log(actividad.description);
 
@@ -93,8 +85,7 @@ if (navigator.geolocation) {
                 eventImage.src = actividad.images[0].url;
                 eventImage.alt = 'Imagen del evento';
                 eventCard.appendChild(eventImage);
-                
-        
+
                 // Añadir botón "Aceptar"
                 var btnAceptar = document.createElement('button');
                 btnAceptar.textContent = 'Aceptar';
@@ -103,7 +94,7 @@ if (navigator.geolocation) {
                     eventCard.remove();
                 });
                 eventCard.appendChild(btnAceptar);
-        
+
                 // Añadir botón "Ver más"
                 var btnVerMas = document.createElement('button');
                 btnVerMas.textContent = 'Información';
@@ -111,7 +102,7 @@ if (navigator.geolocation) {
                     window.open(actividad.url, '_blank');
                 });
                 eventCard.appendChild(btnVerMas);
-        
+
                 // Añadir botón "Rechazar"
                 var btnRechazar = document.createElement('button');
                 btnRechazar.textContent = 'Rechazar';
@@ -120,21 +111,19 @@ if (navigator.geolocation) {
                     eventCard.remove();
                 });
                 eventCard.appendChild(btnRechazar);
-        
+
                 eventsContainer.appendChild(eventCard);
             });
         }
-        
-        
 
         function gestionarActividad(nombreActividad, descripcion, urlRemota, idApi, fechaRealizacion, estado) {
             var urlControlador = '/quickalive/backend/user/gestionRecomendaciones/controladorActividadGeolocalizable.php';
-            var parametros = 'estado=' + estado + 
-                            '&nombreActividad=' + encodeURIComponent(nombreActividad) +
-                            '&descripcion=' + encodeURIComponent(descripcion) +
-                            '&urlRemota=' + encodeURIComponent(urlRemota) +
-                            '&idApi=' + encodeURIComponent(idApi) +
-                            '&fechaRealizacion=' + encodeURIComponent(fechaRealizacion);
+            var parametros = 'estado=' + estado +
+                '&nombreActividad=' + encodeURIComponent(nombreActividad) +
+                '&descripcion=' + encodeURIComponent(descripcion) +
+                '&urlRemota=' + encodeURIComponent(urlRemota) +
+                '&idApi=' + encodeURIComponent(idApi) +
+                '&fechaRealizacion=' + encodeURIComponent(fechaRealizacion);
 
             $.ajax({
                 type: 'GET',
@@ -147,8 +136,5 @@ if (navigator.geolocation) {
                 }
             });
         }
-
-
     });
 }
-

@@ -13,7 +13,7 @@ if (isset($_SESSION['idUsuario'])) {
     // Crear una instancia del objeto BD para interactuar con la base de datos
     $bd = new BD();
 
-    // Obtener las actividades geolocalizables que no están siendo realizadas o que han sido rechazadas
+    // Obtener las actividades geolocalizables que están siendo realizadas o que han sido rechazadas
     $actividadesGeolocalizables = $bd->obtenerActividadesGeolocalizables();
 
     // Verificar si se obtuvieron actividades geolocalizables

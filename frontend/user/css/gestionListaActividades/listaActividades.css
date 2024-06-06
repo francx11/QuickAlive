@@ -1,4 +1,19 @@
 /* Estilos para la lista de actividades */
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: #ffffff;
+}
 
 /* Container for the header */
 header {
@@ -12,7 +27,6 @@ header {
 
 h1 {
   margin: 0;
-  align-self: center;
 }
 
 /* Logo and its text */
@@ -37,59 +51,135 @@ h1 {
   margin-left: 10px;
 }
 
+h2 {
+  font-size: 24px;
+  color: #000;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+/* Estilos para el contenedor de las actividades */
 .container {
-  max-width: 800px;
+  width: 90%;
   margin: 0 auto;
 }
 
+/* Estilos para la lista de actividades */
 .actividades-lista {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
 }
 
+/* Estilos para cada item de actividad */
 .actividad-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f85a75;
+  border: 2px solid #000;
+  border-radius: 10px;
+  padding: 15px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
 }
 
+/* Estilos para la información de la actividad */
 .actividad-info {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
 
 .actividad-nombre {
+  font-size: 18px;
   font-weight: bold;
+  color: #fff;
 }
 
 .actividad-fecha,
 .actividad-duracion {
-  display: block;
-  margin-bottom: 5px;
-}
-
-/* Estilos para los botones */
-button {
-  cursor: pointer;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: #007bff;
+  font-size: 16px;
   color: #fff;
 }
 
-button:hover {
-  background-color: #0056b3;
+/* Estilos para el icono de editar */
+.editar-icono {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #fff;
 }
 
-/* Estilos específicos para los botones de editar fecha y marcar como completada */
-.editar-fecha {
-  margin-right: 10px;
+.editar-icono:hover {
+  color: #000;
 }
 
-.marcar-completada {
-  background-color: #28a745;
+/* Estilos para el botón finalizar */
+.finalizar-btn {
+  padding: 10px 20px;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
-.marcar-completada:hover {
-  background-color: #218838;
+.finalizar-btn:hover {
+  background-color: #000;
+  color: #ff6473;
+}
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+
+.modal-contenido {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  text-align: left;
+}
+
+.cerrar-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.cerrar-modal:hover,
+.cerrar-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.editar-fecha-btn {
+  padding: 10px 20px;
+  background-color: #ff6473;
+  border: 2px solid #000;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.editar-fecha-btn:hover {
+  background-color: #fff;
+  color: #000;
 }

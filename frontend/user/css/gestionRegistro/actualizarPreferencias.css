@@ -1,8 +1,17 @@
-body {
-  font-family: Arial, sans-serif;
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: #ffffff;
 }
 
 /* Container for the header */
@@ -36,74 +45,56 @@ header {
   height: 50px;
   margin-left: 10px;
 }
-
-.tipo-preferencia {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+/* Estilos para el contenedor principal */
+main {
+  margin-top: 50px;
 }
 
-.tipo-preferencia h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
+/* Estilos para el título principal */
+h1 {
+  font-size: 32px;
+  color: #000;
 }
 
-.tipo-preferencia h3 {
-  margin-top: 0;
-  margin-bottom: 5px;
+h2 {
+  margin-bottom: 30px;
 }
 
-.tipo-preferencia ul {
-  padding: 0;
-  margin: 0;
+/* Estilos para el contenedor de las preferencias */
+.preferences-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
-.tipo-preferencia li {
-  display: inline-block;
-  margin-right: 10px;
+/* Estilos para los botones de preferencias */
+.preference {
+  padding: 15px 30px;
+  background-color: #ff6473;
+  border: 2px solid #000;
+  border-radius: 10px;
+  color: #000;
   cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
-.tipo-preferencia li:hover {
-  background-color: #ddd;
+/* Estilos para el botón de preferencia seleccionado */
+.preference.selected {
+  background-color: #000;
+  color: #ff6473;
 }
 
-.tipo-preferencia .seleccionada {
-  background-color: #007bff;
-  color: #fff;
-}
-
+/* Estilos para el botón de guardar preferencias */
 #actualizarPreferencias {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+  margin-top: 30px;
+  padding: 15px 30px;
+  background-color: black;
+  border: 2px solid #000;
+  border-radius: 10px;
+  color: #ff6473;
   cursor: pointer;
-}
-
-#actualizarPreferencias:hover {
-  background-color: #0056b3;
-}
-
-@media (max-width: 600px) {
-  .tipo-preferencia {
-    padding: 10px;
-  }
-
-  .tipo-preferencia h3 {
-    font-size: 18px;
-  }
-
-  .tipo-preferencia ul {
-    text-align: center;
-  }
-
-  .tipo-preferencia li {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 5px;
-  }
+  font-size: 16px;
+  transition: all 0.3s ease;
 }

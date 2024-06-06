@@ -1,7 +1,18 @@
-body {
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+
+/* Reset de márgenes y padding */
+* {
   margin: 0;
   padding: 0;
-  background-color: white;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: #ffffff;
 }
 
 /* Container for the header */
@@ -31,6 +42,9 @@ header {
   color: black;
 }
 
+h2 {
+  margin-bottom: 20px;
+}
 .registro {
   max-width: 800px;
   margin: 0 auto;
@@ -41,6 +55,8 @@ header {
   background-color: #f85a75;
   padding: 20px;
   border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 

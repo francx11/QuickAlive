@@ -1,5 +1,19 @@
 /* Estilos para el contenedor principal */
 
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: #ffffff;
+}
+
 /* Container for the header */
 header {
   background-color: #f85a75; /* Color de fondo del header */

@@ -21,69 +21,98 @@
           src="http://localhost/quickalive/imgs/logo.png"
           alt="QuickAlive Logo"
         />
-        <span> QUICKALIVE</span>
       </div>
-
-      <h1>Lista de Actividades Pendientes</h1>
-
+      <h1>Lista de Actividades</h1>
       <div class="menuUsuario">
-        <img src="http://localhost/quickalive/imgs/perfilUsuario.png" />
+        <img
+          src="http://localhost/quickalive/imgs/perfilUsuario.png"
+          alt="Perfil de Usuario"
+        />
       </div>
     </header>
 
-    <div class="container">
-      <ul class="actividades-lista">
-        {% for actividad in listaActividades %}
-        <li class="actividad-item">
-          <div class="actividad-info">
-            <span class="actividad-nombre"
-              >{{ actividad.nombreActividad }}</span
+    <main>
+      <h2>Cuantas más completes más productivo serás!</h2>
+      <div class="container">
+        <ul class="actividades-lista">
+          {% for actividad in listaActividades %}
+          <li class="actividad-item">
+            <div class="actividad-info">
+              <span class="actividad-nombre"
+                >{{ actividad.nombreActividad }}</span
+              >
+              <span class="actividad-fecha"
+                >Fecha: {{ actividad.fechaRealizacion }} {% if
+                actividad.tipoActividad != "geolocalizable" %}
+                <i
+                  class="fas fa-edit editar-icono"
+                  data-id="{{ actividad.idActividad }}"
+                ></i>
+                {% endif %}
+              </span>
+              {% if actividad.tipoActividad != "geolocalizable" %}
+              <span class="actividad-duracion"
+                >Duración: {{ actividad.duracion }} minutos</span
+              >
+              {% endif %}
+            </div>
+            <form
+              action="../../../../../QuickAlive/backend/user/gestionListaActividades/marcarComoCompletada.php"
+              method="post"
             >
-            <span class="actividad-fecha"
-              >Fecha: {{ actividad.fechaRealizacion }}</span
-            >
+              <input
+                type="hidden"
+                name="idActividad"
+                value="{{ actividad.idActividad }}"
+              />
+              <button type="submit" class="finalizar-btn">Finalizar</button>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </main>
 
-            {% if actividad.tipoActividad != "geolocalizable" %}
-            <span class="actividad-duracion"
-              >Duración: {{ actividad.duracion }} minutos</span
-            >
-            {% endif %}
-          </div>
-          <!-- Formulario para editar la fecha de realización -->
-          {% if actividad.tipoActividad != "geolocalizable" %}
-          <form
-            action="../../../../../QuickAlive/backend/user/gestionListaActividades/modificarFechaRealizacion.php"
-            method="post"
-          >
-            <input
-              type="hidden"
-              name="idActividad"
-              value="{{ actividad.idActividad }}"
-            />
-            <input type="datetime-local" name="nuevaFecha" required />
-            <button type="submit" class="editar-fecha">
-              <i class="fas fa-edit"></i> Editar fecha
-            </button>
-          </form>
-
-          {% endif %}
-          <!-- Botón para marcar como completada -->
-          <form
-            action="../../../../../QuickAlive/backend/user/gestionListaActividades/marcarComoCompletada.php"
-            method="post"
-          >
-            <input
-              type="hidden"
-              name="idActividad"
-              value="{{ actividad.idActividad }}"
-            />
-            <button type="submit" class="marcar-completada">
-              <i class="fas fa-check"></i> Marcar como completada
-            </button>
-          </form>
-        </li>
-        {% endfor %}
-      </ul>
+    <!-- Formulario para editar la fecha de realización (se muestra como modal) -->
+    <div id="modal-editar-fecha" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar-modal">&times;</span>
+        <form
+          action="../../../../../QuickAlive/backend/user/gestionListaActividades/modificarFechaRealizacion.php"
+          method="post"
+        >
+          <input type="hidden" name="idActividad" id="modal-idActividad" />
+          <label for="nuevaFecha">Nueva Fecha:</label>
+          <input
+            type="datetime-local"
+            name="nuevaFecha"
+            id="modal-nuevaFecha"
+            required
+          />
+          <button type="submit" class="editar-fecha-btn">Guardar Fecha</button>
+        </form>
+      </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".editar-icono").click(function () {
+          var idActividad = $(this).data("id");
+          $("#modal-idActividad").val(idActividad);
+          $("#modal-editar-fecha").css("display", "block");
+        });
+
+        $(".cerrar-modal").click(function () {
+          $("#modal-editar-fecha").css("display", "none");
+        });
+
+        $(window).click(function (event) {
+          if (event.target.id === "modal-editar-fecha") {
+            $("#modal-editar-fecha").css("display", "none");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

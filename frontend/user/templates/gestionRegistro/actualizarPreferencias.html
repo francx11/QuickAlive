@@ -11,26 +11,37 @@
   </head>
   <body>
     <header>
-      <h1>Actualización de Preferencias</h1>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+      </div>
+
+      <h1>Actualizar preferencias</h1>
+
+      <div class="menuUsuario">
+        <img src="http://localhost/quickalive/imgs/perfilUsuario.png" />
+      </div>
     </header>
-    <div class="tipo-preferencia">
-      <h2>Indica tus nuevas preferencias personales</h2>
-      <ul>
+
+    <main>
+      <h2> ¿Has descubierto algo nuevo? </h2>
+      <div class="preferences-container">
         {% for tipoPreferencia in tiposPreferencias %}
-        <li>
-          <label>
-            <input type="checkbox" name="preferencias[]" id="preferencia{{
-            tipoPreferencia.idTipoPreferencia }}" value="{{
-            tipoPreferencia.idTipoPreferencia }}" data-nombre="{{
-            tipoPreferencia.tipoPreferencia }}" {% for preferenciaAnterior in
-            preferenciasAnteriores %} {% if tipoPreferencia.idTipoPreferencia ==
-            preferenciaAnterior.idTipoPreferencia %} checked {% endif %} {%
-            endfor %} /> {{ tipoPreferencia.tipoPreferencia }}
-          </label>
-        </li>
+        <button
+            class="preference {% for preferenciaAnterior in
+              preferenciasAnteriores %} {% if tipoPreferencia.idTipoPreferencia ==
+              preferenciaAnterior.idTipoPreferencia %} selected {% endif %} {%
+              endfor %}"
+            data-id="{{ tipoPreferencia.idTipoPreferencia }}"
+            data-nombre="{{ tipoPreferencia.tipoPreferencia }}"
+        >
+            {{ tipoPreferencia.tipoPreferencia }}
+        </button>
         {% endfor %}
-      </ul>
     </div>
+
     <button id="actualizarPreferencias">Actualizar Preferencias</button>
 
     <div id="usuario" data-id-usuario="{{ idUsuario }}"></div>

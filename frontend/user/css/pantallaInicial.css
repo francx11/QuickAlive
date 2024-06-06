@@ -1,8 +1,17 @@
-body {
-  font-family: Arial, sans-serif;
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: #ffffff;
 }
 
 /* Container for the header */

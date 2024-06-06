@@ -1,28 +1,18 @@
-/* Reset some default browser styles */
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-ol,
-li,
-form,
-label,
-input,
-button {
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Roboto Slab", sans-serif;
 }
 
-/* Body and html to take full height */
-html,
-body {
+/* Estilos para el body */
+body,
+html {
+  text-align: center;
+  background-color: #ffffff;
   height: 100%;
   margin: 0;
   display: flex;
@@ -47,8 +37,6 @@ header {
 
 .logo img {
   height: 40px;
-  margin-right: 10px;
-  margin-left: 10px;
 }
 
 .logo span {
@@ -59,8 +47,8 @@ header {
 
 /* Button for login */
 .loginButton {
-  background: white;
-  color: black;
+  background: black;
+  color: #f85a75;
   border: 1px solid black;
   padding: 10px 20px;
   border-radius: 5px;

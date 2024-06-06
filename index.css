@@ -1,59 +1,124 @@
-/* styles.css */
-
-body {
+/* Reset some default browser styles */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+form,
+label,
+input,
+button {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background-image: url("background-image.jpg"); /* Reemplazar con la URL de la imagen de fondo */
-  background-size: cover;
-  background-position: center;
+}
+
+/* Body and html to take full height */
+html,
+body {
+  height: 100%;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  color: white;
 }
 
+/* Container for the header */
 header {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  background-color: #f85a75; /* Color de fondo del header */
+  padding: 20px;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  background-color: #ff5e80;
-  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
 }
 
+/* Logo and its text */
 .logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.logo span {
   font-size: 24px;
   font-weight: bold;
+  color: black;
 }
 
+/* Button for login */
 .loginButton {
-  background-color: black;
-  color: white;
-  border: none;
+  background: white;
+  color: black;
+  border: 1px solid black;
   padding: 10px 20px;
-  cursor: pointer;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  margin-left: 10px;
 }
 
-.content {
+.loginButton:hover {
+  background: black;
+  color: white;
+}
+
+/* Main content area */
+main {
+  background-image: url("./imgs/landingImage.png"); /* Image URL here */
+  background-size: cover;
+  background-position: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding: 20px;
+  width: 100%;
 }
 
 .content h1 {
   font-size: 48px;
+  color: white;
   margin-bottom: 20px;
 }
 
 .create-account-button {
-  background-color: #ff5e80;
+  background: #f85a75;
   color: white;
   border: none;
   padding: 15px 30px;
   font-size: 18px;
-  cursor: pointer;
   border-radius: 5px;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+/* Footer styles */
+footer {
+  background-color: #f85a75; /* Same color as the header */
+  padding: 10px 20px;
+  text-align: center;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: auto; /* Push footer to bottom */
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
 }

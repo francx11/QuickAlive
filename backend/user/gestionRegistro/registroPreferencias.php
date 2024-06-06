@@ -8,6 +8,7 @@ require_once '../../bd/bd.php';
 $loader = new \Twig\Loader\FilesystemLoader('../../../frontend/user/templates/gestionRegistro');
 $twig = new \Twig\Environment($loader);
 
+
 // Crear una instancia de la clase BD para interactuar con la base de datos
 $bd = new BD();
 
@@ -16,5 +17,4 @@ $idUsuario = isset($_GET['id']) ? $_GET['id'] : -1;
 
 $tipoPreferencias = $bd->getAllTipoPreferencias();
 
-//echo var_dump($tipoPreferenciasFormateado);
 echo $twig->render('registroPreferencias.html', ['tiposPreferencias' => $tipoPreferencias, 'idUsuario' => $idUsuario]);

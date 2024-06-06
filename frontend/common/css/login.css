@@ -1,80 +1,118 @@
-/* Estilo para el cuerpo de la página */
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos para el body */
 body {
-    font-family: 'Arial', sans-serif; /* Fuente predeterminada */
-    margin: 0; /* Elimina el margen predeterminado */
-    padding: 0; /* Elimina el relleno predeterminado */
-    background-color: #f4f4f4; /* Color de fondo */
+  text-align: center;
+  background-color: white;
 }
 
-/* Estilo para el formulario */
-form {
-    max-width: 400px; /* Ancho máximo del formulario */
-    margin: 50px auto; /* Centra el formulario horizontalmente con un margen superior e inferior de 50px */
-    padding: 20px; /* Espaciado interno del formulario */
-    background-color: #fff; /* Color de fondo del formulario */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    border-radius: 5px; /* Borde redondeado */
+/* Estilos para el encabezado */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f85a75;
+  color: #000;
 }
 
-/* Estilo para las etiquetas de los campos */
-label {
-    display: block; /* Muestra las etiquetas en una línea separada */
-    margin-bottom: 8px; /* Margen inferior */
-    font-weight: bold; /* Texto en negrita */
+/* Logo and its text */
+.logo {
+  display: flex;
+  align-items: center;
 }
 
-/* Estilo para los campos de entrada */
-input {
-    width: 100%; /* Ancho completo */
-    padding: 8px; /* Espaciado interno */
-    margin-bottom: 16px; /* Margen inferior */
-    box-sizing: border-box; /* Incluye el relleno y el borde en el ancho total */
-    border: 1px solid #ccc; /* Borde con color gris claro */
-    border-radius: 4px; /* Borde redondeado */
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
-/* Estilo para el botón de enviar */
-button {
-    background-color: #007BFF; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    padding: 10px 20px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Borde redondeado */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
 }
 
-/* Estilo para el botón de enviar al pasar el cursor sobre él */
-button:hover {
-    background-color: #0056b3; /* Cambia el color de fondo al pasar el cursor */
+/* Estilos para el contenedor principal */
+main {
+  margin-top: 50px;
 }
 
-/* Estilo para el contenedor del enlace de recuperación de contraseña */
-.recuperacion-contrasena {
-    text-align: center; /* Alineación centrada del texto */
-    margin-top: 20px; /* Margen superior */
+/* Estilos para el título principal */
+h1 {
+  font-size: 32px;
+  color: #000;
+  margin-bottom: 20px;
 }
 
-/* Estilo para el enlace de recuperación de contraseña */
-.recuperacion-contrasena a {
-    color: #007BFF; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
+/* Estilos para el contenedor del formulario de inicio de sesión */
+.login-container {
+  background-color: #f85a75;
+  display: inline-block;
+  padding: 20px 40px;
+  border-radius: 15px;
+  text-align: left;
 }
 
-/* Estilo para el enlace de recuperación de contraseña al pasar el cursor sobre él */
-.recuperacion-contrasena a:hover {
-    text-decoration: underline; /* Subrayado al pasar el cursor */
+/* Estilos para las etiquetas del formulario */
+.login-container label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #000;
 }
 
-/* Estilo para el contenedor del enlace de registro */
+/* Estilos para los campos de entrada del formulario */
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el botón del formulario */
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #000;
+  border: none;
+  border-radius: 5px;
+  color: #f85a75;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Estilos para los mensajes de error */
+.login-container p {
+  color: #ff0000;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Estilos para los enlaces de recuperación de contraseña y registro */
+.recuperacion-contrasena,
 .registro {
-    text-align: center; /* Alineación centrada del texto */
-    margin-top: 20px; /* Margen superior */
-    display: flex; /* Utiliza el modelo de caja flexible */
-    justify-content: center; /* Centra horizontalmente el contenido */
+  margin-top: 20px;
 }
 
-/* Estilo para el enlace de registro */
+.recuperacion-contrasena a,
 .registro a {
-    color: #007BFF; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.recuperacion-contrasena a:hover,
+.registro a:hover {
+  text-decoration: underline;
 }

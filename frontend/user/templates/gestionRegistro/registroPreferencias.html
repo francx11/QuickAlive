@@ -11,25 +11,30 @@
   </head>
   <body>
     <header>
-      <h1>Registro de Preferencias</h1>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+        <span> QUICKALIVE</span>
+      </div>
     </header>
 
-    <div class="tipo-preferencia">
-      <h2>Indica tus preferencias personales</h2>
-      {% for tipoPreferencia in tiposPreferencias %}
-      <input
-        type="checkbox"
-        class="tipo-checkbox"
-        name="tipoPreferencia[]"
-        value="{{ tipoPreferencia.idTipoPreferencia }}"
-        data-nombre="{{ tipoPreferencia.tipoPreferencia }}"
-      />
-      <label for="tipoPreferencia">{{ tipoPreferencia.tipoPreferencia }}</label
-      ><br />
-      {% endfor %}
-    </div>
-
-    <button id="guardarPreferencias">Guardar Preferencias</button>
+    <main>
+      <h1>Indica tus preferencias personales</h1>
+      <div class="preferences-container">
+        {% for tipoPreferencia in tiposPreferencias %}
+        <button
+          class="preference"
+          data-id="{{ tipoPreferencia.idTipoPreferencia }}"
+          data-nombre="{{ tipoPreferencia.tipoPreferencia }}"
+        >
+          {{ tipoPreferencia.tipoPreferencia }}
+        </button>
+        {% endfor %}
+      </div>
+      <button id="guardarPreferencias">Guardar Preferencias</button>
+    </main>
 
     <div id="usuario" data-id-usuario="{{ idUsuario }}"></div>
 

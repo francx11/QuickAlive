@@ -8,6 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idUsuario = $_POST["idUsuario"];
     $preferencias = $_POST["preferencias"];
 
+    echo var_dump($preferencias);
+
     // Crear una instancia de la clase BD para interactuar con la base de datos
     $bd = new BD();
 

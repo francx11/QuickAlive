@@ -11,7 +11,7 @@
 /* Estilos para el body */
 body {
   text-align: center;
-  background-color: #ffffff;
+  background-color: white;
 }
 
 /* Container for the header */
@@ -41,10 +41,61 @@ header {
   color: black;
 }
 
-.menuUsuario img {
-  height: 50px;
-  margin-left: 10px;
+/* Dropdown Button */
+.dropbtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
 }
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f85a75;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: black;
+  color: #f85a75;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Additional styling for the user menu */
+.menuUsuario {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.menuUsuario img {
+  border-radius: 50%;
+}
+
 /* Estilos para el contenedor principal */
 main {
   margin-top: 50px;
@@ -71,7 +122,7 @@ h2 {
 /* Estilos para los botones de preferencias */
 .preference {
   padding: 15px 30px;
-  background-color: #ff6473;
+  background-color: #f85a75;
   border: 2px solid #000;
   border-radius: 10px;
   color: #000;
@@ -82,8 +133,8 @@ h2 {
 
 /* Estilos para el botón de preferencia seleccionado */
 .preference.selected {
-  background-color: #000;
-  color: #ff6473;
+  background-color: black;
+  color: #f85a75;
 }
 
 /* Estilos para el botón de guardar preferencias */
@@ -91,9 +142,9 @@ h2 {
   margin-top: 30px;
   padding: 15px 30px;
   background-color: black;
-  border: 2px solid #000;
+  border: 2px solid black;
   border-radius: 10px;
-  color: #ff6473;
+  color: #f85a75;
   cursor: pointer;
   font-size: 16px;
   transition: all 0.3s ease;

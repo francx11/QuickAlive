@@ -1,6 +1,5 @@
 <?php
 // Incluir el archivo que contiene la lógica para la conexión a la base de datos
-
 require_once '../../bd/bd.php';
 
 // Iniciar la sesión si no está iniciada
@@ -21,10 +20,14 @@ if (isset($_SESSION['idUsuario'])) {
 
     // Verificar si se obtuvieron actividades recomendadas
     if ($actividadesRecomendadas !== false && !empty($actividadesRecomendadas)) {
+        // Filtrar las actividades para eliminar aquellas que sean de tipo 'geolocalizable'
+        $actividadesFiltradas = array_filter($actividadesRecomendadas, function ($actividad) {
+            return $actividad['tipoActividad'] !== 'geolocalizable';
+        });
+
         // Devolver las actividades recomendadas en formato JSON
         header('Content-Type: application/json');
-        //echo var_dump($actividadesRecomendadas);
-        echo json_encode($actividadesRecomendadas);
+        echo json_encode(array_values($actividadesFiltradas));
     } else {
         // No se encontraron actividades recomendadas
         header('Content-Type: application/json');

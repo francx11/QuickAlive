@@ -17,11 +17,14 @@ body {
 /* Container for the header */
 header {
   background-color: #f85a75; /* Color de fondo del header */
-  padding: 20px;
   display: flex;
+  top: 0;
+  left: 0;
+  padding: 20px 20px 20px 20px;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  top: 0;
 }
 
 /* Logo and its text */
@@ -41,104 +44,123 @@ header {
   color: black;
 }
 
+/* Dropdown Button */
+.dropbtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f85a75;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: black;
+  color: #f85a75;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Additional styling for the user menu */
+.menuUsuario {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .menuUsuario img {
-  height: 50px;
-  margin-left: 10px;
+  border-radius: 50%;
 }
 
 h1 {
   margin: 0;
 }
 
-.event-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+h2 {
+  margin-top: 10px;
 }
 
-.event-card h3 {
-  margin-top: 0;
+h3 {
+  margin: 0;
+  margin-top: 10px;
 }
 
-.event-card p {
-  margin-bottom: 5px;
+/* Estilo del contenedor principal */
+#events-simple,
+#events-geo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
+  gap: 16px; /* Espacio entre las actividades */
+  padding: 16px; /* Espacio interno del contenedor */
 }
 
-.event-card a {
-  text-decoration: none;
-  color: blue;
+/* Estilo de las actividades */
+.actividad {
+  display: grid;
+  grid-template-rows: 10% 60% 30%; /* Dos filas: 80% para la imagen, 20% para los botones */
+  background-color: #f85a75; /* Color de fondo */
+  border: 1px solid #ddd; /* Borde de las actividades */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 16px; /* Espacio interno de las actividades */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
 }
 
-/* Establecer un tamaño máximo para las imágenes */
-.event-card img {
-  width: 40%; /* La imagen no superará el ancho del contenedor */
-  height: 40%; /* Ajusta automáticamente la altura para mantener la proporción */
+.actividad img {
+  max-width: 100%; /* Ajustar la imagen al ancho máximo del contenedor */
+  height: auto; /* Mantener la proporción de la imagen */
+  width: 100%; /* Establecer un ancho específico para todas las imágenes */
+  height: 100%; /* Establecer una altura específica para todas las imágenes */
 }
 
-/* Estilo para el botón de eliminar cuenta */
-.eliminarCuentaBoton {
-  background-color: #ff0000; /* Color de fondo rojo */
-  color: #ffffff; /* Color del texto blanco */
-  padding: 10px 20px; /* Espaciado interior */
+/* Estilo del contenedor de botones */
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre los botones */
+  align-items: center; /* Centrar los botones verticalmente */
+}
+
+/* Estilo de los botones */
+.button-container button {
+  flex: 1; /* Distribuir uniformemente el espacio entre los botones */
+  margin: 0 4px; /* Espacio entre los botones */
+  padding: 8px 16px; /* Espacio interno de los botones */
   border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cambiar cursor al pasar el ratón */
-  text-decoration: none; /* Sin subrayado */
-  display: inline-block; /* Mostrar como bloque en línea */
+  border-radius: 4px; /* Bordes redondeados */
+  background-color: black; /* Color de fondo */
+  color: #f85a75; /* Color del texto */
+  cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+  transition: background-color 0.3s; /* Transición suave del color de fondo */
 }
 
-.eliminarCuentaBoton:hover {
-  background-color: #cc0000; /* Cambiar color de fondo al pasar el ratón */
-}
-
-/* Estilo para el botón de actualizar preferencias */
-.actualizarPreferenciasBoton {
-  background-color: #007bff; /* Color de fondo azul */
-  color: #ffffff; /* Color del texto blanco */
-  padding: 10px 20px; /* Espaciado interior */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cambiar cursor al pasar el ratón */
-  text-decoration: none; /* Sin subrayado */
-  display: inline-block; /* Mostrar como bloque en línea */
-}
-
-.actualizarPreferenciasBoton:hover {
-  background-color: #0056b3; /* Cambiar color de fondo al pasar el ratón */
-}
-
-.event-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-  background-color: #fff;
-}
-
-.event-card h3 {
-  margin-top: 0;
-  font-size: 18px;
-  color: #333;
-}
-
-.event-card p {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #666;
-}
-
-.event-card a {
-  display: inline-block;
-  padding: 8px 12px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.event-card a:hover {
-  background-color: #0056b3;
+/* Cambiar el color de fondo de los botones al pasar el cursor sobre ellos */
+.button-container button:hover {
+  background-color: black; /* Color de fondo al pasar el cursor */
+  color: white;
 }

@@ -15,24 +15,32 @@ $(document).ready(function() {
 
             // Recorrer las actividades y mostrarlas en el contenedor de eventos
             response.forEach(function(actividad) {
-
                 var actividadHTML = '<div class="actividad">';
-                actividadHTML += '<h3>' + actividad.nombreActividad + '</h3>';
-                actividadHTML += '<p>Duración: ' + actividad.duracion + ' minutos</p>';
+                    
+                    var eventName = actividad.nombreActividad;
+                    var eventDescription = actividad.descripcion;
+                    var eventId = actividad.idActividad;
 
-                // Verificar si hay fotos asociadas a la actividad
-                if (actividad.fotos && actividad.fotos.length > 0) {
-                    // Agregar la primera imagen encontrada
-                    actividadHTML += '<img src="' + actividad.fotos[0] + '" alt="Imagen de la actividad">';
-                }
+                    actividadHTML += '<h4>' + eventName + '</h4>';
+                    //actividadHTML += '<p>Duración: ' + eventDuration + ' minutos</p>';
 
-                // Agregar botones de aceptación, rechazo e información
-                actividadHTML += '<button class="btn-aceptar" data-id="' + actividad.idActividad + '">Aceptar</button>';
-                actividadHTML += '<button class="btn-rechazar" data-id="' + actividad.idActividad + '">Rechazar</button>';
-                actividadHTML += '<button class="btn-info" data-descripcion="' + actividad.descripcion + '">Información</button>';
-                actividadHTML += '</div>';
+                    // Añadir imagen si está disponible
+                    if (actividad.fotos && actividad.fotos.length > 0) {
+                        var eventImage = actividad.fotos[0];
+                        actividadHTML += '<img src="' + eventImage + '" alt="Imagen de la actividad">';
+                    }
 
-                $('#events-simple').append(actividadHTML);
+                    // Añadir botones
+                    actividadHTML += '<div class="button-container">';
+                    actividadHTML += '<button class="btn-aceptar" data-id="' + eventId + '">Aceptar</button>';
+                    actividadHTML += '<button class="btn-info" data-descripcion="' + eventDescription + '">Información</button>';
+                    actividadHTML += '<button class="btn-rechazar" data-id="' + eventId + '">Rechazar</button>';
+                    actividadHTML += '</div>'; // Cerrar button-container
+
+                    actividadHTML += '</div>'; // Cerrar actividad
+
+                    $('#events-simple').append(actividadHTML);
+
             });
 
             // Escuchar eventos de clic en los botones de aceptación, rechazo e información

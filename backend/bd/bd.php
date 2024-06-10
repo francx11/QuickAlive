@@ -1650,7 +1650,7 @@ class BD
         // Verificar si el usuario tiene preferencias personales
         if (is_null($preferenciasUsuario) or $sinPreferencias) {
             // Si el usuario no tiene preferencias, obtener todas las actividades de la base de datos
-            $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad";
+            $query = "SELECT idActividad, nombreActividad, descripcion, duracion, tipoActividad FROM actividad";
             $stmt = $this->mysqli->prepare($query);
 
             // Verificar si la preparación de la consulta fue exitosa

@@ -64,58 +64,60 @@ if (navigator.geolocation) {
         function mostrarActividades(actividades) {
             var eventsContainer = document.getElementById('events-geo');
             eventsContainer.innerHTML = ''; // Limpiar contenedor
-
+        
             actividades.forEach(function(actividad) {
+                // Crear la tarjeta del evento
                 var eventCard = document.createElement('div');
-                eventCard.classList.add('event-card');
+                eventCard.classList.add('actividad');
 
-                var eventName = document.createElement('h3');
+                var eventName = document.createElement('h4');
                 eventName.textContent = actividad.name;
                 eventCard.appendChild(eventName);
-
-                var eventDescription = document.createElement('p');
-                var fecha;
-                eventDescription.textContent = 'Fecha del evento: ' + actividad.dates.start.dateTime;
-                fecha = actividad.dates.start.localDate;
-
-                console.log(actividad.description);
-
-                // Añadir imagen
+        
+                // Añadir la imagen del evento
                 var eventImage = document.createElement('img');
                 eventImage.src = actividad.images[0].url;
                 eventImage.alt = 'Imagen del evento';
                 eventCard.appendChild(eventImage);
-
+        
+                // Crear el contenedor de botones
+                var buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('button-container');
+        
                 // Añadir botón "Aceptar"
                 var btnAceptar = document.createElement('button');
                 btnAceptar.textContent = 'Aceptar';
                 btnAceptar.addEventListener('click', function() {
-                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, fecha, 'aceptada');
+                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, actividad.dates.start.localDate, 'aceptada');
                     eventCard.remove();
                 });
-                eventCard.appendChild(btnAceptar);
-
+                buttonContainer.appendChild(btnAceptar);
+        
                 // Añadir botón "Ver más"
                 var btnVerMas = document.createElement('button');
                 btnVerMas.textContent = 'Información';
                 btnVerMas.addEventListener('click', function() {
                     window.open(actividad.url, '_blank');
                 });
-                eventCard.appendChild(btnVerMas);
-
+                buttonContainer.appendChild(btnVerMas);
+        
                 // Añadir botón "Rechazar"
                 var btnRechazar = document.createElement('button');
                 btnRechazar.textContent = 'Rechazar';
                 btnRechazar.addEventListener('click', function() {
-                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, fecha, 'rechazada');
+                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, actividad.dates.start.localDate, 'rechazada');
                     eventCard.remove();
                 });
-                eventCard.appendChild(btnRechazar);
-
+                buttonContainer.appendChild(btnRechazar);
+        
+                // Añadir el contenedor de botones a la tarjeta del evento
+                eventCard.appendChild(buttonContainer);
+        
+                // Añadir la tarjeta del evento al contenedor principal
                 eventsContainer.appendChild(eventCard);
             });
         }
-
+        
         function gestionarActividad(nombreActividad, descripcion, urlRemota, idApi, fechaRealizacion, estado) {
             var urlControlador = '/quickalive/backend/user/gestionRecomendaciones/controladorActividadGeolocalizable.php';
             var parametros = 'estado=' + estado +

@@ -10,7 +10,6 @@
       type="text/css"
     />
   </head>
-
   <body>
     <header>
       <div class="logo">
@@ -22,41 +21,48 @@
       </div>
 
       <div class="menuUsuario">
-        <img src="http://localhost/quickalive/imgs/perfilUsuario.png" />
+        <div class="dropdown">
+          <img
+            src="http://localhost/quickalive/imgs/perfilUsuario.png"
+            class="dropbtn"
+          />
+          <div class="dropdown-content">
+            <a
+              href="http://localhost/quickalive/backend/user/pantallaInicial.php"
+              >Mis recomendaciones</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionRegistro/renderActualizarPreferencias.php"
+              >Actualizar Preferencias</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionListaActividades/renderListaActividades.php"
+              >Lista de Actividades</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionHistorialActividades/renderHistorialActividades.php"
+              >Historial de Actividades</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+              >Cerrar Sesión</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/eliminarCuenta.php"
+              >Eliminar Cuenta</a
+            >
+          </div>
+        </div>
       </div>
     </header>
 
-    <h2>Estas son para ti...</h2>
+    <h2>Encuentra la actividad que buscabas</h2>
+    <h3>Cerquita de tu casa</h3>
+    <div class="activities-geo" id="events-geo"></div>
 
-    <div id="events-geo"></div>
+    <h3>Hechas a medida</h3>
+    <div class="activities-simple" id="events-simple"></div>
 
-    <div id="events-simple"></div>
-
-    <a href="http://localhost/quickalive/backend/user/eliminarCuenta.php">
-      <button class="eliminarCuentaBoton">Borrar Cuenta</button>
-    </a>
-
-    <a
-      href="http://localhost/quickalive/backend/user/gestionRegistro/renderActualizarPreferencias.php"
-    >
-      <button class="actualizarPreferenciasBoton">
-        Actualizar Preferencias
-      </button>
-    </a>
-
-    <a
-      href="http://localhost/quickalive/backend/user/gestionListaActividades/renderListaActividades.php"
-    >
-      <button class="actualizarPreferenciasBoton">Lista Actividades</button>
-    </a>
-
-    <a
-      href="http://localhost/quickalive/backend/user/gestionHistorialActividades/renderHistorialActividades.php"
-    >
-      <button class="actualizarPreferenciasBoton">Historial Actividades</button>
-    </a>
-
-    <!-- Incluir el script JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="http://localhost/quickalive/frontend/user/js/obtenerActividadesCercanas.js"></script>
     <script src="http://localhost/quickalive/frontend/user/js/obtenerActividadesSimples.js"></script>

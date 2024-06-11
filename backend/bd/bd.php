@@ -1756,8 +1756,7 @@ class BD
 
                     if ($puntuacion >= 0) {
 
-
-                        $query = "SELECT idActividad, nombreActividad, descripcion, duracion FROM actividad WHERE idActividad = ?";
+                        $query = "SELECT idActividad, nombreActividad, descripcion, duracion, tipoActividad FROM actividad WHERE idActividad = ?";
                         $stmt = $this->mysqli->prepare($query);
                         $stmt->bind_param('i', $idActividad);
                         $stmt->execute();

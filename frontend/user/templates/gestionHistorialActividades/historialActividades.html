@@ -50,6 +50,7 @@
             >
             <a
               href="http://localhost/quickalive/backend/user/eliminarCuenta.php"
+              onclick="return confirmarEliminacion()"
               >Eliminar Cuenta</a
             >
           </div>
@@ -97,4 +98,12 @@
       </div>
     </main>
   </body>
+
+  <script>
+    function confirmarEliminacion() {
+      return confirm(
+        "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer."
+      );
+    }
+  </script>
 </html>

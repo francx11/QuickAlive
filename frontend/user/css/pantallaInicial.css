@@ -124,17 +124,16 @@ h3 {
 /* Estilo de las actividades */
 .actividad {
   display: grid;
-  grid-template-rows: 10% 60% 30%; /* Dos filas: 80% para la imagen, 20% para los botones */
+  grid-template-rows: 10% 70% 20%; /* Dos filas: 80% para la imagen, 20% para los botones */
   background-color: #f85a75; /* Color de fondo */
-  border: 1px solid #ddd; /* Borde de las actividades */
+  border: 2px solid black; /* Borde de las actividades */
   border-radius: 8px; /* Bordes redondeados */
-  padding: 16px; /* Espacio interno de las actividades */
+  padding: 16px 0px 16px 0px; /* Espacio interno de las actividades */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  position: relative;
 }
 
 .actividad img {
-  max-width: 100%; /* Ajustar la imagen al ancho máximo del contenedor */
-  height: auto; /* Mantener la proporción de la imagen */
   width: 100%; /* Establecer un ancho específico para todas las imágenes */
   height: 100%; /* Establecer una altura específica para todas las imágenes */
 }
@@ -163,4 +162,30 @@ h3 {
 .button-container button:hover {
   background-color: black; /* Color de fondo al pasar el cursor */
   color: white;
+}
+
+.iframe-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  background: #f85a75;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.btn-info:hover .iframe-container,
+.iframe-container:hover {
+  display: block;
+}
+
+.iframe-content p {
+  color: black;
+  text-align: justify;
 }

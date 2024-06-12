@@ -83,12 +83,14 @@ if (navigator.geolocation) {
                 // Crear el contenedor de botones
                 var buttonContainer = document.createElement('div');
                 buttonContainer.classList.add('button-container');
+
+                console.log(actividad.dates.start.dateTime);
         
                 // Añadir botón "Aceptar"
                 var btnAceptar = document.createElement('button');
                 btnAceptar.textContent = 'Aceptar';
                 btnAceptar.addEventListener('click', function() {
-                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, actividad.dates.start.localDate, 'aceptada');
+                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, actividad.dates.start.dateTime, 'aceptada');
                     eventCard.remove();
                 });
                 buttonContainer.appendChild(btnAceptar);

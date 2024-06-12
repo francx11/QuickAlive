@@ -11,7 +11,7 @@
 /* Estilos para el body */
 body {
   text-align: center;
-  background-color: #ffffff;
+  background-color: white;
 }
 
 /* Estilos para el encabezado */
@@ -65,7 +65,7 @@ h1 {
 /* Estilos para los botones de preferencias */
 .preference {
   padding: 15px 30px;
-  background-color: #ff6473;
+  background-color: #f85a75;
   border: 2px solid #000;
   border-radius: 10px;
   color: #000;
@@ -77,7 +77,7 @@ h1 {
 /* Estilos para el botón de preferencia seleccionado */
 .preference.selected {
   background-color: #000;
-  color: #ff6473;
+  color: #f85a75;
 }
 
 /* Estilos para el botón de guardar preferencias */
@@ -87,7 +87,7 @@ h1 {
   background-color: black;
   border: 2px solid #000;
   border-radius: 10px;
-  color: #ff6473;
+  color: #f85a75;
   cursor: pointer;
   font-size: 16px;
   transition: all 0.3s ease;

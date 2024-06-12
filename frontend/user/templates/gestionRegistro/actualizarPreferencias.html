@@ -50,6 +50,7 @@
             >
             <a
               href="http://localhost/quickalive/backend/user/eliminarCuenta.php"
+              onclick="return confirmarEliminacion()"
               >Eliminar Cuenta</a
             >
           </div>
@@ -80,5 +81,12 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/quickalive/frontend/user/js/actualizarPreferencias.js"></script>
+    <script>
+      function confirmarEliminacion() {
+        return confirm(
+          "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer."
+        );
+      }
+    </script>
   </body>
 </html>

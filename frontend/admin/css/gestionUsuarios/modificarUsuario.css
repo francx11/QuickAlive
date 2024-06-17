@@ -1,90 +1,121 @@
-/* Estilo para el cuerpo de la página */
-body {
-    font-family: Arial, sans-serif; /* Fuente y tipo de letra para todo el cuerpo de la página */
-    margin: 0; /* Elimina los márgenes predeterminados del cuerpo */
-    padding: 0; /* Elimina el relleno predeterminado del cuerpo */
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
 }
 
-/* Estilo para el encabezado */
+/* Estilos para el body */
+body,
+html {
+  text-align: center;
+  background-color: #ffffff;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container for the header */
 header {
-    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
-    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos del encabezado */
-    align-items: center; /* Alinea los elementos verticalmente en el centro del encabezado */
-    padding: 10px; /* Añade relleno alrededor del encabezado */
-    background-color: #333; /* Color de fondo oscuro para el encabezado */
-    color: white; /* Color del texto del encabezado */
+  background-color: #f85a75; /* Color de fondo del header */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-/* Estilo para el contenedor de la marca o logo */
-.brand {
-    flex: 1; /* El contenedor de la marca ocupará el espacio restante */
-    text-align: center; /* Alineación del texto al centro */
+/* Logo and its text */
+.logo {
+  display: flex;
+  align-items: center;
 }
 
-/* Estilos para los botones de inicio de sesión y cierre de sesión */
-.loginButton,
-.logoutButton {
-    background-color: #4CAF50; /* Color de fondo para los botones de inicio de sesión y cierre de sesión */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 15px; /* Relleno interno */
-    text-align: center; /* Alineación del texto al centro */
-    text-decoration: none; /* Sin decoración de texto */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 16px; /* Tamaño de fuente */
-    margin: 4px 2px; /* Márgenes */
-    cursor: pointer; /* Cursor al pasar sobre el botón */
-    border-radius: 5px; /* Borde redondeado */
+.logo img {
+  height: 40px;
+}
+
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Button for login */
+.loginButton {
+  background: black;
+  color: #f85a75;
+  border: 1px solid black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  margin-left: 10px;
+}
+
+.loginButton:hover {
+  background: black;
+  color: white;
+}
+
+h1 {
+  margin: 0;
 }
 
 /* Estilos para los títulos */
 h2 {
-    margin: 0; /* Elimina los márgenes superior e inferior */
+  margin: 0; /* Elimina los márgenes superior e inferior */
 }
 
 /* Estilo para el contenido principal */
 main {
-    padding: 2rem; /* Añade un relleno alrededor del contenido principal */
+  padding: 2rem; /* Añade un relleno alrededor del contenido principal */
 }
 
 /* Estilo para los formularios */
 form {
-    max-width: 400px; /* Ancho máximo del formulario */
-    margin: 0 auto; /* Centra el formulario horizontalmente en la página */
+  max-width: 400px; /* Ancho máximo del formulario */
+  margin: 0 auto; /* Centra el formulario horizontalmente en la página */
 }
 
 /* Estilo para los contenedores genéricos */
 div {
-    margin-bottom: 1rem; /* Añade un margen inferior a los elementos de tipo div */
+  margin-bottom: 1rem; /* Añade un margen inferior a los elementos de tipo div */
 }
 
 /* Estilo para las etiquetas de los campos */
 label {
-    display: block; /* Convierte las etiquetas en elementos de bloque */
-    margin-bottom: 0.5rem; /* Añade un margen inferior a las etiquetas */
+  display: block; /* Convierte las etiquetas en elementos de bloque */
+  margin-bottom: 0.5rem; /* Añade un margen inferior a las etiquetas */
 }
 
 /* Estilo para los campos de entrada y select */
-input, select {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    padding: 0.5rem; /* Añade un relleno uniforme a los campos */
-    border: 1px solid #ccc; /* Borde delgadp de color gris claro */
-    border-radius: 4px; /* Borde redondeado */
+input,
+select {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  padding: 0.5rem; /* Añade un relleno uniforme a los campos */
+  border: 1px solid #ccc; /* Borde delgadp de color gris claro */
+  border-radius: 4px; /* Borde redondeado */
 }
 
 /* Estilo para los botones */
 button {
-    display: block; /* Convierte los botones en elementos de bloque */
-    width: 100%; /* Ocupa todo el ancho disponible */
-    padding: 0.75rem; /* Relleno uniforme */
-    background-color: #333; /* Color de fondo oscuro para los botones */
-    color: #fff; /* Color del texto */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Borde redondeado */
-    cursor: pointer; /* Cursor al pasar sobre el botón */
+  display: block; /* Convierte los botones en elementos de bloque */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  padding: 0.75rem; /* Relleno uniforme */
+  background-color: #f85a75; /* Color de fondo oscuro para los botones */
+  color: black; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Borde redondeado */
+  cursor: pointer; /* Cursor al pasar sobre el botón */
 }
 
 /* Estilo para los botones al pasar el cursor */
 button:hover {
-    background-color: #555; /* Color de fondo alterno al pasar el cursor sobre el botón */
+  background-color: black; /* Color de fondo alterno al pasar el cursor sobre el botón */
+  color: #f85a75;
 }

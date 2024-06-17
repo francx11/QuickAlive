@@ -18,6 +18,8 @@ if ($logueado) {
         $urlRemota = $_GET["urlRemota"];
         $idApi = $_GET["idApi"];
         $fechaRealizacion = $_GET["fechaRealizacion"];
+        echo var_dump($fechaRealizacion);
+        
         $estado = $_GET["estado"];
         $duracion = 0;
 

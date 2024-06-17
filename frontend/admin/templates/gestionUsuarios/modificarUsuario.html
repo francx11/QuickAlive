@@ -1,97 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="/quickalive/frontend/admin/css/gestionUsuarios/modificarUsuario.css"
-			rel="stylesheet"
-			type="text/css"
-		/>
-		<title>Modificar Usuario</title>
-	</head>
-	<body>
-		<!-- Encabezado de la página -->
-		<header>
-			<div class="brand">
-				<h2>Modificar Usuario</h2>
-				<!-- Título de la página -->
-			</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="/quickalive/frontend/admin/css/gestionUsuarios/modificarUsuario.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>Modificar Usuario</title>
+  </head>
+  <body>
+    <!-- Encabezado de la página -->
+    <header>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+      </div>
 
-			<!-- Botón para cerrar sesión si el usuario está autenticado, de lo contrario, muestra un botón para iniciar sesión -->
-			{% if logueado %}
-			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php">
-				<button class="logoutButton">Cerrar Sesión</button>
-			</a>
-			{% else %}
-			<a href="./backend/api/sesiones/login.php">
-				<button class="loginButton">Iniciar Sesión</button>
-			</a>
-			{% endif %}
-		</header>
+      <h1>Modificar Usuario</h1>
 
-		<!-- Contenido principal -->
-		<main>
-			<form
-				id="modificarUsuarioForm"
-				action="modificarUsuario.php?id= {{ idUsuario }}"
-				method="post"
-			>
-				<div>
-					<label for="nickName">Nickname:</label>
-					<input type="text" id="nickName" name="nickName" />
-					<!-- Campo para ingresar el nickname del usuario -->
-				</div>
-				<div>
-					<label for="telefono">Teléfono:</label>
-					<input type="tel" id="telefono" name="telefono" />
-					<!-- Campo para ingresar el teléfono del usuario -->
-				</div>
-				<div>
-					<label for="correo">Correo:</label>
-					<input type="email" id="correo" name="correo" />
-					<!-- Campo para ingresar el correo electrónico del usuario -->
-				</div>
-				<div>
-					<label for="password">Password:</label>
-					<input type="password" id="password" name="password" />
-					<!-- Campo para ingresar la contraseña del usuario -->
-				</div>
-				<div>
-					<label for="nombre">Nombre:</label>
-					<input type="text" id="nombre" name="nombre" />
-					<!-- Campo para ingresar el nombre del usuario -->
-				</div>
-				<div>
-					<label for="apellidos">Apellidos:</label>
-					<input type="text" id="apellidos" name="apellidos" />
-					<!-- Campo para ingresar los apellidos del usuario -->
-				</div>
-				<div>
-					<label for="edad">Edad:</label>
-					<input type="number" id="edad" name="edad" />
-					<!-- Campo para ingresar la edad del usuario -->
-				</div>
-				<!-- Verifica si el usuario tiene permisos para cambiar el rol -->
-				{% if rol != 'root' %}
-				<div>
-					<label for="rol">Rol:</label>
-					<select id="rol" name="rol">
-						<option value="registrado">Registrado</option>
-						<option value="root" selected>Administrador</option>
-					</select>
-				</div>
-				{% else %}
-				<!-- Si el usuario tiene rol de 'root', oculta el campo de selección de rol -->
-				<input type="hidden" name="rol" value="root" />
-				{% endif %}
-				<!-- Botón para enviar el formulario de modificación -->
-				<a
-					href="http://localhost/quickalive/backend/admin/gestionUsuarios/modificarUsuario.php?id= {{ idUsuario }}"
-				>
-					<button type="submit">Modificar Usuario</button>
-				</a>
-			</form>
-		</main>
-	</body>
+      {% if logueado %}
+      <a href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+        ><button class="loginButton">Cerrar Sesión</button></a
+      >
+      <!-- Botón de cierre de sesión -->
+      {% else %}
+      <a href="http://localhost/quickalive/backend/api/sesiones/login.php"
+        ><button class="loginButton">Iniciar Sesión</button></a
+      >
+      <!-- Botón de inicio de sesión -->
+      {% endif %}
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+      <form
+        id="modificarUsuarioForm"
+        action="modificarUsuario.php?id= {{ idUsuario }}"
+        method="post"
+      >
+        <div>
+          <label for="nickName">Nickname:</label>
+          <input type="text" id="nickName" name="nickName" />
+          <!-- Campo para ingresar el nickname del usuario -->
+        </div>
+        <div>
+          <label for="telefono">Teléfono:</label>
+          <input type="tel" id="telefono" name="telefono" />
+          <!-- Campo para ingresar el teléfono del usuario -->
+        </div>
+        <div>
+          <label for="correo">Correo:</label>
+          <input type="email" id="correo" name="correo" />
+          <!-- Campo para ingresar el correo electrónico del usuario -->
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" />
+          <!-- Campo para ingresar la contraseña del usuario -->
+        </div>
+        <div>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" />
+          <!-- Campo para ingresar el nombre del usuario -->
+        </div>
+        <div>
+          <label for="apellidos">Apellidos:</label>
+          <input type="text" id="apellidos" name="apellidos" />
+          <!-- Campo para ingresar los apellidos del usuario -->
+        </div>
+        <div>
+          <label for="edad">Edad:</label>
+          <input type="number" id="edad" name="edad" />
+          <!-- Campo para ingresar la edad del usuario -->
+        </div>
+        <!-- Verifica si el usuario tiene permisos para cambiar el rol -->
+        {% if rol != 'root' %}
+        <div>
+          <label for="rol">Rol:</label>
+          <select id="rol" name="rol">
+            <option value="registrado">Registrado</option>
+            <option value="root" selected>Administrador</option>
+          </select>
+        </div>
+        {% else %}
+        <!-- Si el usuario tiene rol de 'root', oculta el campo de selección de rol -->
+        <input type="hidden" name="rol" value="root" />
+        {% endif %}
+        <!-- Botón para enviar el formulario de modificación -->
+        <a
+          href="http://localhost/quickalive/backend/admin/gestionUsuarios/modificarUsuario.php?id= {{ idUsuario }}"
+        >
+          <button type="submit">Modificar Usuario</button>
+        </a>
+      </form>
+    </main>
+  </body>
 </html>

@@ -84,13 +84,18 @@ if (navigator.geolocation) {
                 var buttonContainer = document.createElement('div');
                 buttonContainer.classList.add('button-container');
 
-                console.log(actividad.dates.start.dateTime);
+                var localDate = actividad.dates.start.localDate;
+                var localTime = actividad.dates.start.localTime;
+
+                var combinedDateTime = `${localDate} ${localTime}`;
+
+                console.log(combinedDateTime);
         
                 // Añadir botón "Aceptar"
                 var btnAceptar = document.createElement('button');
                 btnAceptar.textContent = 'Aceptar';
                 btnAceptar.addEventListener('click', function() {
-                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, actividad.dates.start.dateTime, 'aceptada');
+                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, combinedDateTime, 'aceptada');
                     eventCard.remove();
                 });
                 buttonContainer.appendChild(btnAceptar);
@@ -107,7 +112,7 @@ if (navigator.geolocation) {
                 var btnRechazar = document.createElement('button');
                 btnRechazar.textContent = 'Rechazar';
                 btnRechazar.addEventListener('click', function() {
-                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, actividad.dates.start.localDate, 'rechazada');
+                    gestionarActividad(actividad.name, actividad.description, actividad.images[0].url, actividad.id, combinedDateTime, 'rechazada');
                     eventCard.remove();
                 });
                 buttonContainer.appendChild(btnRechazar);

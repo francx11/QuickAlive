@@ -16,25 +16,29 @@
     <title>Modificar Actividad</title>
   </head>
   <body>
+    <!-- Encabezado de la página -->
     <header>
-      <a href="../gestionActividades/gestionActividades.php"
-        ><i class="fas fa-arrow-left"></i> Volver</a
-      >
-      <div class="brand">
-        <h2>Modificar Actividad</h2>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
       </div>
 
+      <h1>Modificar Actividad</h1>
+
       {% if logueado %}
-      <a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
-        ><button class="logoutButton">Cerrar Sesión</button></a
+      <a href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+        ><button class="loginButton">Cerrar Sesión</button></a
       >
+      <!-- Botón de cierre de sesión -->
       {% else %}
-      <a href="./backend/api/sesiones/login.php"
+      <a href="http://localhost/quickalive/backend/api/sesiones/login.php"
         ><button class="loginButton">Iniciar Sesión</button></a
       >
+      <!-- Botón de inicio de sesión -->
       {% endif %}
     </header>
-
     <main>
       <form id="actividadForm">
         <input
@@ -57,7 +61,8 @@
         </div>
 
         <div class="galeria">
-          Galería de imágenes Actual: {% for imagen in imagenes %}
+          <h2>Galería de imágenes actual:</h2>
+          {% for imagen in imagenes %}
           <div class="imagen">
             <img src="{{ imagen.url }}" alt="Imagen de la galería" />
             <button
@@ -71,6 +76,18 @@
 
           {% endfor %}
         </div>
+
+        <label for="imagenes"
+          >Inserción de imágenes (selecciona varias manteniendo
+          Ctrl/Cmd):</label
+        ><br />
+        <input
+          type="file"
+          id="imagenes"
+          name="imagenes[]"
+          multiple
+          accept="image/*"
+        /><br /><br />
 
         <div class="tipo-preferencia">
           <h2>Indica las categorías a las que pertenece la actividad</h2>
@@ -90,17 +107,6 @@
             {% endfor %}
           </ul>
         </div>
-
-        <label for="imagenes"
-          >Imágenes (selecciona varias manteniendo Ctrl/Cmd):</label
-        ><br />
-        <input
-          type="file"
-          id="imagenes"
-          name="imagenes[]"
-          multiple
-          accept="image/*"
-        /><br /><br />
 
         <button id="submitBtn">Modificar Actividad</button>
       </form>

@@ -16,21 +16,27 @@
     <title>Gestión de Actividades</title>
   </head>
   <body>
+    <!-- Encabezado de la página -->
     <header>
-      <a href="../panelAdmin.php"><i class="fas fa-arrow-left"></i> Volver</a>
-
-      <div class="brand">
-        <h2>Gestión de Actividades</h2>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
       </div>
 
+      <h1>Gestión de Actividades</h1>
+
       {% if logueado %}
-      <a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
-        ><button class="logoutButton">Cerrar Sesión</button></a
+      <a href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+        ><button class="loginButton">Cerrar Sesión</button></a
       >
+      <!-- Botón de cierre de sesión -->
       {% else %}
-      <a href="./backend/api/sesiones/login.php"
+      <a href="http://localhost/quickalive/backend/api/sesiones/login.php"
         ><button class="loginButton">Iniciar Sesión</button></a
       >
+      <!-- Botón de inicio de sesión -->
       {% endif %}
     </header>
 

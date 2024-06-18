@@ -69,11 +69,14 @@
                 >{{ actividad.nombreActividad }}</span
               >
               <span class="actividad-fecha"
-                >Fecha: {{ actividad.fechaRealizacion }}</span
+                >Fecha de realización: {{ actividad.fechaRealizacion }}</span
               >
+
+              {% if actividad.tipoActividad != "geolocalizable" %}
               <span class="actividad-duracion"
                 >Duración: {{ actividad.duracion }} minutos</span
               >
+              {% endif %}
             </div>
             <!-- Formulario para volver a realizar la actividad -->
             {% if actividad.tipoActividad != "geolocalizable" %}

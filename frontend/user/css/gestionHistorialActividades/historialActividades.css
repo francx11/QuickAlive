@@ -12,7 +12,7 @@
 /* Estilos para el body */
 body {
   text-align: center;
-  background-color: #ffffff;
+  background-color: white;
 }
 
 /* Container for the header */
@@ -138,19 +138,19 @@ h2 {
 .actividad-nombre {
   font-size: 18px;
   font-weight: bold;
-  color: #fff;
+  color: black;
 }
 
 .actividad-fecha,
 .actividad-duracion {
   font-size: 16px;
-  color: #fff;
+  color: black;
 }
 /* Estilos para el botón "Volver a realizar" */
 .volver-a-realizar {
-  background-color: black;
-  color: #f85a75;
-  border: none;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
@@ -159,4 +159,5 @@ h2 {
 
 .volver-a-realizar:hover {
   background-color: black;
+  color: #f85a75;
 }

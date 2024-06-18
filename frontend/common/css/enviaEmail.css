@@ -49,17 +49,18 @@ input {
 
 /* Estilo para el botón de enviar */
 button[type="submit"] {
-  background-color: black; /* Color de fondo */
-  color: #f85a75; /* Color del texto */
+  background-color: white; /* Color de fondo */
+  color: black; /* Color del texto */
   padding: 10px 20px; /* Espaciado interno */
-  border: none; /* Sin borde */
+  border: 2px solid black; /* Sin borde */
   border-radius: 4px; /* Borde redondeado */
   cursor: pointer; /* Cambia el cursor al pasar por encima */
 }
 
 /* Estilo para el botón de enviar al pasar el cursor sobre él */
 button[type="submit"]:hover {
-  background-color: white; /* Cambia el color de fondo al pasar el cursor */
+  background-color: black; /* Cambia el color de fondo al pasar el cursor */
+  color: #f85a75;
 }
 
 /* Estilo para el mensaje de confirmación */

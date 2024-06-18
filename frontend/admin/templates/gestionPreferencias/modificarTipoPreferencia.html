@@ -1,78 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Lista de Preferencias Hijas</title>
-		<link
-			href="/quickalive/frontend/admin/css/gestionPreferencias/modificarTipoPreferencia.css"
-			rel="stylesheet"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-		/>
-	</head>
-	<body>
-		<header>
-			<a href="../gestionPreferencias/gestionPreferencias.php"
-				><i class="fas fa-arrow-left"></i> Volver</a
-			>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Preferencias Hijas</title>
+    <link
+      href="/quickalive/frontend/admin/css/gestionPreferencias/modificarTipoPreferencia.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="../gestionPreferencias/gestionPreferencias.php"
+        ><i class="fas fa-arrow-left"></i> Volver</a
+      >
 
-			<div class="brand">
-				<h2>Modificar Tipo de Preferencia</h2>
-			</div>
+      <div class="brand">
+        <h2>Modificar Tipo de Preferencia</h2>
+      </div>
 
-			{% if logueado %}
-			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
-				><button class="logoutButton">Cerrar Sesión</button></a
-			>
-			{% else %}
-			<a href="./backend/api/sesiones/login.php"
-				><button class="loginButton">Iniciar Sesión</button></a
-			>
-			{% endif %}
-		</header>
+      {% if logueado %}
+      <a href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+        ><button class="loginButton">Cerrar Sesión</button></a
+      >
+      <!-- Botón de cierre de sesión -->
+      {% else %}
+      <a href="http://localhost/quickalive/backend/api/sesiones/login.php"
+        ><button class="loginButton">Iniciar Sesión</button></a
+      >
+      <!-- Botón de inicio de sesión -->
+      {% endif %}
+    </header>
 
-		<!-- Lista de preferencias hijas -->
-		<ul>
-			{% for preferencia in preferencias %}
-			<li>
-				<span class="nombre">Nombre: {{ preferencia.nombrePreferencia }}</span>
-				<form
-					action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=borrar&tipoPreferencia={{tipoPreferencia}}"
-					method="post"
-				>
-					<input
-						type="hidden"
-						name="idPreferencia"
-						value="{{ preferencia.idPreferencia }}"
-					/>
-					<button type="submit">Eliminar</button>
-				</form>
-			</li>
-			{% endfor %}
-		</ul>
+    <!-- Lista de preferencias hijas -->
+    <ul>
+      {% for preferencia in preferencias %}
+      <li>
+        <span class="nombre">Nombre: {{ preferencia.nombrePreferencia }}</span>
+        <form
+          action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=borrar&tipoPreferencia={{tipoPreferencia}}"
+          method="post"
+        >
+          <input
+            type="hidden"
+            name="idPreferencia"
+            value="{{ preferencia.idPreferencia }}"
+          />
+          <button type="submit">Eliminar</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
 
-		<!-- Formulario para agregar nueva preferencia hija -->
-		<h3>Agregar Nueva Preferencia</h3>
-		<form
-			action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=añadir&tipoPreferencia={{tipoPreferencia}}"
-			method="post"
-		>
-			<input
-				type="hidden"
-				name="idTipoPreferencia"
-				value="{{ idTipoPreferencia }}"
-			/>
-			<label for="nombrePreferencia">Nombre de la Prefencia:</label>
-			<input
-				type="text"
-				id="nombrePreferencia"
-				name="nombrePreferencia"
-				required
-			/>
-			<button type="submit">Agregar Preferencia</button>
-		</form>
-	</body>
+    <!-- Formulario para agregar nueva preferencia hija -->
+    <h3>Agregar Nueva Preferencia</h3>
+    <form
+      action="modificarTipoPreferencia.php?id={{idTipoPreferencia}}&tipoOperacion=añadir&tipoPreferencia={{tipoPreferencia}}"
+      method="post"
+    >
+      <input
+        type="hidden"
+        name="idTipoPreferencia"
+        value="{{ idTipoPreferencia }}"
+      />
+      <label for="nombrePreferencia">Nombre de la Prefencia:</label>
+      <input
+        type="text"
+        id="nombrePreferencia"
+        name="nombrePreferencia"
+        required
+      />
+      <button type="submit">Agregar Preferencia</button>
+    </form>
+  </body>
 </html>

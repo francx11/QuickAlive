@@ -19,16 +19,9 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
 
     // Obtener los datos del usuario original
     $usuarioOriginal = $bd->getUsuarioPorId($idUsuario);
-    $rolOriginal = $usuarioOriginal->getRol();
 
     // Verificar si se envió una solicitud POST para modificar el usuario
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo 'Entra aqui';
-        //echo $idUsuario;
-        // Verificar la existencia de cada campo POST
-        if ($rolOriginal == 'root') {
-            $_POST['rol'] = 'root';
-        }
 
         if (isset($_POST['nickName'], $_POST['telefono'], $_POST['correo'], $_POST['password'], $_POST['nombre'], $_POST['apellidos'], $_POST['edad'], $_POST['rol'])) {
             // Obtener los datos del formulario
@@ -40,7 +33,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
             $nombre = $_POST['nombre'];
             $apellidos = $_POST['apellidos'];
             $edad = $_POST['edad'];
-            $root = $_POST['rol'];
+            $rol = $_POST['rol'];
 
             // Verificar qué campos se están modificando y establecer valores predeterminados si no se están modificando
             $nickName = ($nickName != '') ? $nickName : $usuarioOriginal->getNickName();
@@ -64,8 +57,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
         }
     }
     // Renderizar el formulario de modificación del usuario
-    echo $twig->render('modificarUsuario.html', ['idUsuario' => $idUsuario, 'rol' => $rolOriginal, 'logueado' => $logueado]);
-
+    echo $twig->render('modificarUsuario.html', ['idUsuario' => $idUsuario, 'logueado' => $logueado]);
 } else {
     // Si el usuario no tiene permisos suficientes, mostrar un mensaje de error en la página
     echo "No tienes permiso para realizar esta acción";

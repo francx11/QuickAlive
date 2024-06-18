@@ -41,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $idUsuario = $usuario->getIdUsuario();
 
-    // Redirigir al usuario de vuelta a la misma página para evitar envíos duplicados del formulario
     header("Location: registroPreferencias.php?id=" . $idUsuario);
     exit();
 }

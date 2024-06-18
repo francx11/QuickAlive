@@ -50,14 +50,7 @@ $(document).ready(function() {
             preferenciaDiv.append($('<span>').text('ID de preferencia: ' + preferencia.idTipoPreferencia));
             preferenciaDiv.append($('<span>').text('Tipo de preferencia: ' + preferencia.tipoPreferencia));
 
-            // Crear botones de editar y eliminar
-            var editarBtn = $('<button>').addClass('editar-btn').text('Editar');
             var eliminarBtn = $('<button>').addClass('eliminar-btn').text('Eliminar');
-
-            // Agregar enlaces a los botones de editar y eliminar con los parámetros de la preferencia
-            editarBtn.click(function() {
-                window.location.href = 'http://localhost/quickalive/backend/admin/gestionPreferencias/modificarTipoPreferencia.php?id=' + preferencia.idTipoPreferencia + '&' + 'tipoPreferencia=' + preferencia.tipoPreferencia;
-            });
 
             eliminarBtn.click(function() {
                 window.location.href = 'http://localhost/quickalive/backend/admin/gestionPreferencias/eliminarTipoPreferencia.php?id=' + preferencia.idTipoPreferencia;
@@ -65,7 +58,6 @@ $(document).ready(function() {
 
             // Crear un div para los botones y agregar los botones al div
             var buttonsDiv = $('<div>').addClass('preferencia-buttons');
-            buttonsDiv.append(editarBtn);
             buttonsDiv.append(eliminarBtn);
 
             // Agregar el div de botones al div de preferencia

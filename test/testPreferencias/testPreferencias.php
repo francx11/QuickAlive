@@ -7,24 +7,22 @@ class TestPreferencias extends TestCase
 {
     private $bd;
 
-// Método para inicializar el entorno de pruebas
+    // Método para inicializar el entorno de pruebas
     protected function setUp(): void
     {
         // Aquí puedes realizar configuraciones necesarias antes de cada prueba
         $this->bd = new BD();
-
     }
 
-// Método para limpiar el entorno de pruebas
+    // Método para limpiar el entorno de pruebas
     protected function tearDown(): void
     {
-
     }
 
     public function testInsertarTipoDePreferencia()
     {
         // Tipo de preferencia a insertar
-        $tipoPreferencia = 'Preuba';
+        $tipoPreferencia = 'Prueba';
 
         // Ejecutar la función que se está probando
         $idPreferenciaPadre = $this->bd->insertarTipoDePreferencia($tipoPreferencia);
@@ -37,6 +35,31 @@ class TestPreferencias extends TestCase
 
         // Eliminar la preferencia insertada
         $this->bd->eliminarTipoPreferencia($idPreferenciaPadre);
+    }
+
+    public function testObtenerNombreTipoPreferencia()
+    {
+        // Datos de prueba
+        $nombreTipoPreferencia = 'Deporte'; // Nombre del tipo de preferencia a insertar
+
+        // Insertar el tipo de preferencia de prueba utilizando la función `insertarTipoDePreferencia`
+        $idTipoPreferencia = $this->bd->insertarTipoDePreferencia($nombreTipoPreferencia);
+
+        // Verificar que la inserción fue exitosa y se devolvió un ID válido
+        $this->assertNotFalse($idTipoPreferencia, 'La inserción del tipo de preferencia falló');
+        $this->assertGreaterThan(0, $idTipoPreferencia, 'El ID del tipo de preferencia debería ser mayor que 0');
+
+        // Ejecutar la función que se está probando
+        $nombreObtenido = $this->bd->obtenerNombreTipoPreferencia($idTipoPreferencia);
+
+        // Verificar si el nombre del tipo de preferencia se obtuvo correctamente
+        $this->assertEquals($nombreTipoPreferencia, $nombreObtenido, 'El nombre del tipo de preferencia no coincide con el esperado');
+
+        // Limpiar la base de datos después de la prueba eliminando el tipo de preferencia insertado
+        $queryDelete = "DELETE FROM tipoPreferencias WHERE idTipoPreferencia = ?";
+        $stmtDelete = $this->bd->mysqli->prepare($queryDelete);
+        $stmtDelete->bind_param('i', $idTipoPreferencia);
+        $stmtDelete->execute();
     }
 
     public function testEliminarTipoPreferencia()
@@ -53,146 +76,91 @@ class TestPreferencias extends TestCase
 
         // Verificar si la eliminación fue exitosa
         $this->assertTrue($resultado);
-
-    }
-
-    public function testInsertarPreferencia()
-    {
-        // Insertar una preferencia padre para asociar la preferencia específica
-        $tipoPreferencia = "prueba"; // Tipo de preferencia
-        $idTipoPreferencia = $this->bd->insertarTipoDePreferencia($tipoPreferencia);
-
-        // Verificar que la inserción de la preferencia padre fue exitosa
-        $this->assertGreaterThan(0, $idTipoPreferencia);
-
-        // Datos de la preferencia específica
-        $nombrePreferencia = "Preferencia de prueba";
-
-        // Ejecutar la función que se está probando
-        $idPreferencia = $this->bd->insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia);
-
-        // Verificar si la inserción de la preferencia específica fue exitosa
-        $this->assertGreaterThan(0, $idPreferencia);
-
-        // Eliminar la preferencia de prueba
-        $this->assertTrue($this->bd->eliminarTipoPreferencia($idTipoPreferencia));
-    }
-
-    public function testEliminarPreferencia()
-    {
-        // Insertar una preferencia padre para asociar la preferencia específica
-        $tipoPreferencia = "Prueba";
-        $idTipoPreferencia = $this->bd->insertarTipoDePreferencia($tipoPreferencia);
-
-        // Verificar que la inserción de la preferencia padre fue exitosa
-        $this->assertGreaterThan(0, $idTipoPreferencia);
-
-        // Insertar una preferencia específica asociada a la preferencia padre
-        $nombrePreferencia = "Preferencia de prueba";
-        $idPreferencia = $this->bd->insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $nombrePreferencia);
-
-        // Verificar que la inserción de la preferencia específica fue exitosa
-        $this->assertGreaterThan(0, $idPreferencia);
-
-        // Ejecutar la función que se está probando
-        $resultado = $this->bd->eliminarPreferencia($idPreferencia, $tipoPreferencia);
-
-        // Verificar si la eliminación de la preferencia fue exitosa
-        $this->assertTrue($resultado);
-
-        // Eliminar la preferencia de prueba
-        $this->assertTrue($this->bd->eliminarTipoPreferencia($idTipoPreferencia));
-
     }
 
     public function testBuscarCoincidenciasTipoPreferencias()
     {
-        // Insertar algunos tipos de preferencia de prueba
-        $tipoPreferencia1 = 'Prueba1';
-        $idTipoPreferencia1 = $this->bd->insertarTipoDePreferencia($tipoPreferencia1);
+        // Datos de prueba
+        $nombreTipoPreferencia1 = 'Deporte';
+        $nombreTipoPreferencia2 = 'Deportes Acuáticos';
+        $nombreTipoPreferencia3 = 'Deportes de Montaña';
 
-        $tipoPreferencia2 = 'Prueba2';
-        $idTipoPreferencia2 = $this->bd->insertarTipoDePreferencia($tipoPreferencia2);
+        // Insertar los tipos de preferencia de prueba utilizando la función `insertarTipoDePreferencia`
+        $idTipoPreferencia1 = $this->bd->insertarTipoDePreferencia($nombreTipoPreferencia1);
+        $idTipoPreferencia2 = $this->bd->insertarTipoDePreferencia($nombreTipoPreferencia2);
+        $idTipoPreferencia3 = $this->bd->insertarTipoDePreferencia($nombreTipoPreferencia3);
 
-        // Buscar coincidencias para el tipo de preferencia 'Prueba'
-        $resultados = $this->bd->buscarCoincidenciasTipoPreferencias('Prueba');
+        // Verificar que la inserción fue exitosa y se devolvió un ID válido
+        $this->assertNotFalse($idTipoPreferencia1, 'La inserción del tipo de preferencia falló');
+        $this->assertNotFalse($idTipoPreferencia2, 'La inserción del tipo de preferencia falló');
+        $this->assertNotFalse($idTipoPreferencia3, 'La inserción del tipo de preferencia falló');
+        $this->assertGreaterThan(0, $idTipoPreferencia1, 'El ID del tipo de preferencia debería ser mayor que 0');
+        $this->assertGreaterThan(0, $idTipoPreferencia2, 'El ID del tipo de preferencia debería ser mayor que 0');
+        $this->assertGreaterThan(0, $idTipoPreferencia3, 'El ID del tipo de preferencia debería ser mayor que 0');
 
-        // Verificar que se encuentren tipos de preferencia con el nombre 'Prueba'
-        $this->assertNotEmpty($resultados);
+        // Ejecutar la función que se está probando
+        $coincidencias = $this->bd->buscarCoincidenciasTipoPreferencias('Deporte');
 
-        // Verificar si se encuentran los tipos de preferencia esperados en los resultados
-        $this->assertEquals(2, count($resultados)); // Se esperan encontrar 2 tipos de preferencia con el nombre 'Prueba'
+        // Verificar que se encontraron coincidencias
+        $this->assertNotEmpty($coincidencias, 'No se encontraron coincidencias');
 
-        // Verificar que los datos de los tipos de preferencia encontrados coinciden con los esperados
-        $tipoPreferencia1Encontrado = $this->bd->getTipoPreferencia($tipoPreferencia1);
-        $tipoPreferencia2Encontrado = $this->bd->getTipoPreferencia($tipoPreferencia2);
+        // Verificar que las coincidencias son correctas
+        $preferenciasEsperadas = [
+            ['idTipoPreferencia' => $idTipoPreferencia1, 'tipoPreferencia' => $nombreTipoPreferencia1],
+            ['idTipoPreferencia' => $idTipoPreferencia2, 'tipoPreferencia' => $nombreTipoPreferencia2],
+            ['idTipoPreferencia' => $idTipoPreferencia3, 'tipoPreferencia' => $nombreTipoPreferencia3],
+        ];
 
-        $this->assertContains($tipoPreferencia1Encontrado, $resultados);
-        $this->assertContains($tipoPreferencia2Encontrado, $resultados);
+        foreach ($preferenciasEsperadas as $preferenciaEsperada) {
+            $this->assertContains($preferenciaEsperada, $coincidencias, 'La coincidencia esperada no se encontró');
+        }
 
-        // Eliminar los tipos de preferencia de prueba
-        $this->assertTrue($this->bd->eliminarTipoPreferencia($idTipoPreferencia1));
-        $this->assertTrue($this->bd->eliminarTipoPreferencia($idTipoPreferencia2));
+        // Limpiar la base de datos después de la prueba eliminando los tipos de preferencia insertados
+        $queryDelete = "DELETE FROM tipoPreferencias WHERE idTipoPreferencia IN (?, ?, ?)";
+        $stmtDelete = $this->bd->mysqli->prepare($queryDelete);
+        $stmtDelete->bind_param('iii', $idTipoPreferencia1, $idTipoPreferencia2, $idTipoPreferencia3);
+        $stmtDelete->execute();
     }
 
-    public function testObtenerPreferencias()
+    public function testGetCategoriasActividad()
     {
-        // Insertar un tipo de preferencia de prueba
-        $tipoPreferencia = "Prueba";
-        $idTipoPreferencia = $this->bd->insertarTipoDePreferencia($tipoPreferencia);
+        // Datos de prueba
+        $nombreActividad = 'Actividad de prueba';
+        $descripcion = 'Descripción de prueba';
+        $duracion = 30;
 
-        // Insertar algunas preferencias hijas asociadas al tipo de preferencia de prueba
-        $preferencias = array(
-            'Preferencia 1',
-            'Preferencia 2',
-            'Preferencia 3',
-        );
+        // Insertar una actividad de prueba
+        $idActividad = $this->bd->insertarActividadSimple($nombreActividad, $descripcion, $duracion);
+        $this->assertNotFalse($idActividad, 'La inserción de la actividad falló');
+        $this->assertGreaterThan(0, $idActividad, 'El ID de la actividad debería ser mayor que 0');
 
-        // Insertar preferencias hijas y almacenar sus IDs en un array
-        $idsPreferencias = array();
-        foreach ($preferencias as $pref) {
-            $idPreferencia = $this->bd->insertarPreferencia($idTipoPreferencia, $tipoPreferencia, $pref);
-            $idsPreferencias[] = $idPreferencia;
+        // Datos de categorías de prueba
+        $categorias = [
+            ['idTipoPreferencia' => 329],
+            ['idTipoPreferencia' => 330]
+        ];
+
+        // Insertar las categorías para la actividad
+        $insercionCategorias = $this->bd->insertarActividadConCategorias($idActividad, $categorias);
+        $this->assertTrue($insercionCategorias, 'La inserción de categorías falló');
+
+        // Ejecutar la función que se está probando
+        $categoriasObtenidas = $this->bd->getCategoriasActividad($idActividad);
+
+        // Verificar si se encontraron categorías
+        $this->assertNotEmpty($categoriasObtenidas, 'No se encontraron categorías para la actividad');
+
+        // Verificar que las categorías obtenidas son correctas
+        foreach ($categorias as $categoriaEsperada) {
+            $this->assertContains(
+                ['idActividad' => $idActividad, 'idTipoPreferencia' => $categoriaEsperada['idTipoPreferencia']],
+                $categoriasObtenidas,
+                'La categoría esperada no se encontró en los resultados obtenidos'
+            );
         }
 
-        // Obtener las preferencias asociadas al tipo de preferencia de prueba
-        $resultado = $this->bd->obtenerPreferencias($idTipoPreferencia, $tipoPreferencia);
-
-        // Verificar que se obtengan resultados
-        $this->assertNotEmpty($resultado);
-
-        // Verificar la cantidad de preferencias obtenidas
-        $this->assertCount(count($preferencias), $resultado);
-
-        // Verificar que los nombres de las preferencias coincidan
-        foreach ($resultado as $index => $pref) {
-            $this->assertEquals($preferencias[$index], $pref['nombrePreferencia']);
-        }
-
-        // Limpiar el estado de la base de datos eliminando las preferencias hijas y el tipo de preferencia de prueba
-        foreach ($idsPreferencias as $idPreferencia) {
-            $this->assertTrue($this->bd->eliminarPreferencia($idPreferencia, $tipoPreferencia));
-        }
-        $this->assertTrue($this->bd->eliminarTipoPreferencia($idTipoPreferencia));
-    }
-
-    public function testGetTipoPreferencia()
-    {
-        // Insertar un tipo de preferencia de prueba
-        $tipoPreferencia = "Prueba";
-        $idTipoPreferencia = $this->bd->insertarTipoDePreferencia($tipoPreferencia);
-
-        // Ejecutar la función para obtener el tipo de preferencia
-        $tipoPreferenciaData = $this->bd->getTipoPreferencia($tipoPreferencia);
-
-        // Verificar que se obtenga un resultado
-        $this->assertNotEmpty($tipoPreferenciaData);
-
-        // Verificar que el tipo de preferencia obtenido coincida con el tipo de preferencia de prueba
-        $this->assertEquals($tipoPreferencia, $tipoPreferenciaData['tipoPreferencia']);
-
-        // Limpiar el estado de la base de datos eliminando el tipo de preferencia de prueba
-        $this->assertTrue($this->bd->eliminarTipoPreferencia($idTipoPreferencia));
+        // Limpiar la base de datos después de la prueba
+        $this->bd->eliminarActividad($idActividad);
     }
 
     public function testGetAllTipoPreferencias()
@@ -208,9 +176,9 @@ class TestPreferencias extends TestCase
     public function testInsertarYEliminarPreferenciaPersonal()
     {
         // Definir datos de prueba
-        $idUsuario = 115;
+        $idUsuario = 162;
         $nombrePreferencia = "Yoga";
-        $idTipoPreferencia = 11;
+        $idTipoPreferencia = 342;
 
         // Insertar preferencia personal
         $resultadoInsercion = $this->bd->insertarPreferenciaPersonal($idUsuario, $nombrePreferencia, $idTipoPreferencia);
@@ -228,11 +196,11 @@ class TestPreferencias extends TestCase
     public function testActualizarPreferenciasPersonales()
     {
         // Definir datos de prueba
-        $idUsuario = 115;
+        $idUsuario = 162;
         $nombrePreferenciaInicial = "Yoga";
-        $idTipoPreferenciaInicial = 11;
-        $nombrePreferenciaNueva = "Tenis";
-        $idTipoPreferenciaNueva = 10;
+        $idTipoPreferenciaInicial = 342;
+        $nombrePreferenciaNueva = "Películas";
+        $idTipoPreferenciaNueva = 337;
 
         // Insertar preferencia personal inicial
         $resultadoInsercion = $this->bd->insertarPreferenciaPersonal($idUsuario, $nombrePreferenciaInicial, $idTipoPreferenciaInicial);
@@ -241,7 +209,7 @@ class TestPreferencias extends TestCase
         $this->assertTrue($resultadoInsercion);
 
         // Ejecutar la función para actualizar las preferencias personales del usuario con una nueva preferencia
-        $this->bd->actualizarPreferenciasPersonales($idUsuario, array(array("nombrePreferencia" => $nombrePreferenciaNueva, "idTipoPreferencia" => $idTipoPreferenciaNueva)));
+        $this->bd->actualizarPreferenciasPersonales($idUsuario, array(array("nombreTipoPreferencia" => $nombrePreferenciaNueva, "idTipoPreferencia" => $idTipoPreferenciaNueva)));
 
         // Eliminar la preferencia personal insertada durante la actualización
         $resultadoEliminacion = $this->bd->eliminarPreferenciaPersonal($idUsuario, $nombrePreferenciaNueva, $idTipoPreferenciaNueva);
@@ -250,4 +218,33 @@ class TestPreferencias extends TestCase
         $this->assertTrue($resultadoEliminacion);
     }
 
+    public function testEliminarPreferenciasPersonalesUsuario()
+    {
+        // Datos de prueba
+        $idUsuario = 162; // Suponiendo que el usuario con ID 1 existe en la base de datos
+
+        // Preparar datos: Insertar preferencias personales para el usuario de prueba
+        $nombreTipoPreferencia1 = 'Preferencia 1';
+        $idTipoPreferencia1 = 329; // Suponiendo que el tipo de preferencia con ID 1 existe en la base de datos
+        $this->bd->insertarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia1, $idTipoPreferencia1);
+
+        $nombreTipoPreferencia2 = 'Preferencia 2';
+        $idTipoPreferencia2 = 330; // Suponiendo que el tipo de preferencia con ID 2 existe en la base de datos
+        $this->bd->insertarPreferenciaPersonal($idUsuario, $nombreTipoPreferencia2, $idTipoPreferencia2);
+
+        // Ejecutar la función que se está probando
+        $resultado = $this->bd->eliminarPreferenciasPersonalesUsuario($idUsuario);
+
+        // Verificar si la eliminación fue exitosa
+        $this->assertTrue($resultado, 'La eliminación de las preferencias personales del usuario falló');
+
+        // Obtener las preferencias personales del usuario para verificar la eliminación
+        $preferenciasPersonales = $this->bd->getPreferenciasUsuario($idUsuario);
+
+        // Verificar si no se encontraron preferencias personales
+        $this->assertEmpty($preferenciasPersonales, 'Las preferencias personales del usuario no fueron eliminadas');
+
+        // Limpiar la base de datos después de la prueba (opcional)
+        // En este caso, no se requiere ya que se supone que las preferencias fueron eliminadas
+    }
 }

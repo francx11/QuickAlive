@@ -1,49 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Registro de Usuario</title>
-		<link
-			rel="stylesheet"
-			href="/quickalive/frontend/user/css/registroBasico.css"
-		/>
-	</head>
-	<body>
-		<header>
-			<h1>Registro de Usuario</h1>
-		</header>
-		<div class="registro">
-			<form
-				action="../../../../../QuickAlive/backend/user/gestionRegistro/registroBasico.php"
-				method="POST"
-			>
-				<h2>Datos Básicos</h2>
-				<label for="nickName">Nombre de Usuario:</label>
-				<input type="text" id="nickName" name="nickName" required />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Usuario</title>
+    <link
+      rel="stylesheet"
+      href="/quickalive/frontend/user/css/gestionRegistro/registroBasico.css"
+    />
 
-				<label for="nombre">Nombre:</label>
-				<input type="text" id="nombre" name="nombre" required />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+        <span> QUICKALIVE</span>
+      </div>
+    </header>
 
-				<label for="apellidos">Apellidos:</label>
-				<input type="text" id="apellidos" name="apellidos" />
+    <div class="registro">
+      <h2>Introduce lo de siempre</h2>
+      <form
+        action="../../../../../QuickAlive/backend/user/gestionRegistro/registroBasico.php"
+        method="POST"
+      >
+        <label for="nickName">Nombre de Usuario:</label>
+        <input type="text" id="nickName" name="nickName" required />
 
-				<label for="correo">Correo:</label>
-				<input type="email" id="correo" name="correo" required />
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required />
 
-				<label for="telefono">Teléfono:</label>
-				<input type="tel" id="telefono" name="telefono" required />
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" />
 
-				<label for="edad">Edad:</label>
-				<input type="number" id="edad" name="edad" required />
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" name="correo" required />
 
-				<label for="password">Contraseña:</label>
-				<input type="password" id="password" name="password" required />
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required />
 
-				<input type="hidden" id="role" name="role" value="registrado" />
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" required />
 
-				<button type="submit">Crear Cuenta</button>
-			</form>
-		</div>
-	</body>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required />
+
+        <input type="hidden" id="role" name="role" value="registrado" />
+
+        <button type="submit">Crear Cuenta</button>
+      </form>
+    </div>
+  </body>
 </html>

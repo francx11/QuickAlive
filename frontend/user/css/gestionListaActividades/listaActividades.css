@@ -1,0 +1,236 @@
+/* Estilos para la lista de actividades */
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: white;
+}
+
+/* Container for the header */
+header {
+  background-color: #f85a75; /* Color de fondo del header */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+h1 {
+  margin: 0;
+}
+
+/* Logo and its text */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f85a75;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: black;
+  color: #f85a75;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Additional styling for the user menu */
+.menuUsuario {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.menuUsuario img {
+  border-radius: 50%;
+}
+
+h2 {
+  font-size: 24px;
+  color: #000;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+/* Estilos para el contenedor de las actividades */
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Estilos para la lista de actividades */
+.actividades-lista {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Estilos para cada item de actividad */
+.actividad-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f85a75;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+/* Estilos para la información de la actividad */
+.actividad-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.actividad-nombre {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+.actividad-fecha,
+.actividad-duracion {
+  font-size: 16px;
+  color: black;
+}
+
+/* Estilos para el icono de editar */
+.editar-icono {
+  margin-left: 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.editar-icono:hover {
+  color: black;
+}
+
+/* Estilos para el botón finalizar */
+.finalizar-btn {
+  padding: 10px 20px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.finalizar-btn:hover {
+  background-color: black;
+  color: #f85a75;
+}
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+
+.modal-contenido {
+  background-color: white;
+  margin: 5% auto;
+  padding: 20px;
+  border: 3px solid black;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+  text-align: left;
+}
+
+.cerrar-modal {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.cerrar-modal:hover,
+.cerrar-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.editar-fecha-btn {
+  padding: 10px 20px;
+  background-color: #f85a75;
+  border: 2px solid #000;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.editar-fecha-btn:hover {
+  background-color: black;
+  color: #f85a75;
+}

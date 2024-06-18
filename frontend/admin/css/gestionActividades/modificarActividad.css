@@ -1,156 +1,236 @@
-/* Estilos generales para el cuerpo de la página */
-body {
-    font-family: Arial, sans-serif; /* Establece una fuente predeterminada para el cuerpo */
-    margin: 0; /* Elimina el margen predeterminado del cuerpo */
-    padding: 0; /* Elimina el relleno predeterminado del cuerpo */
-    background-color: #f4f4f4; /* Color de fondo para el cuerpo de la página */
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
 }
 
-/* Estilos para el encabezado */
+/* Estilos para el body */
+body,
+html {
+  text-align: center;
+  background-color: #ffffff;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container for the header */
 header {
-    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
-    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos */
-    align-items: center; /* Alinea verticalmente los elementos en el centro */
-    padding: 10px; /* Añade relleno alrededor del encabezado */
-    background-color: #333; /* Color de fondo oscuro para el encabezado */
-    color: white; /* Color del texto en el encabezado */
+  background-color: #f85a75; /* Color de fondo del header */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-/* Estilos para la marca o logo */
-.brand {
-    flex: 1; /* La marca ocupará el espacio restante */
-    text-align: center; /* Alinea el texto al centro */
+/* Logo and its text */
+.logo {
+  display: flex;
+  align-items: center;
 }
 
-/* Estilos para el icono de flecha de retroceso */
-.fa-arrow-left {
-    margin-right: 10px; /* Margen derecho para separar el icono del texto */
-    color: #ffffff; /* Cambia el color del icono a blanco */
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Agrega una sombra al texto para hacerlo más visible */
-
+.logo img {
+  height: 40px;
 }
 
-/* Estilos para el texto "Volver" */
-a {
-    color: #ffffff; /* Cambia el color del texto a blanco */
-    text-decoration: none; /* Quita la decoración de subrayado del enlace */
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
 }
 
-a:hover {
-    text-decoration: underline; /* Agrega subrayado al pasar el mouse sobre el enlace */
+/* Button for login */
+.loginButton {
+  background: black;
+  color: #f85a75;
+  border: 1px solid black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  margin-left: 10px;
 }
 
-/* Estilos para los botones de inicio de sesión */
-.loginButton,
-.logoutButton {
-    background-color: #4CAF50; /* Color de fondo para los botones */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 15px; /* Relleno interno */
-    text-align: center; /* Alineación del texto al centro */
-    text-decoration: none; /* Sin decoración de texto */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 16px; /* Tamaño de la fuente */
-    margin: 4px 2px; /* Márgenes */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    border-radius: 5px; /* Borde redondeado */
+.loginButton:hover {
+  background: black;
+  color: white;
+}
+
+h1 {
+  margin: 0;
 }
 
 /* Estilos para el contenido principal */
 main {
-    max-width: 800px; /* Ancho máximo del contenido principal */
-    margin: 20px auto; /* Margen automático para centrar el contenido */
-    padding: 0 20px; /* Espaciado interno del contenido principal */
+  max-width: 800px; /* Ancho máximo del contenido principal */
+  margin: 20px auto; /* Margen automático para centrar el contenido */
+  padding: 0 20px; /* Espaciado interno del contenido principal */
 }
 
 /* Estilos para los formularios */
 form {
-    background-color: #f4f4f4; /* Color de fondo del formulario */
-    padding: 20px; /* Espaciado interno del formulario */
-    border-radius: 10px; /* Borde redondeado del formulario */
+  background-color: #f85a75; /* Color de fondo del formulario */
+  padding: 20px; /* Espaciado interno del formulario */
+  border-radius: 10px; /* Borde redondeado del formulario */
 }
 
 /* Estilos para los elementos del formulario */
 form div {
-    margin-bottom: 15px; /* Espacio entre los elementos del formulario */
+  margin-bottom: 15px; /* Espacio entre los elementos del formulario */
 }
 
 /* Estilos para las etiquetas del formulario */
 label {
-    display: block; /* Muestra las etiquetas en una línea separada */
-    margin-bottom: 5px; /* Espacio debajo de las etiquetas */
+  display: block; /* Muestra las etiquetas en una línea separada */
+  margin-bottom: 5px; /* Espacio debajo de las etiquetas */
 }
 
 /* Estilos para los campos de entrada de texto y número */
 input[type="text"],
 input[type="number"] {
-    width: 100%; /* Ancho completo */
-    padding: 10px; /* Espaciado interno */
-    border-radius: 5px; /* Borde redondeado */
-    border: 1px solid #ccc; /* Borde */
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Borde redondeado */
+  border: 1px solid #ccc; /* Borde */
 }
 
 /* Estilos para los botones de envío */
 button[type="submit"] {
-    background-color: #007bff; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 10px 20px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Borde redondeado */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+  background-color: #007bff; /* Color de fondo */
+  color: white; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo */
 }
 
 /* Estilos para los botones de envío al pasar el cursor */
 button[type="submit"]:hover {
-    background-color: #0056b3; /* Cambio de color de fondo al pasar el cursor */
+  background-color: #0056b3; /* Cambio de color de fondo al pasar el cursor */
 }
 
 /* Estilos para la galería de imágenes */
 .galeria {
-    display: grid; /* Muestra la galería como una cuadrícula */
-    grid-template-columns: repeat(3, 1fr); /* Distribuye las columnas en 3 partes iguales */
-    gap: 20px; /* Espacio entre las imágenes */
-    margin-bottom: 50px; /* Margen inferior para dejar espacio para el botón */
+  display: grid; /* Muestra la galería como una cuadrícula */
+  grid-template-columns: repeat(
+    3,
+    1fr
+  ); /* Distribuye las columnas en 3 partes iguales */
+  gap: 20px; /* Espacio entre las imágenes */
+  max-width: 800px; /* Ancho máximo de la galería */
+  margin: 0 auto 50px; /* Margen automático para centrar y margen inferior */
+}
+
+.galeria h2 {
+  grid-column: 1 / -1; /* Hace que el título ocupe todo el ancho de la galería */
+  text-align: center; /* Centra el texto del título */
+  margin-bottom: 20px; /* Espacio debajo del título */
 }
 
 /* Estilos para las imágenes en la galería */
 .imagen {
-    position: relative; /* Permite el posicionamiento relativo */
+  position: relative; /* Permite el posicionamiento relativo */
+  overflow: hidden; /* Oculta cualquier contenido que se desborde */
 }
 
 .imagen img {
-    width: 100%; /* Ancho completo de la imagen */
-    height: auto; /* Altura automática para mantener la proporción de aspecto */
-    display: block; /* Muestra la imagen como un bloque */
-    border-radius: 10px; /* Borde redondeado */
+  width: 100%; /* Ancho completo de la imagen */
+  height: 200px; /* Altura fija para todas las imágenes */
+  object-fit: cover; /* Cubre el área del contenedor sin distorsionar la imagen */
+  display: block; /* Muestra la imagen como un bloque */
+  border-radius: 10px; /* Borde redondeado */
 }
 
 /* Estilos para el botón de eliminar superpuesto en las imágenes */
 .eliminar-imagen {
-    position: absolute; /* Permite el posicionamiento absoluto */
-    top: 10px; /* Distancia desde la parte superior */
-    right: 10px; /* Distancia desde la derecha */
-    background-color: rgba(255, 255, 255, 0.8); /* Color de fondo semi-transparente */
-    border: none; /* Sin borde */
-    border-radius: 50%; /* Borde redondeado */
-    width: 30px; /* Ancho del botón */
-    height: 30px; /* Altura del botón */
-    font-size: 20px; /* Tamaño del icono */
-    line-height: 1; /* Alineación vertical del contenido */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+  position: absolute; /* Permite el posicionamiento absoluto */
+  top: 10px; /* Distancia desde la parte superior */
+  right: 10px; /* Distancia desde la derecha */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Color de fondo semi-transparente */
+  border: none; /* Sin borde */
+  border-radius: 50%; /* Borde redondeado */
+  width: 30px; /* Ancho del botón */
+  height: 30px; /* Altura del botón */
+  font-size: 20px; /* Tamaño del icono */
+  line-height: 1; /* Alineación vertical del contenido */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo */
 }
 
 /* Estilos para el botón de eliminar al pasar el cursor */
 .eliminar-imagen:hover {
-    background-color: rgba(255, 0, 0, 0.8); /* Cambio de color de fondo al pasar el cursor */
-    color: white; /* Cambio de color del icono al pasar el cursor */
+  background-color: rgba(
+    255,
+    0,
+    0,
+    0.8
+  ); /* Cambio de color de fondo al pasar el cursor */
+  color: white; /* Cambio de color del icono al pasar el cursor */
 }
 
-/* Estilo opcional para el botón de eliminar */
-.eliminar-imagen::after {
-    content: '\00d7'; /* Código Unicode para la 'X' */
+.tipo-preferencia {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
+.tipo-preferencia h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
 
+.tipo-preferencia h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.tipo-preferencia ul {
+  padding: 0;
+  margin: 0;
+}
+
+.tipo-preferencia li {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tipo-preferencia li:hover {
+  background-color: black;
+  color: #f85a75;
+  border-radius: 2px;
+}
+
+.tipo-preferencia .seleccionada {
+  background-color: #007bff;
+}
+
+#submitBtn {
+  background-color: black; /* Color de fondo */
+  border: none; /* Sin borde */
+  color: #f85a75; /* Color del texto */
+  padding: 15px 32px; /* Espacio alrededor del texto */
+  text-align: center; /* Alinear el texto al centro */
+  text-decoration: none; /* Sin subrayado */
+  display: inline-block; /* Mostrar como un bloque */
+  font-size: 16px; /* Tamaño de fuente */
+  margin: 4px 2px; /* Margen exterior */
+  cursor: pointer; /* Cambiar el cursor al pasar sobre él */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+#submitBtn:hover {
+  color: white;
+}

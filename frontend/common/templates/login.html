@@ -1,63 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Inicio de Sesión</title>
-		<!-- Se incluye un enlace a una hoja de estilos externa -->
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="/quickalive/frontend/common/css/login.css"
-		/>
-		<!-- Agrega aquí tus enlaces a hojas de estilo si es necesario -->
-	</head>
-	<body>
-		<!-- Sección del formulario de inicio de sesión -->
-		<form
-			action="http://localhost/quickalive/backend/api/sesiones/login.php"
-			method="POST"
-		>
-			<label for="nickName">Nombre de Usuario:</label>
-			<input
-				type="text"
-				id="nickName"
-				name="nickName"
-				required
-				autocomplete="off"
-			/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio de Sesión</title>
+    <!-- Se incluye un enlace a una hoja de estilos externa -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/quickalive/frontend/common/css/login.css"
+    />
+    <!-- Agrega aquí tus enlaces a hojas de estilo si es necesario -->
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+        <span>QUICKALIVE</span>
+      </div>
+    </header>
 
-			<label for="password">Contraseña:</label>
-			<input type="password" id="password" name="password" required />
+    <main>
+      <h1>Bienvenido de vuelta</h1>
+      <div class="login-container">
+        <form
+          action="http://localhost/quickalive/backend/api/sesiones/login.php"
+          method="POST"
+        >
+          <label for="nickName">Nombre de Usuario:</label>
+          <input
+            type="text"
+            id="nickName"
+            name="nickName"
+            required
+            autocomplete="off"
+          />
 
-			<!-- Sección para mostrar un mensaje de error si las credenciales son incorrectas -->
-			{% if inicio == 2 %}
-			<p>Nombre de usuario o contraseña incorrectos</p>
-			{% endif %}
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" required />
 
-			<!-- Botón para enviar el formulario -->
-			<button type="submit">Iniciar Sesión</button>
-		</form>
+          <!-- Sección para mostrar un mensaje de error si las credenciales son incorrectas -->
+          {% if inicio == 2 %}
+          <p>Nombre de usuario o contraseña incorrectos</p>
+          {% endif %}
 
-		<!-- Sección para recuperación de contraseña -->
-		<div class="recuperacion-contrasena">
-			<!-- Enlace para recuperar contraseña -->
-			<p>
-				<a href="../../../backend/api/recuContraseña/enviaEmail.php">
-					¿Olvidaste tu contraseña?
-				</a>
-			</p>
-		</div>
+          <!-- Botón para enviar el formulario -->
+          <button type="submit">Iniciar Sesión</button>
+        </form>
+      </div>
 
-		<!-- Sección para el enlace de registro -->
-		<div class="registro">
-			<p>
-				¿No tienes una cuenta?
-				<a href="../../../backend/user/gestionRegistro/registroBasico.php"
-					>Regístrate aquí</a
-				>.
-			</p>
-		</div>
-	</body>
+      <!-- Sección para recuperación de contraseña -->
+      <div class="recuperacion-contrasena">
+        <!-- Enlace para recuperar contraseña -->
+        <p>
+          <a href="../../../backend/api/recuContraseña/enviaEmail.php">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </p>
+      </div>
+
+      <div class="registro">
+        <p>
+          ¿No tienes una cuenta?
+          <a href="../../../backend/user/gestionRegistro/registroBasico.php"
+            >Regístrate aquí</a
+          >.
+        </p>
+      </div>
+    </main>
+    <!-- Sección del formulario de inicio de sesión -->
+
+    <!-- Sección para el enlace de registro -->
+  </body>
 </html>

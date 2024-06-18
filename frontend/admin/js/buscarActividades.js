@@ -50,8 +50,6 @@ $(document).ready(function() {
             actividadDiv.append($('<span>').text('ID de actividad: ' + actividad.idActividad));
             actividadDiv.append($('<span>').text('Nombre de actividad: ' + actividad.nombreActividad));
             actividadDiv.append($('<span>').text('Descripción: ' + actividad.descripcion ));
-            actividadDiv.append($('<span>').text('Tipo de Actividad: ' + actividad.tipoActividad));
-            actividadDiv.append($('<span>').text('SubTipo de Actividad: ' + actividad.subTipoActividad));
             actividadDiv.append($('<span>').text('Duración: ' + actividad.duracion));
 
             // Crear botones de editar y eliminar
@@ -60,7 +58,7 @@ $(document).ready(function() {
 
             // Agregar enlaces a los botones de editar y eliminar con los parámetros de la actividad
             editarBtn.click(function() {
-                window.location.href = 'http://localhost/quickalive/backend/admin/gestionActividades/modificarActividad.php?id=' + actividad.idActividad;
+                window.location.href = 'http://localhost/quickalive/backend/admin/gestionActividades/renderModificarActividad.php?id=' + actividad.idActividad;
             });
 
             eliminarBtn.click(function() {

@@ -77,8 +77,7 @@
           <input type="number" id="edad" name="edad" />
           <!-- Campo para ingresar la edad del usuario -->
         </div>
-        <!-- Verifica si el usuario tiene permisos para cambiar el rol -->
-        {% if rol != 'root' %}
+
         <div>
           <label for="rol">Rol:</label>
           <select id="rol" name="rol">
@@ -86,10 +85,7 @@
             <option value="root" selected>Administrador</option>
           </select>
         </div>
-        {% else %}
-        <!-- Si el usuario tiene rol de 'root', oculta el campo de selección de rol -->
-        <input type="hidden" name="rol" value="root" />
-        {% endif %}
+
         <!-- Botón para enviar el formulario de modificación -->
         <a
           href="http://localhost/quickalive/backend/admin/gestionUsuarios/modificarUsuario.php?id= {{ idUsuario }}"

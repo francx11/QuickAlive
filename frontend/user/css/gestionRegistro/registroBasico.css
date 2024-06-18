@@ -1,0 +1,94 @@
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: #ffffff;
+}
+
+/* Container for the header */
+header {
+  background-color: #f85a75; /* Color de fondo del header */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Logo and its text */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+.registro {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.registro form {
+  background-color: #f85a75;
+  padding: 20px;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.registro h2 {
+  margin-top: 0;
+}
+
+.registro label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.registro input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.registro button {
+  background-color: black;
+  color: #f85a75;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.registro button:hover {
+  background-color: #f85a75;
+  color: black;
+}

@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Registro de Preferencias</title>
-		<link
-			rel="stylesheet"
-			href="/quickalive/frontend/user/css/registroPreferencias.css"
-		/>
-	</head>
-	<body>
-		<header>
-			<h1>Registro de Preferencias</h1>
-		</header>
-		<div class="tipo-preferencia">
-			<h2>Indica tus preferencias</h2>
-			{% for tipoPreferencia in tiposPreferencias %}
-			<h3>{{ tipoPreferencia.tipoPreferencia }}</h3>
-			<ul>
-				{% for preferencia in tipoPreferencia.preferencias %}
-				<li
-					class="preferencia"
-					data-id="{{ preferencia.idPreferencia }}"
-					data-tipo-preferencia="{{ preferencia.idTipoPreferencia }}"
-					data-nombre-preferencia="{{ preferencia.nombrePreferencia }}"
-				>
-					{{ preferencia.nombrePreferencia }}
-				</li>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Preferencias</title>
+    <link
+      rel="stylesheet"
+      href="/quickalive/frontend/user/css/gestionRegistro/registroPreferencias.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+        <span> QUICKALIVE</span>
+      </div>
+    </header>
 
-				{% endfor %}
-			</ul>
-			{% endfor %}
-		</div>
-		<button id="guardarPreferencias">Guardar Preferencias</button>
+    <main>
+      <h1>Indica tus preferencias personales</h1>
+      <div class="preferences-container">
+        {% for tipoPreferencia in tiposPreferencias %}
+        <button
+          class="preference"
+          data-id="{{ tipoPreferencia.idTipoPreferencia }}"
+          data-nombre="{{ tipoPreferencia.tipoPreferencia }}"
+        >
+          {{ tipoPreferencia.tipoPreferencia }}
+        </button>
+        {% endfor %}
+      </div>
+      <button id="guardarPreferencias">Guardar Preferencias</button>
+    </main>
 
-		<div id="usuario" data-id-usuario="{{ idUsuario }}"></div>
+    <div id="usuario" data-id-usuario="{{ idUsuario }}"></div>
 
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="/quickalive/frontend/user/js/registroPreferencias.js"></script>
-	</body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/quickalive/frontend/user/js/registroPreferencias.js"></script>
+  </body>
 </html>

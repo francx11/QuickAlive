@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Clase que representa a un usuario del sistema.
  */
@@ -17,6 +18,7 @@ class Usuario
     /**
      * Constructor de la clase Usuario.
      *
+     * @param int $idUsuario ID del usuario.
      * @param string $nickName Nombre de usuario (nickName) del usuario.
      * @param string $telefono Número de teléfono del usuario.
      * @param string $correo Correo electrónico del usuario.
@@ -39,6 +41,7 @@ class Usuario
         $this->rol = $rol;
     }
 
+    // Métodos get
     /**
      * Obtiene el ID del usuario.
      *
@@ -127,5 +130,96 @@ class Usuario
     public function getRol()
     {
         return $this->rol;
+    }
+
+    // Métodos set
+    /**
+     * Establece el ID del usuario.
+     *
+     * @param int $idUsuario ID del usuario.
+     */
+    public function setIdUsuario($idUsuario)
+    {
+        $this->idUsuario = $idUsuario;
+    }
+
+    /**
+     * Establece el nombre de usuario (nickName) del usuario.
+     *
+     * @param string $nickName Nombre de usuario (nickName) del usuario.
+     */
+    public function setNickName($nickName)
+    {
+        $this->nickName = $nickName;
+    }
+
+    /**
+     * Establece el número de teléfono del usuario.
+     *
+     * @param string $telefono Número de teléfono del usuario.
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    }
+
+    /**
+     * Establece el correo electrónico del usuario.
+     *
+     * @param string $correo Correo electrónico del usuario.
+     */
+    public function setCorreo($correo)
+    {
+        $this->correo = $correo;
+    }
+
+    /**
+     * Establece la contraseña del usuario.
+     *
+     * @param string $password Contraseña del usuario.
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * Establece el nombre del usuario.
+     *
+     * @param string $nombre Nombre del usuario.
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+    /**
+     * Establece los apellidos del usuario.
+     *
+     * @param string $apellidos Apellidos del usuario.
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+    }
+
+    /**
+     * Establece la edad del usuario.
+     *
+     * @param int $edad Edad del usuario.
+     */
+    public function setEdad($edad)
+    {
+        $this->edad = $edad;
+    }
+
+    /**
+     * Establece el rol del usuario en el sistema.
+     *
+     * @param string $rol Rol del usuario en el sistema.
+     */
+    public function setRol($rol)
+    {
+        $this->rol = $rol;
     }
 }

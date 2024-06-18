@@ -1,97 +1,171 @@
-/* Estilos generales para el cuerpo de la página */
-body {
-    font-family: Arial, sans-serif; /* Define la fuente para el texto */
-    background-color: #f4f4f4; /* Color de fondo del cuerpo */
-    margin: 0; /* Elimina el margen exterior */
-    padding: 0; /* Elimina el relleno interior */
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
 }
 
-/* Contenedor principal */
-.container {
-    max-width: 600px; /* Ancho máximo del contenedor */
-    margin: 50px auto; /* Margen superior e inferior de 50px, centrado horizontalmente */
-    background-color: #fff; /* Color de fondo del contenedor */
-    padding: 20px; /* Relleno interno del contenedor */
-    border-radius: 8px; /* Borde redondeado */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+/* Estilos para el body */
+body,
+html {
+  text-align: center;
+  background-color: #ffffff;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Estilos para el encabezado */
+/* Container for the header */
 header {
-    display: flex; /* Utiliza un modelo de caja flexible para el encabezado */
-    justify-content: space-between; /* Distribuye el espacio disponible entre los elementos */
-    align-items: center; /* Alinea verticalmente los elementos al centro */
-    padding: 10px; /* Añade relleno alrededor del encabezado */
-    background-color: #333; /* Color de fondo oscuro para el encabezado */
-    color: white; /* Color del texto en el encabezado */
+  background-color: #f85a75; /* Color de fondo del header */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-/* Estilos para la marca o logo */
-.brand {
-    flex: 1; /* La marca ocupa el espacio restante */
-    text-align: center; /* Alinea el texto al centro */
+/* Logo and its text */
+.logo {
+  display: flex;
+  align-items: center;
 }
 
-/* Estilos para los botones de inicio de sesión */
-.loginButton,
-.logoutButton {
-    background-color: #4CAF50; /* Color de fondo para los botones */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 15px; /* Relleno interno */
-    text-align: center; /* Alineación del texto al centro */
-    text-decoration: none; /* Sin decoración de texto */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 16px; /* Tamaño de la fuente */
-    margin: 4px 2px; /* Márgenes */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    border-radius: 5px; /* Borde redondeado */
+.logo img {
+  height: 40px;
+}
+
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Button for login */
+.loginButton {
+  background: black;
+  color: #f85a75;
+  border: 1px solid black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  margin-left: 10px;
+}
+
+.loginButton:hover {
+  background: black;
+  color: white;
+}
+
+h1 {
+  margin: 0;
+}
+/* Estilos para el contenido principal */
+main {
+  max-width: 800px; /* Ancho máximo del contenido principal */
+  margin: 20px auto; /* Margen automático para centrar el contenido */
+  padding: 0 20px; /* Espaciado interno del contenido principal */
 }
 
 /* Estilos para los formularios */
 form {
-    margin-top: 20px; /* Margen superior */
+  background-color: #f85a75; /* Color de fondo del formulario */
+  padding: 20px; /* Espaciado interno del formulario */
+  border-radius: 10px; /* Borde redondeado del formulario */
 }
 
-/* Estilos para las etiquetas de los campos */
+/* Estilos para los elementos del formulario */
+form div {
+  margin-bottom: 15px; /* Espacio entre los elementos del formulario */
+}
+
+/* Estilos para las etiquetas del formulario */
 label {
-    display: block; /* Muestra las etiquetas en una línea separada */
-    margin-bottom: 5px; /* Espacio debajo de las etiquetas */
-    font-weight: bold; /* Texto en negrita */
-    color: #333; /* Color del texto */
+  display: block; /* Muestra las etiquetas en una línea separada */
+  margin-bottom: 5px; /* Espacio debajo de las etiquetas */
 }
 
-/* Estilos para los campos de entrada de texto y número, y para las áreas de texto */
+/* Estilos para los campos de entrada de texto y número */
 input[type="text"],
-input[type="number"],
-textarea {
-    width: 100%; /* Ancho completo */
-    padding: 10px; /* Relleno interno */
-    margin-bottom: 20px; /* Espacio inferior */
-    border: 1px solid #ccc; /* Borde sólido */
-    border-radius: 5px; /* Borde redondeado */
-    box-sizing: border-box; /* El ancho incluye el borde y el relleno */
+input[type="number"] {
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Borde redondeado */
+  border: 1px solid #ccc; /* Borde */
 }
 
-/* Estilos para el campo de carga de archivos */
-input[type="file"] {
-    margin-bottom: 20px; /* Espacio inferior */
+/* Estilos para los botones de envío */
+button[type="submit"] {
+  background-color: #007bff; /* Color de fondo */
+  color: white; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo */
 }
 
-/* Estilos para el botón de enviar */
-input[type="submit"] {
-    background-color: #007bff; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 12px 20px; /* Relleno interno */
-    border-radius: 5px; /* Borde redondeado */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    font-size: 16px; /* Tamaño de la fuente */
-    transition: background-color 0.3s ease; /* Transición suave */
+/* Estilos para los botones de envío al pasar el cursor */
+button[type="submit"]:hover {
+  background-color: #0056b3; /* Cambio de color de fondo al pasar el cursor */
 }
 
-/* Estilos para el botón de enviar al pasar el cursor */
-input[type="submit"]:hover {
-    background-color: #0056b3; /* Cambio de color de fondo */
+.tipo-preferencia {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
+.tipo-preferencia h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.tipo-preferencia h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.tipo-preferencia ul {
+  padding: 0;
+  margin: 0;
+}
+
+.tipo-preferencia li {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tipo-preferencia li:hover {
+  background-color: black;
+  color: #f85a75;
+  border-radius: 2px;
+}
+
+.tipo-preferencia .seleccionada {
+  background-color: #007bff;
+}
+
+#submitBtn {
+  background-color: black; /* Color de fondo */
+  border: none; /* Sin borde */
+  color: #f85a75; /* Color del texto */
+  padding: 15px 32px; /* Espacio alrededor del texto */
+  text-align: center; /* Alinear el texto al centro */
+  text-decoration: none; /* Sin subrayado */
+  display: inline-block; /* Mostrar como un bloque */
+  font-size: 16px; /* Tamaño de fuente */
+  margin: 4px 2px; /* Margen exterior */
+  cursor: pointer; /* Cambiar el cursor al pasar sobre él */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+#submitBtn:hover {
+  color: white;
+}

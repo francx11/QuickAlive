@@ -1,60 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="/quickalive/frontend/admin/css/gestionActividades/gestionActividades.css"
-			rel="stylesheet"
-			type="text/css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-		/>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<title>Gestión de Actividades</title>
-	</head>
-	<body>
-		<header>
-			<a href="../panelAdmin.php"><i class="fas fa-arrow-left"></i> Volver</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="/quickalive/frontend/admin/css/gestionActividades/gestionActividades.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Gestión de Actividades</title>
+  </head>
+  <body>
+    <!-- Encabezado de la página -->
+    <header>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+      </div>
 
-			<div class="brand">
-				<h2>Gestión de Actividades</h2>
-			</div>
+      <h1>Gestión de Actividades</h1>
 
-			{% if logueado %}
-			<a href="../../../../../QuickAlive/backend/api/sesiones/logout.php"
-				><button class="logoutButton">Cerrar Sesión</button></a
-			>
-			{% else %}
-			<a href="./backend/api/sesiones/login.php"
-				><button class="loginButton">Iniciar Sesión</button></a
-			>
-			{% endif %}
-		</header>
+      {% if logueado %}
+      <a href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+        ><button class="loginButton">Cerrar Sesión</button></a
+      >
+      <!-- Botón de cierre de sesión -->
+      {% else %}
+      <a href="http://localhost/quickalive/backend/api/sesiones/login.php"
+        ><button class="loginButton">Iniciar Sesión</button></a
+      >
+      <!-- Botón de inicio de sesión -->
+      {% endif %}
+    </header>
 
-		<main>
-			<button
-				id="altaActividadButton"
-				onclick="window.location.href='/quickalive/backend/admin/gestionActividades/altaActividad.php'"
-			>
-				Dar de Alta Actividad
-			</button>
+    <main>
+      <button
+        id="altaActividadButton"
+        onclick="window.location.href='/quickalive/backend/admin/gestionActividades/renderAltaActividad.php'"
+      >
+        Dar de Alta Actividad
+      </button>
 
-			<div>
-				<label for="nombreActividadBuscado">Buscar Actividad:</label>
-				<input
-					type="text"
-					id="nombreActividadBuscado"
-					name="nombreActividadBuscado"
-					placeholder="Buscar Actividad"
-				/>
-			</div>
+      <div>
+        <label for="nombreActividadBuscado">Buscar Actividad:</label>
+        <input
+          type="text"
+          id="nombreActividadBuscado"
+          name="nombreActividadBuscado"
+          placeholder="Buscar Actividad"
+        />
+      </div>
 
-			<div id="resultadosBusqueda"></div>
-		</main>
+      <div id="resultadosBusqueda"></div>
+    </main>
 
-		<script src="/quickalive/frontend/admin/js/buscarActividades.js"></script>
-	</body>
+    <script src="/quickalive/frontend/admin/js/buscarActividades.js"></script>
+  </body>
 </html>

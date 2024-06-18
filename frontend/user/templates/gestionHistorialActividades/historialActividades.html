@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historial de Actividades</title>
+    <!-- Enlace a tu archivo CSS -->
+    <link
+      rel="stylesheet"
+      href="/quickalive/frontend/user/css/gestionHistorialActividades/historialActividades.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+      </div>
+
+      <h1>Historial de actividades</h1>
+
+      <div class="menuUsuario">
+        <div class="dropdown">
+          <img
+            src="http://localhost/quickalive/imgs/perfilUsuario.png"
+            class="dropbtn"
+          />
+          <div class="dropdown-content">
+            <a
+              href="http://localhost/quickalive/backend/user/pantallaInicial.php"
+              >Mis recomendaciones</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionRegistro/renderActualizarPreferencias.php"
+              >Actualizar Preferencias</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionListaActividades/renderListaActividades.php"
+              >Lista de Actividades</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionHistorialActividades/renderHistorialActividades.php"
+              >Historial de Actividades</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+              >Cerrar Sesión</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/eliminarCuenta.php"
+              onclick="return confirmarEliminacion()"
+              >Eliminar Cuenta</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <h2>¿Quieres repetir?</h2>
+        <ul class="actividades-lista">
+          {% for actividad in listaActividades %}
+          <li class="actividad-item">
+            <div class="actividad-info">
+              <span class="actividad-nombre"
+                >{{ actividad.nombreActividad }}</span
+              >
+              <span class="actividad-fecha"
+                >Fecha de realización: {{ actividad.fechaRealizacion }}</span
+              >
+
+              {% if actividad.tipoActividad != "geolocalizable" %}
+              <span class="actividad-duracion"
+                >Duración: {{ actividad.duracion }} minutos</span
+              >
+              {% endif %}
+            </div>
+            <!-- Formulario para volver a realizar la actividad -->
+            {% if actividad.tipoActividad != "geolocalizable" %}
+            <form
+              action="../../../../../QuickAlive/backend/user/gestionHistorialActividades/volverArealizarActividad.php"
+              method="post"
+            >
+              <input
+                type="hidden"
+                name="idActividad"
+                value="{{ actividad.idActividad }}"
+              />
+              <input type="hidden" name="estado" value="aceptada" />
+              <button type="submit" class="volver-a-realizar">
+                Volver a realizar
+              </button>
+              {% endif %}
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </main>
+  </body>
+
+  <script>
+    function confirmarEliminacion() {
+      return confirm(
+        "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer."
+      );
+    }
+  </script>
+</html>

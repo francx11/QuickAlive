@@ -1,0 +1,94 @@
+/* Importa la fuente Roboto Slab */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+/* Estilos para el body */
+body {
+  text-align: center;
+  background-color: white;
+}
+
+/* Estilos para el encabezado */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f85a75;
+  color: #000;
+}
+
+/* Logo and its text */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Estilos para el contenedor principal */
+main {
+  margin-top: 50px;
+}
+
+/* Estilos para el título principal */
+h1 {
+  font-size: 32px;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+/* Estilos para el contenedor de las preferencias */
+.preferences-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Estilos para los botones de preferencias */
+.preference {
+  padding: 15px 30px;
+  background-color: #f85a75;
+  border: 2px solid #000;
+  border-radius: 10px;
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Estilos para el botón de preferencia seleccionado */
+.preference.selected {
+  background-color: #000;
+  color: #f85a75;
+}
+
+/* Estilos para el botón de guardar preferencias */
+#guardarPreferencias {
+  margin-top: 30px;
+  padding: 15px 30px;
+  background-color: black;
+  border: 2px solid #000;
+  border-radius: 10px;
+  color: #f85a75;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}

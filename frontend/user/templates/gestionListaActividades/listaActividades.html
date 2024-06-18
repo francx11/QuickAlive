@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Actividades</title>
+    <link
+      rel="stylesheet"
+      href="/quickalive/frontend/user/css/gestionListaActividades/listaActividades.css"
+    />
+    <!-- Font Awesome para los iconos -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="http://localhost/quickalive/imgs/logo.png"
+          alt="QuickAlive Logo"
+        />
+      </div>
+
+      <h1>Lista de actividades</h1>
+
+      <div class="menuUsuario">
+        <div class="dropdown">
+          <img
+            src="http://localhost/quickalive/imgs/perfilUsuario.png"
+            class="dropbtn"
+          />
+          <div class="dropdown-content">
+            <a
+              href="http://localhost/quickalive/backend/user/pantallaInicial.php"
+              >Mis recomendaciones</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionRegistro/renderActualizarPreferencias.php"
+              >Actualizar Preferencias</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionListaActividades/renderListaActividades.php"
+              >Lista de Actividades</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/gestionHistorialActividades/renderHistorialActividades.php"
+              >Historial de Actividades</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/api/sesiones/logout.php"
+              >Cerrar Sesión</a
+            >
+            <a
+              href="http://localhost/quickalive/backend/user/eliminarCuenta.php"
+              onclick="return confirmarEliminacion()"
+              >Eliminar Cuenta</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h2>Cuantas más completes más productivo serás!</h2>
+      <div class="container">
+        <ul class="actividades-lista">
+          {% for actividad in listaActividades %}
+          <li class="actividad-item">
+            <div class="actividad-info">
+              <span class="actividad-nombre"
+                >{{ actividad.nombreActividad }}</span
+              >
+              <span class="actividad-fecha"
+                >Fecha a realizar: {{ actividad.fechaRealizacion }} {% if
+                actividad.tipoActividad != "geolocalizable" %}
+                <i
+                  class="fas fa-edit editar-icono"
+                  data-id="{{ actividad.idActividad }}"
+                ></i>
+                {% endif %}
+              </span>
+              {% if actividad.tipoActividad != "geolocalizable" %}
+              <span class="actividad-duracion"
+                >Duración: {{ actividad.duracion }} minutos</span
+              >
+              {% endif %}
+            </div>
+            <form
+              action="../../../../../QuickAlive/backend/user/gestionListaActividades/marcarComoCompletada.php"
+              method="post"
+            >
+              <input
+                type="hidden"
+                name="idActividad"
+                value="{{ actividad.idActividad }}"
+              />
+              <button type="submit" class="finalizar-btn">Finalizar</button>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </main>
+
+    <!-- Formulario para editar la fecha de realización (se muestra como modal) -->
+    <div id="modal-editar-fecha" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar-modal">&times;</span>
+        <form
+          action="../../../../../QuickAlive/backend/user/gestionListaActividades/modificarFechaRealizacion.php"
+          method="post"
+        >
+          <input type="hidden" name="idActividad" id="modal-idActividad" />
+          <label for="nuevaFecha">Nueva Fecha:</label>
+          <input
+            type="datetime-local"
+            name="nuevaFecha"
+            id="modal-nuevaFecha"
+            required
+          />
+          <button type="submit" class="editar-fecha-btn">Guardar Fecha</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      function confirmarEliminacion() {
+        return confirm(
+          "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer."
+        );
+      }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".editar-icono").click(function () {
+          var idActividad = $(this).data("id");
+          $("#modal-idActividad").val(idActividad);
+          $("#modal-editar-fecha").css("display", "block");
+        });
+
+        $(".cerrar-modal").click(function () {
+          $("#modal-editar-fecha").css("display", "none");
+        });
+
+        $(window).click(function (event) {
+          if (event.target.id === "modal-editar-fecha") {
+            $("#modal-editar-fecha").css("display", "none");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

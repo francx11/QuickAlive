@@ -33,7 +33,7 @@ if (isset($_SESSION['loggedin'], $_SESSION['rol']) && $_SESSION['loggedin'] && $
             $nombre = $_POST['nombre'];
             $apellidos = $_POST['apellidos'];
             $edad = $_POST['edad'];
-            $root = $_POST['rol'];
+            $rol = $_POST['rol'];
 
             // Verificar qué campos se están modificando y establecer valores predeterminados si no se están modificando
             $nickName = ($nickName != '') ? $nickName : $usuarioOriginal->getNickName();

@@ -18,19 +18,17 @@ body {
 header {
   background-color: #f85a75; /* Color de fondo del header */
   display: flex;
-  top: 0;
-  left: 0;
-  padding: 20px 20px 20px 20px;
+  padding: 10px 20px; /* Padding ajustado */
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  top: 0;
 }
 
 /* Logo and its text */
 .logo {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo img {
@@ -42,6 +40,7 @@ header {
   font-size: 24px;
   font-weight: bold;
   color: black;
+  flex: 1; /* Ajusta el tamaño del texto del logo */
 }
 
 /* Dropdown Button */
@@ -116,7 +115,10 @@ h3 {
 #events-simple,
 #events-geo {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Ajustable grid */
   gap: 16px; /* Espacio entre las actividades */
   padding: 16px; /* Espacio interno del contenedor */
 }
@@ -124,15 +126,15 @@ h3 {
 /* Estilo de las actividades */
 .actividad {
   display: grid;
-  grid-template-rows: 10% 70% 20%; /* Dos filas: 80% para la imagen, 20% para los botones */
+  grid-template-rows: 15% 65% 20%; /* Dos filas: 80% para la imagen, 20% para los botones */
   background-color: #f85a75; /* Color de fondo */
   border: 2px solid black; /* Borde de las actividades */
   border-radius: 8px; /* Bordes redondeados */
   padding: 16px 0px 16px 0px; /* Espacio interno de las actividades */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
   position: relative;
-  height: 500px;
-  width: 600px;
+  height: 100%; /* Ajustar la altura */
+  width: 100%; /* Ajustar el ancho */
 }
 
 .actividad img {
@@ -190,4 +192,20 @@ h3 {
 .iframe-content p {
   color: black;
   text-align: justify;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+  }
+
+  .logo span {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .dropdown-content {
+    min-width: 100px;
+  }
 }

@@ -3,12 +3,14 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Admin\ActividadController;
+use App\Http\Controllers\Admin\PanelController;
 use App\Http\Controllers\Admin\PreferenciaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\RecuperarContrasenaController;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\User\AsistenteIAController;
+use App\Http\Controllers\User\CuentaController;
 use App\Http\Controllers\User\HistorialController;
 use App\Http\Controllers\User\ListaActividadesController;
 use App\Http\Controllers\User\RecomendacionesController;
@@ -113,4 +115,13 @@ return static function (Router $router, Container $container): void {
         $group->map('POST', '/procesarMensajeChat.php', [AsistenteIAController::class, 'procesarMensajeChat']);
     })
         ->middleware($container->get(AuthMiddleware::class));
+
+    $router->map('GET', '/backend/user/pantallaInicial.php', [CuentaController::class, 'pantallaInicial'])
+        ->middleware($container->get(AuthMiddleware::class));
+    $router->map('GET', '/backend/user/eliminarCuenta.php', [CuentaController::class, 'eliminarCuenta'])
+        ->middleware($container->get(AuthMiddleware::class));
+
+    $router->map('GET', '/backend/admin/panelAdmin.php', [PanelController::class, 'render'])
+        ->middleware($container->get(AuthMiddleware::class))
+        ->middleware($container->get(AdminMiddleware::class));
 };

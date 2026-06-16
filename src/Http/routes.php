@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ActividadController;
 use App\Http\Controllers\Admin\PreferenciaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
+use App\Http\Controllers\Api\RecuperarContrasenaController;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\User\AsistenteIAController;
 use App\Http\Controllers\User\HistorialController;
@@ -27,6 +28,15 @@ return static function (Router $router, Container $container): void {
     $router->map('GET', '/backend/api/sesiones/login.php', [SesionController::class, 'login']);
     $router->map('POST', '/backend/api/sesiones/login.php', [SesionController::class, 'login']);
     $router->map('GET', '/backend/api/sesiones/logout.php', [SesionController::class, 'logout']);
+
+    // PSR-7 Uri::getPath() preserves percent-encoding rather than decoding it,
+    // and browsers percent-encode non-ASCII characters in href attributes
+    // before sending the request line -- so the route pattern needs the
+    // encoded form of "ñ", not the literal UTF-8 character.
+    $router->map('GET', '/backend/api/recuContrase%C3%B1a/enviaEmail.php', [RecuperarContrasenaController::class, 'enviaEmail']);
+    $router->map('POST', '/backend/api/recuContrase%C3%B1a/enviaEmail.php', [RecuperarContrasenaController::class, 'enviaEmail']);
+    $router->map('GET', '/backend/api/recuContrase%C3%B1a/recuperarContrase%C3%B1a.php', [RecuperarContrasenaController::class, 'recuperarContrasena']);
+    $router->map('POST', '/backend/api/recuContrase%C3%B1a/recuperarContrase%C3%B1a.php', [RecuperarContrasenaController::class, 'recuperarContrasena']);
 
     $router->group('/backend/admin', static function (RouteGroup $admin) {
         $admin->map('GET', '/gestionUsuarios/gestionUsuarios.php', [UsuarioController::class, 'index']);

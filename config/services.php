@@ -6,6 +6,7 @@ use App\Domain\Actividad\ActividadRepositoryInterface;
 use App\Domain\Preferencia\PreferenciaRepositoryInterface;
 use App\Domain\Usuario\UsuarioRepositoryInterface;
 use App\Http\Controllers\Admin\ActividadController;
+use App\Infrastructure\Mail\PhpMailerMailer;
 use App\Infrastructure\Persistence\Mysql\ActividadRepository;
 use App\Infrastructure\Persistence\Mysql\PreferenciaRepository;
 use App\Infrastructure\Persistence\Mysql\UsuarioRepository;
@@ -27,6 +28,11 @@ return [
     // project root (pre-existing layout; Phase 5 may relocate it).
     ActividadController::class => DI\autowire()
         ->constructorParameter('uploadDir', dirname(__DIR__) . '/imgs'),
+
+    PhpMailerMailer::class => DI\autowire()
+        ->constructorParameter('host', 'smtp.gmail.com')
+        ->constructorParameter('username', getenv('CORREO_GMAIL'))
+        ->constructorParameter('password', getenv('CONTRASENA_GMAIL')),
 
     Connection::class => function (): Connection {
         return DriverManager::getConnection([

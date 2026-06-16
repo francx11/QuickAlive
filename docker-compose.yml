@@ -9,15 +9,18 @@ services:
       DB_PASS: ${DB_PASS:-quickalive}
       DB_NAME: ${DB_NAME:-quickalivedb}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      API_KEY: ${API_KEY}
+      CORREO_GMAIL: ${CORREO_GMAIL}
+      CONTRASENA_GMAIL: ${CONTRASENA_GMAIL}
     volumes:
       - .:/var/www/html
-      - /var/www/html/vendor
     depends_on:
       db:
         condition: service_healthy
 
   db:
     image: mysql:8.0
+    command: --lower-case-table-names=1
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root}
       MYSQL_DATABASE: ${DB_NAME:-quickalivedb}

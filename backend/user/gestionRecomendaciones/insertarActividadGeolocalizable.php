@@ -1,30 +1,9 @@
 <?php
-require_once '../../bd/bd.php';
 
-session_start();
+declare(strict_types=1);
 
-$logueado = $_SESSION['loggedin'];
+$basePath = dirname(__DIR__, 3);
 
-if ($logueado) {
+require $basePath . "/vendor/autoload.php";
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $nombreActividad = $_POST['nombreActividad'];
-        $descripcion = $_POST['descripcion'];
-        $duracion = $_POST['duracion'];
-        $urlImagen = $_POST['urlImagen'];
-        $fechaLimite = $_POST['fechaLimite'];
-        $idApi = $_POST['idApi'];
-
-        $bd = new BD();
-        $idActividad = $bd->insertarActividadGeolocalizable($nombreActividad, $descripcion, $duracion, $urlImagen, $idApi, $fechaLimite);
-
-        if ($idActividad) {
-            echo json_encode(['status' => 'success', 'idActividad' => $idActividad]);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'No se pudo insertar la actividad']);
-        }
-    } else {
-        http_response_code(400);
-        echo json_encode(['status' => 'error', 'message' => 'Solicitud no válida']);
-    }
-}
+(new \App\Kernel($basePath))->run();

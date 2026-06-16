@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Domain\Actividad\ActividadRepositoryInterface;
 use App\Domain\Preferencia\PreferenciaRepositoryInterface;
 use App\Domain\Usuario\UsuarioRepositoryInterface;
+use App\Http\Controllers\Admin\ActividadController;
 use App\Infrastructure\Persistence\Mysql\ActividadRepository;
 use App\Infrastructure\Persistence\Mysql\PreferenciaRepository;
 use App\Infrastructure\Persistence\Mysql\UsuarioRepository;
@@ -21,6 +22,11 @@ return [
     UsuarioRepositoryInterface::class => DI\autowire(UsuarioRepository::class),
     ActividadRepositoryInterface::class => DI\autowire(ActividadRepository::class),
     PreferenciaRepositoryInterface::class => DI\autowire(PreferenciaRepository::class),
+
+    // The legacy app stores uploaded activity images flat under /imgs at the
+    // project root (pre-existing layout; Phase 5 may relocate it).
+    ActividadController::class => DI\autowire()
+        ->constructorParameter('uploadDir', dirname(__DIR__) . '/imgs'),
 
     Connection::class => function (): Connection {
         return DriverManager::getConnection([

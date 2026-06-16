@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Admin\ActividadController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\SesionController;
@@ -29,6 +30,19 @@ return static function (Router $router, Container $container): void {
         $admin->map('GET', '/gestionUsuarios/eliminarUsuario.php', [UsuarioController::class, 'eliminar']);
         $admin->map('GET', '/gestionUsuarios/modificarUsuario.php', [UsuarioController::class, 'modificar']);
         $admin->map('POST', '/gestionUsuarios/modificarUsuario.php', [UsuarioController::class, 'modificar']);
+    })
+        ->middleware($container->get(AuthMiddleware::class))
+        ->middleware($container->get(AdminMiddleware::class));
+
+    $router->group('/backend/admin', static function (RouteGroup $admin) {
+        $admin->map('GET', '/gestionActividades/gestionActividades.php', [ActividadController::class, 'index']);
+        $admin->map('GET', '/gestionActividades/renderAltaActividad.php', [ActividadController::class, 'renderAlta']);
+        $admin->map('POST', '/gestionActividades/altaActividad.php', [ActividadController::class, 'alta']);
+        $admin->map('POST', '/gestionActividades/buscarActividad.php', [ActividadController::class, 'buscar']);
+        $admin->map('GET', '/gestionActividades/eliminarActividad.php', [ActividadController::class, 'eliminar']);
+        $admin->map('POST', '/gestionActividades/eliminarFotoGaleria.php', [ActividadController::class, 'eliminarFotoGaleria']);
+        $admin->map('GET', '/gestionActividades/renderModificarActividad.php', [ActividadController::class, 'renderModificar']);
+        $admin->map('POST', '/gestionActividades/modificarActividad.php', [ActividadController::class, 'modificar']);
     })
         ->middleware($container->get(AuthMiddleware::class))
         ->middleware($container->get(AdminMiddleware::class));

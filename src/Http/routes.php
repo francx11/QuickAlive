@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PreferenciaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\SesionController;
+use App\Http\Controllers\User\ListaActividadesController;
 use App\Http\Controllers\User\RegistroController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthMiddleware;
@@ -69,5 +70,12 @@ return static function (Router $router, Container $container): void {
     $router->map('GET', '/backend/user/gestionRegistro/renderActualizarPreferencias.php', [RegistroController::class, 'renderActualizarPreferencias'])
         ->middleware($container->get(AuthMiddleware::class));
     $router->map('POST', '/backend/user/gestionRegistro/actualizarPreferencias.php', [RegistroController::class, 'actualizarPreferencias'])
+        ->middleware($container->get(AuthMiddleware::class));
+
+    $router->group('/backend/user/gestionListaActividades', static function (RouteGroup $group) {
+        $group->map('GET', '/renderListaActividades.php', [ListaActividadesController::class, 'render']);
+        $group->map('POST', '/marcarComoCompletada.php', [ListaActividadesController::class, 'marcarCompletada']);
+        $group->map('POST', '/modificarFechaRealizacion.php', [ListaActividadesController::class, 'modificarFechaRealizacion']);
+    })
         ->middleware($container->get(AuthMiddleware::class));
 };

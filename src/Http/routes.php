@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PreferenciaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\SesionController;
+use App\Http\Controllers\User\AsistenteIAController;
 use App\Http\Controllers\User\HistorialController;
 use App\Http\Controllers\User\ListaActividadesController;
 use App\Http\Controllers\User\RecomendacionesController;
@@ -93,6 +94,13 @@ return static function (Router $router, Container $container): void {
         $group->map('POST', '/insertarActividadGeolocalizable.php', [RecomendacionesController::class, 'insertarGeolocalizable']);
         $group->map('GET', '/obtenerActividadesGeolocalizables.php', [RecomendacionesController::class, 'obtenerGeolocalizablesDisponibles']);
         $group->map('GET', '/obtenerActividadesSimples.php', [RecomendacionesController::class, 'obtenerSimplesRecomendadas']);
+    })
+        ->middleware($container->get(AuthMiddleware::class));
+
+    $router->group('/backend/user/gestionAsistenteIA', static function (RouteGroup $group) {
+        $group->map('GET', '/renderAsistenteIA.php', [AsistenteIAController::class, 'render']);
+        $group->map('GET', '/activarPremiumDemo.php', [AsistenteIAController::class, 'activarPremiumDemo']);
+        $group->map('POST', '/procesarMensajeChat.php', [AsistenteIAController::class, 'procesarMensajeChat']);
     })
         ->middleware($container->get(AuthMiddleware::class));
 };

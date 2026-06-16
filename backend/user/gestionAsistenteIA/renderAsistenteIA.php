@@ -1,24 +1,9 @@
 <?php
-// Incluir el archivo que contiene la lógica para la conexión a la base de datos
-require_once '../../bd/bd.php';
-// Cargar el autoloader de Composer para cargar las clases automáticamente
-require_once "../../../vendor/autoload.php";
 
-// Configurar Twig para cargar plantillas desde el directorio especificado
-$loader = new \Twig\Loader\FilesystemLoader('../../../frontend/user/templates/gestionAsistenteIA');
-$twig = new \Twig\Environment($loader);
+declare(strict_types=1);
 
-session_start();
+$basePath = dirname(__DIR__, 3);
 
-$logueado = $_SESSION['loggedin'];
+require $basePath . "/vendor/autoload.php";
 
-if ($logueado) {
-    $bd = new BD();
-    $idUsuario = $_SESSION['idUsuario'];
-
-    if ($bd->esUsuarioPremium($idUsuario)) {
-        echo $twig->render('asistente.html', ['idUsuario' => $idUsuario]);
-    } else {
-        echo $twig->render('upsellPremium.html', []);
-    }
-}
+(new \App\Kernel($basePath))->run();

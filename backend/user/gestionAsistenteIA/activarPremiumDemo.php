@@ -1,20 +1,9 @@
 <?php
-// TODO: endpoint de demostración. Sustituir por una activación real ligada
-// a una pasarela de pago (Stripe/PayPal) antes de pasar a producción.
-require_once '../../bd/bd.php';
 
-session_start();
+declare(strict_types=1);
 
-header('Content-Type: application/json');
+$basePath = dirname(__DIR__, 3);
 
-if (empty($_SESSION['loggedin'])) {
-    http_response_code(401);
-    echo json_encode(['error' => 'No autenticado']);
-    exit;
-}
+require $basePath . "/vendor/autoload.php";
 
-$idUsuario = $_SESSION['idUsuario'];
-$bd = new BD();
-$exito = $bd->activarPremiumDemo($idUsuario);
-
-echo json_encode(['exito' => $exito]);
+(new \App\Kernel($basePath))->run();

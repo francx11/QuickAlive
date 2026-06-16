@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PreferenciaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\SesionController;
+use App\Http\Controllers\User\HistorialController;
 use App\Http\Controllers\User\ListaActividadesController;
 use App\Http\Controllers\User\RegistroController;
 use App\Http\Middleware\AdminMiddleware;
@@ -76,6 +77,12 @@ return static function (Router $router, Container $container): void {
         $group->map('GET', '/renderListaActividades.php', [ListaActividadesController::class, 'render']);
         $group->map('POST', '/marcarComoCompletada.php', [ListaActividadesController::class, 'marcarCompletada']);
         $group->map('POST', '/modificarFechaRealizacion.php', [ListaActividadesController::class, 'modificarFechaRealizacion']);
+    })
+        ->middleware($container->get(AuthMiddleware::class));
+
+    $router->group('/backend/user/gestionHistorialActividades', static function (RouteGroup $group) {
+        $group->map('GET', '/renderHistorialActividades.php', [HistorialController::class, 'render']);
+        $group->map('POST', '/volverArealizarActividad.php', [HistorialController::class, 'volverARealizar']);
     })
         ->middleware($container->get(AuthMiddleware::class));
 };

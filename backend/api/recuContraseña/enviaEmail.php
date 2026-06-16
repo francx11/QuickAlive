@@ -71,10 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'servicio.recuperacion.quickalive@gmail.com'; //getenv('CORREO_GMAIL'); // Cambiar por tu correo
-                    $mail->Password = '***REMOVED-APP-PASSWORD***'; //getenv('CONTRASENA_GMAIL'); // Cambiar por tu contraseña
+                    $mail->Username = getenv('CORREO_GMAIL');
+                    $mail->Password = getenv('CONTRASENA_GMAIL');
 
-                    //echo var_dump($mail->Password);
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
 

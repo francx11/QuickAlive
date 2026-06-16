@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Admin\ActividadController;
+use App\Http\Controllers\Admin\PreferenciaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\SesionController;
@@ -43,6 +44,16 @@ return static function (Router $router, Container $container): void {
         $admin->map('POST', '/gestionActividades/eliminarFotoGaleria.php', [ActividadController::class, 'eliminarFotoGaleria']);
         $admin->map('GET', '/gestionActividades/renderModificarActividad.php', [ActividadController::class, 'renderModificar']);
         $admin->map('POST', '/gestionActividades/modificarActividad.php', [ActividadController::class, 'modificar']);
+    })
+        ->middleware($container->get(AuthMiddleware::class))
+        ->middleware($container->get(AdminMiddleware::class));
+
+    $router->group('/backend/admin', static function (RouteGroup $admin) {
+        $admin->map('GET', '/gestionPreferencias/gestionPreferencias.php', [PreferenciaController::class, 'index']);
+        $admin->map('GET', '/gestionPreferencias/altaTipoPreferencia.php', [PreferenciaController::class, 'alta']);
+        $admin->map('POST', '/gestionPreferencias/altaTipoPreferencia.php', [PreferenciaController::class, 'alta']);
+        $admin->map('POST', '/gestionPreferencias/buscarTipoPreferencia.php', [PreferenciaController::class, 'buscar']);
+        $admin->map('GET', '/gestionPreferencias/eliminarTipoPreferencia.php', [PreferenciaController::class, 'eliminar']);
     })
         ->middleware($container->get(AuthMiddleware::class))
         ->middleware($container->get(AdminMiddleware::class));

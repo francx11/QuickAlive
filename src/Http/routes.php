@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\User\HistorialController;
 use App\Http\Controllers\User\ListaActividadesController;
+use App\Http\Controllers\User\RecomendacionesController;
 use App\Http\Controllers\User\RegistroController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthMiddleware;
@@ -83,6 +84,15 @@ return static function (Router $router, Container $container): void {
     $router->group('/backend/user/gestionHistorialActividades', static function (RouteGroup $group) {
         $group->map('GET', '/renderHistorialActividades.php', [HistorialController::class, 'render']);
         $group->map('POST', '/volverArealizarActividad.php', [HistorialController::class, 'volverARealizar']);
+    })
+        ->middleware($container->get(AuthMiddleware::class));
+
+    $router->group('/backend/user/gestionRecomendaciones', static function (RouteGroup $group) {
+        $group->map('GET', '/controladorInteresActividad.php', [RecomendacionesController::class, 'decidirInteresActividad']);
+        $group->map('GET', '/controladorActividadGeolocalizable.php', [RecomendacionesController::class, 'insertarYDecidirGeolocalizable']);
+        $group->map('POST', '/insertarActividadGeolocalizable.php', [RecomendacionesController::class, 'insertarGeolocalizable']);
+        $group->map('GET', '/obtenerActividadesGeolocalizables.php', [RecomendacionesController::class, 'obtenerGeolocalizablesDisponibles']);
+        $group->map('GET', '/obtenerActividadesSimples.php', [RecomendacionesController::class, 'obtenerSimplesRecomendadas']);
     })
         ->middleware($container->get(AuthMiddleware::class));
 };

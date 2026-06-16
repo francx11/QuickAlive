@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PreferenciaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\SesionController;
+use App\Http\Controllers\User\RegistroController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\SessionMiddleware;
@@ -57,4 +58,16 @@ return static function (Router $router, Container $container): void {
     })
         ->middleware($container->get(AuthMiddleware::class))
         ->middleware($container->get(AdminMiddleware::class));
+
+    // Public registration flow -- no auth required, the user doesn't exist yet.
+    $router->map('GET', '/backend/user/gestionRegistro/registroBasico.php', [RegistroController::class, 'registroBasico']);
+    $router->map('POST', '/backend/user/gestionRegistro/registroBasico.php', [RegistroController::class, 'registroBasico']);
+    $router->map('GET', '/backend/user/gestionRegistro/registroPreferencias.php', [RegistroController::class, 'registroPreferencias']);
+    $router->map('POST', '/backend/user/gestionRegistro/guardarPreferencias.php', [RegistroController::class, 'guardarPreferencias']);
+
+    // Updating preferences from an existing account does require auth.
+    $router->map('GET', '/backend/user/gestionRegistro/renderActualizarPreferencias.php', [RegistroController::class, 'renderActualizarPreferencias'])
+        ->middleware($container->get(AuthMiddleware::class));
+    $router->map('POST', '/backend/user/gestionRegistro/actualizarPreferencias.php', [RegistroController::class, 'actualizarPreferencias'])
+        ->middleware($container->get(AuthMiddleware::class));
 };

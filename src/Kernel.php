@@ -31,7 +31,7 @@ final class Kernel
         $this->router = new Router();
         $this->router->setStrategy($strategy);
 
-        (require $this->basePath . '/src/Http/routes.php')($this->router);
+        (require $this->basePath . '/src/Http/routes.php')($this->router, $this->container);
     }
 
     public function getContainer(): Container

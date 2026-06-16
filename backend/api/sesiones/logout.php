@@ -1,10 +1,9 @@
 <?php
-session_start();
 
-// Finalizar la sesión
-session_unset();
-session_destroy();
+declare(strict_types=1);
 
-// Redirigir a la página de inicio de sesión
-header("Location: ../../../index.php");
-exit();
+$basePath = dirname(__DIR__, 3);
+
+require $basePath . '/vendor/autoload.php';
+
+(new \App\Kernel($basePath))->run();

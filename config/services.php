@@ -34,7 +34,17 @@ return [
     },
 
     Environment::class => function (): Environment {
-        $loader = new FilesystemLoader(dirname(__DIR__) . '/resources/views');
+        $root = dirname(__DIR__);
+
+        // Phase 5 will move these into resources/views; until then, the legacy
+        // frontend/*/templates trees are added as flat search paths so migrated
+        // controllers can render the existing templates unchanged.
+        $loader = new FilesystemLoader([
+            $root . '/resources/views',
+            $root . '/frontend/common/templates',
+            $root . '/frontend/user/templates',
+            $root . '/frontend/admin/templates',
+        ]);
 
         return new Environment($loader);
     },

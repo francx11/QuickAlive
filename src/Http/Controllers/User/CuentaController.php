@@ -22,7 +22,7 @@ final readonly class CuentaController
     {
         $idUsuario = (int) $_SESSION['idUsuario'];
 
-        return $this->twig->render('pantallaInicial.html', [
+        return $this->twig->render('user/pantallaInicial.html', [
             'esPremium' => $this->usuarios->esPremium($idUsuario),
         ]);
     }

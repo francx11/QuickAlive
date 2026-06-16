@@ -27,12 +27,12 @@ final readonly class ActividadController
 
     public function index(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->twig->render('gestionActividades/gestionActividades.html', ['logueado' => true]);
+        return $this->twig->render('admin/gestionActividades/gestionActividades.html', ['logueado' => true]);
     }
 
     public function renderAlta(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->twig->render('gestionActividades/altaActividad.html', [
+        return $this->twig->render('admin/gestionActividades/altaActividad.html', [
             'logueado' => true,
             'tiposPreferencias' => $this->preferencias->todosLosTipos(),
         ]);
@@ -92,7 +92,7 @@ final readonly class ActividadController
     {
         $idActividad = (int) ($request->getQueryParams()['id'] ?? -1);
 
-        return $this->twig->render('gestionActividades/modificarActividad.html', [
+        return $this->twig->render('admin/gestionActividades/modificarActividad.html', [
             'logueado' => true,
             'tiposPreferencias' => $this->preferencias->todosLosTipos(),
             'idActividad' => $idActividad,
@@ -146,7 +146,7 @@ final readonly class ActividadController
             $nombreImagen = basename((string) $imagen->getClientFilename());
             $imagen->moveTo($this->uploadDir . '/' . $nombreImagen);
 
-            $this->actividades->agregarFotoGaleria($idActividad, '/quickalive/imgs/' . $nombreImagen);
+            $this->actividades->agregarFotoGaleria($idActividad, '/public/assets/img/' . $nombreImagen);
         }
     }
 }

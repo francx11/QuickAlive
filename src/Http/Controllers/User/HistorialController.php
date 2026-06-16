@@ -44,7 +44,7 @@ final readonly class HistorialController
             ];
         }
 
-        return $this->twig->render('gestionHistorialActividades/historialActividades.html', [
+        return $this->twig->render('user/gestionHistorialActividades/historialActividades.html', [
             'listaActividades' => $listaActividades,
             'idUsuario' => $idUsuario,
         ]);

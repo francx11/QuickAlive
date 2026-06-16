@@ -20,7 +20,7 @@ final readonly class RecuperarContrasenaController
 
     public function enviaEmail(ServerRequestInterface $request): ResponseInterface
     {
-        $respuestaFormulario = $this->twig->render('enviaEmail.html');
+        $respuestaFormulario = $this->twig->render('common/enviaEmail.html');
 
         if ($request->getMethod() !== 'POST') {
             return $respuestaFormulario;
@@ -72,13 +72,13 @@ final readonly class RecuperarContrasenaController
         $parametros = $request->getQueryParams();
 
         if (!isset($parametros['token'], $parametros['email'])) {
-            return $this->twig->render('recuperarContraseña.html', ['token' => null, 'correo' => null]);
+            return $this->twig->render('common/recuperarContraseña.html', ['token' => null, 'correo' => null]);
         }
 
         $token = $parametros['token'];
         $correo = $parametros['email'];
 
-        $respuestaFormulario = $this->twig->render('recuperarContraseña.html', ['token' => $token, 'correo' => $correo]);
+        $respuestaFormulario = $this->twig->render('common/recuperarContraseña.html', ['token' => $token, 'correo' => $correo]);
 
         if ($request->getMethod() !== 'POST') {
             return $respuestaFormulario;

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pantalla Inicial</title>
+    <link
+      rel="stylesheet"
+      href="/public/assets/user/css/pantallaInicial.css"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="/public/assets/img/logo.png"
+          alt="QuickAlive Logo"
+        />
+        <span> QUICKALIVE</span>
+      </div>
+
+      <div class="menuUsuario">
+        <div class="dropdown">
+          <img
+            src="/public/assets/img/perfilUsuario.png"
+            class="dropbtn"
+          />
+          <div class="dropdown-content">
+            <a
+              href="/backend/user/pantallaInicial.php"
+              >Mis recomendaciones</a
+            >
+            <a
+              href="/backend/user/gestionRegistro/renderActualizarPreferencias.php"
+              >Actualizar Preferencias</a
+            >
+            <a
+              href="/backend/user/gestionListaActividades/renderListaActividades.php"
+              >Lista de Actividades</a
+            >
+            <a
+              href="/backend/user/gestionHistorialActividades/renderHistorialActividades.php"
+              >Historial de Actividades</a
+            >
+            <a
+              href="/backend/user/gestionAsistenteIA/renderAsistenteIA.php"
+              >Asistente IA {% if not esPremium %}🔒 Premium{% endif %}</a
+            >
+            <a
+              href="/backend/api/sesiones/logout.php"
+              >Cerrar Sesión</a
+            >
+            <a
+              href="/backend/user/eliminarCuenta.php"
+              onclick="return confirmarEliminacion()"
+              >Eliminar Cuenta</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <h2>Encuentra la actividad que buscabas</h2>
+    <h3>Cerquita de tu casa</h3>
+    <div class="activities-geo" id="events-geo"></div>
+
+    <h3>Hechas a medida</h3>
+    <div class="activities-simple" id="events-simple"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/public/assets/user/js/obtenerActividadesCercanas.js"></script>
+    <script src="/public/assets/user/js/obtenerActividadesSimples.js"></script>
+    <script>
+      function confirmarEliminacion() {
+        return confirm(
+          "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer."
+        );
+      }
+    </script>
+  </body>
+</html>

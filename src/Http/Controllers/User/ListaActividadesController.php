@@ -42,7 +42,7 @@ final readonly class ListaActividadesController
             ];
         }
 
-        return $this->twig->render('gestionListaActividades/listaActividades.html', [
+        return $this->twig->render('user/gestionListaActividades/listaActividades.html', [
             'listaActividades' => $listaActividades,
             'idUsuario' => $idUsuario,
         ]);

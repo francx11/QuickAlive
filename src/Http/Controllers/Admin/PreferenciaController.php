@@ -22,7 +22,7 @@ final readonly class PreferenciaController
 
     public function index(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->twig->render('gestionPreferencias/gestionPreferencias.html', ['logueado' => true]);
+        return $this->twig->render('admin/gestionPreferencias/gestionPreferencias.html', ['logueado' => true]);
     }
 
     public function alta(ServerRequestInterface $request): ResponseInterface
@@ -36,7 +36,7 @@ final readonly class PreferenciaController
                 ->withHeader('Location', '/backend/admin/gestionPreferencias/gestionPreferencias.php');
         }
 
-        return $this->twig->render('gestionPreferencias/altaTipoPreferencia.html', ['logueado' => true]);
+        return $this->twig->render('admin/gestionPreferencias/altaTipoPreferencia.html', ['logueado' => true]);
     }
 
     public function buscar(ServerRequestInterface $request): ResponseInterface

@@ -45,7 +45,7 @@ final readonly class SesionController
             $inicio = 2;
         }
 
-        return $this->responder->render('login.html', ['inicio' => $inicio]);
+        return $this->responder->render('common/login.html', ['inicio' => $inicio]);
     }
 
     public function logout(ServerRequestInterface $request): ResponseInterface

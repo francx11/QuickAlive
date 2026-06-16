@@ -43,14 +43,14 @@ final readonly class RegistroController
                 ->withHeader('Location', '/backend/user/gestionRegistro/registroPreferencias.php?id=' . $usuario->idUsuario);
         }
 
-        return $this->twig->render('gestionRegistro/registroBasico.html');
+        return $this->twig->render('user/gestionRegistro/registroBasico.html');
     }
 
     public function registroPreferencias(ServerRequestInterface $request): ResponseInterface
     {
         $idUsuario = (int) ($request->getQueryParams()['id'] ?? -1);
 
-        return $this->twig->render('gestionRegistro/registroPreferencias.html', [
+        return $this->twig->render('user/gestionRegistro/registroPreferencias.html', [
             'tiposPreferencias' => $this->preferencias->todosLosTipos(),
             'idUsuario' => $idUsuario,
         ]);
@@ -76,7 +76,7 @@ final readonly class RegistroController
     {
         $idUsuario = (int) $_SESSION['idUsuario'];
 
-        return $this->twig->render('gestionRegistro/actualizarPreferencias.html', [
+        return $this->twig->render('user/gestionRegistro/actualizarPreferencias.html', [
             'tiposPreferencias' => $this->preferencias->todosLosTipos(),
             'preferenciasAnteriores' => $this->preferencias->preferenciasUsuario($idUsuario),
             'idUsuario' => $idUsuario,

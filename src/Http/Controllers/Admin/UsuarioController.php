@@ -24,7 +24,7 @@ final readonly class UsuarioController
 
     public function index(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->twig->render('gestionUsuarios/gestionUsuarios.html', ['logueado' => true]);
+        return $this->twig->render('admin/gestionUsuarios/gestionUsuarios.html', ['logueado' => true]);
     }
 
     public function alta(ServerRequestInterface $request): ResponseInterface
@@ -47,7 +47,7 @@ final readonly class UsuarioController
                 ->withHeader('Location', '/backend/admin/gestionUsuarios/gestionUsuarios.php');
         }
 
-        return $this->twig->render('gestionUsuarios/altaUsuario.html', ['logueado' => true]);
+        return $this->twig->render('admin/gestionUsuarios/altaUsuario.html', ['logueado' => true]);
     }
 
     public function buscar(ServerRequestInterface $request): ResponseInterface
@@ -103,6 +103,6 @@ final readonly class UsuarioController
                 ->withHeader('Location', '/backend/admin/gestionUsuarios/gestionUsuarios.php');
         }
 
-        return $this->twig->render('gestionUsuarios/modificarUsuario.html', ['idUsuario' => $idUsuario, 'logueado' => true]);
+        return $this->twig->render('admin/gestionUsuarios/modificarUsuario.html', ['idUsuario' => $idUsuario, 'logueado' => true]);
     }
 }

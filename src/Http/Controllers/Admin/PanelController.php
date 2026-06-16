@@ -16,6 +16,6 @@ final readonly class PanelController
 
     public function render(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->twig->render('panelAdmin.html', ['logueado' => true]);
+        return $this->twig->render('admin/panelAdmin.html', ['logueado' => true]);
     }
 }

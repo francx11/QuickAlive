@@ -26,10 +26,10 @@ final readonly class AsistenteIAController
         $idUsuario = (int) $_SESSION['idUsuario'];
 
         if (!$this->usuarios->esPremium($idUsuario)) {
-            return $this->twig->render('gestionAsistenteIA/upsellPremium.html');
+            return $this->twig->render('user/gestionAsistenteIA/upsellPremium.html');
         }
 
-        return $this->twig->render('gestionAsistenteIA/asistente.html', ['idUsuario' => $idUsuario]);
+        return $this->twig->render('user/gestionAsistenteIA/asistente.html', ['idUsuario' => $idUsuario]);
     }
 
     public function activarPremiumDemo(ServerRequestInterface $request): ResponseInterface

@@ -24,10 +24,8 @@ return [
     ActividadRepositoryInterface::class => DI\autowire(ActividadRepository::class),
     PreferenciaRepositoryInterface::class => DI\autowire(PreferenciaRepository::class),
 
-    // The legacy app stores uploaded activity images flat under /imgs at the
-    // project root (pre-existing layout; Phase 5 may relocate it).
     ActividadController::class => DI\autowire()
-        ->constructorParameter('uploadDir', dirname(__DIR__) . '/imgs'),
+        ->constructorParameter('uploadDir', dirname(__DIR__) . '/public/assets/img'),
 
     PhpMailerMailer::class => DI\autowire()
         ->constructorParameter('host', 'smtp.gmail.com')
@@ -46,17 +44,7 @@ return [
     },
 
     Environment::class => function (): Environment {
-        $root = dirname(__DIR__);
-
-        // Phase 5 will move these into resources/views; until then, the legacy
-        // frontend/*/templates trees are added as flat search paths so migrated
-        // controllers can render the existing templates unchanged.
-        $loader = new FilesystemLoader([
-            $root . '/resources/views',
-            $root . '/frontend/common/templates',
-            $root . '/frontend/user/templates',
-            $root . '/frontend/admin/templates',
-        ]);
+        $loader = new FilesystemLoader(dirname(__DIR__) . '/resources/views');
 
         return new Environment($loader);
     },

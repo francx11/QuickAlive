@@ -64,20 +64,21 @@ final readonly class UsuarioRepository implements UsuarioRepositoryInterface
 
     public function modificar(ActualizarUsuarioDTO $datos): bool
     {
-        $affected = $this->connection->update(
-            'usuario',
-            [
-                'nickName' => $datos->nickName,
-                'telefono' => $datos->telefono,
-                'correo' => $datos->correo,
-                'password' => password_hash($datos->password, PASSWORD_DEFAULT),
-                'nombre' => $datos->nombre,
-                'apellidos' => $datos->apellidos,
-                'edad' => $datos->edad,
-                'rol' => $datos->rol,
-            ],
-            ['idUsuario' => $datos->idUsuario],
-        );
+        $valores = [
+            'nickName' => $datos->nickName,
+            'telefono' => $datos->telefono,
+            'correo' => $datos->correo,
+            'nombre' => $datos->nombre,
+            'apellidos' => $datos->apellidos,
+            'edad' => $datos->edad,
+            'rol' => $datos->rol,
+        ];
+
+        if ($datos->password !== null) {
+            $valores['password'] = password_hash($datos->password, PASSWORD_DEFAULT);
+        }
+
+        $affected = $this->connection->update('usuario', $valores, ['idUsuario' => $datos->idUsuario]);
 
         return $affected > 0;
     }

@@ -418,6 +418,40 @@ class BD
     }
 
     /**
+     * Comprueba si un usuario tiene suscripción premium activa.
+     *
+     * @param int $idUsuario El ID del usuario.
+     * @return bool true si el usuario es premium, false en caso contrario.
+     */
+    public function esUsuarioPremium($idUsuario)
+    {
+        $query = "SELECT isPremium FROM usuario WHERE idUsuario = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $fila = $resultado->fetch_assoc();
+
+        return $fila && (bool) $fila['isPremium'];
+    }
+
+    /**
+     * Activa el acceso premium de demostración para un usuario.
+     * TODO: sustituir por una activación real ligada a una pasarela de pago (Stripe/PayPal).
+     *
+     * @param int $idUsuario El ID del usuario.
+     * @return bool true si la actualización fue exitosa, false si falló.
+     */
+    public function activarPremiumDemo($idUsuario)
+    {
+        $query = "UPDATE usuario SET isPremium = 1 WHERE idUsuario = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param('i', $idUsuario);
+
+        return $stmt->execute();
+    }
+
+    /**
      * Verifica las credenciales de inicio de sesión de un usuario.
      *
      * @param string $nickName Nombre de usuario del usuario.

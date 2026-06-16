@@ -14,6 +14,7 @@ session_start();
 $logueado = $_SESSION['loggedin'];
 
 if ($logueado) {
-    //echo $_SESSION['idUsuario'];
-    echo $twig->render('pantallaInicial.html', []);
+    $bd = new BD();
+    $esPremium = $bd->esUsuarioPremium($_SESSION['idUsuario']);
+    echo $twig->render('pantallaInicial.html', ['esPremium' => $esPremium]);
 }

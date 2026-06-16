@@ -255,16 +255,17 @@ CREATE TABLE `usuario` (
   `edad` int(11) DEFAULT NULL,
   `rol` varchar(50) DEFAULT NULL,
   `tokenRecuperacion` varchar(255) DEFAULT NULL,
-  `fechaExpiracionToken` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `fechaExpiracionToken` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `isPremium` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `nickName`, `telefono`, `correo`, `password`, `nombre`, `apellidos`, `edad`, `rol`, `tokenRecuperacion`, `fechaExpiracionToken`) VALUES
-(7, 'root', '123456789', 'franexca@gmail.com', '$2y$10$n0W7C5BolDMo3Gm4oZoAwuvzzhocgftK3m5j.S9dhXhkRhYAL/yOK', 'Root', 'Root', 40, 'root', '2dc0f65831e6093893ec847a5939dba6a3a7ddb42cb196b1e235784a8df124ca', '2024-06-19 18:12:40'),
-(198, 'prueba', '987654321', 'franexca@gmail.com', '$2y$10$n0W7C5BolDMo3Gm4oZoAwuvzzhocgftK3m5j.S9dhXhkRhYAL/yOK', 'asd', 'asd', 34, 'registrado', NULL, '2024-06-19 18:12:40');
+INSERT INTO `usuario` (`idUsuario`, `nickName`, `telefono`, `correo`, `password`, `nombre`, `apellidos`, `edad`, `rol`, `tokenRecuperacion`, `fechaExpiracionToken`, `isPremium`) VALUES
+(7, 'root', '123456789', 'franexca@gmail.com', '$2y$10$n0W7C5BolDMo3Gm4oZoAwuvzzhocgftK3m5j.S9dhXhkRhYAL/yOK', 'Root', 'Root', 40, 'root', '2dc0f65831e6093893ec847a5939dba6a3a7ddb42cb196b1e235784a8df124ca', '2024-06-19 18:12:40', 0),
+(198, 'prueba', '987654321', 'franexca@gmail.com', '$2y$10$n0W7C5BolDMo3Gm4oZoAwuvzzhocgftK3m5j.S9dhXhkRhYAL/yOK', 'asd', 'asd', 34, 'registrado', NULL, '2024-06-19 18:12:40', 0);
 
 -- --------------------------------------------------------
 

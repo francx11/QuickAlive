@@ -3,11 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pantalla Inicial</title>
+    <title>Asistente IA</title>
     <link
       rel="stylesheet"
-      href="http://localhost/quickalive/frontend/user/css/pantallaInicial.css"
-      type="text/css"
+      href="/quickalive/frontend/user/css/gestionAsistenteIA/asistente.css"
     />
   </head>
   <body>
@@ -17,8 +16,9 @@
           src="http://localhost/quickalive/imgs/logo.png"
           alt="QuickAlive Logo"
         />
-        <span> QUICKALIVE</span>
       </div>
+
+      <h1>Asistente IA de actividades</h1>
 
       <div class="menuUsuario">
         <div class="dropdown">
@@ -44,10 +44,6 @@
               >Historial de Actividades</a
             >
             <a
-              href="http://localhost/quickalive/backend/user/gestionAsistenteIA/renderAsistenteIA.php"
-              >Asistente IA {% if not esPremium %}🔒 Premium{% endif %}</a
-            >
-            <a
               href="http://localhost/quickalive/backend/api/sesiones/logout.php"
               >Cerrar Sesión</a
             >
@@ -61,16 +57,23 @@
       </div>
     </header>
 
-    <h2>Encuentra la actividad que buscabas</h2>
-    <h3>Cerquita de tu casa</h3>
-    <div class="activities-geo" id="events-geo"></div>
+    <main>
+      <div class="chat-container">
+        <div id="chat-mensajes" class="chat-mensajes"></div>
+        <form id="chat-form" class="chat-form">
+          <input
+            type="text"
+            id="chat-input"
+            placeholder="¿Qué te apetece hacer hoy?"
+            maxlength="500"
+            autocomplete="off"
+            required
+          />
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </main>
 
-    <h3>Hechas a medida</h3>
-    <div class="activities-simple" id="events-simple"></div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="http://localhost/quickalive/frontend/user/js/obtenerActividadesCercanas.js"></script>
-    <script src="http://localhost/quickalive/frontend/user/js/obtenerActividadesSimples.js"></script>
     <script>
       function confirmarEliminacion() {
         return confirm(
@@ -78,5 +81,7 @@
         );
       }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="http://localhost/quickalive/frontend/user/js/asistenteIA.js"></script>
   </body>
 </html>

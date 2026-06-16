@@ -14,7 +14,6 @@ services:
       CONTRASENA_GMAIL: ${CONTRASENA_GMAIL}
     volumes:
       - .:/var/www/html
-      - /var/www/html/vendor
     depends_on:
       db:
         condition: service_healthy

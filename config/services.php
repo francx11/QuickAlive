@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Domain\Actividad\ActividadRepositoryInterface;
+use App\Domain\Preferencia\PreferenciaRepositoryInterface;
+use App\Domain\Usuario\UsuarioRepositoryInterface;
+use App\Infrastructure\Persistence\Mysql\ActividadRepository;
+use App\Infrastructure\Persistence\Mysql\PreferenciaRepository;
+use App\Infrastructure\Persistence\Mysql\UsuarioRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -11,6 +17,10 @@ use Twig\Loader\FilesystemLoader;
 
 return [
     ResponseFactoryInterface::class => DI\create(Psr17Factory::class),
+
+    UsuarioRepositoryInterface::class => DI\autowire(UsuarioRepository::class),
+    ActividadRepositoryInterface::class => DI\autowire(ActividadRepository::class),
+    PreferenciaRepositoryInterface::class => DI\autowire(PreferenciaRepository::class),
 
     Connection::class => function (): Connection {
         return DriverManager::getConnection([

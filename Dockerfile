@@ -1,4 +1,5 @@
-FROM php:8.4-apache
+# 8.4.27+ corrige CVE-2026-109618 y CVE-2026-109619 (RCE sin autenticación). No bajar de aquí.
+FROM php:8.4.27-apache
 
 RUN docker-php-ext-install mysqli \
     && apt-get update && apt-get install -y --no-install-recommends \
@@ -14,5 +15,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --no-progress
 
 COPY . .
+
+COPY docker/php/security.ini /usr/local/etc/php/conf.d/zz-security.ini
 
 RUN a2enmod rewrite
